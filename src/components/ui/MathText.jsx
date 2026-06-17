@@ -30,7 +30,10 @@ export default function MathText({ text, className = '', as: Tag = 'span' }) {
   const parts = working.split(PLACEHOLDER).filter(Boolean);
 
   parts.forEach((part, idx) => {
-    if (part.startsWith('D')) {
+    // Only treat parts that match the placeholder pattern D<n> or I<n> as math.
+    // Otherwise text beginning with 'D'/'I' (e.g. 'Dalam', 'Implementasi') would
+    // be mis-parsed as a math placeholder and render as $$undefined$$.
+    if (/^D\d+$/.test(part)) {
       const index = Number(part.slice(1));
       const math = displayMatches[index];
       if (math === undefined || math === null) {
@@ -52,7 +55,7 @@ export default function MathText({ text, className = '', as: Tag = 'span' }) {
       } catch {
         segments.push(<span key={idx}>{`$$${math}$$`}</span>);
       }
-    } else if (part.startsWith('I')) {
+    } else if (/^I\d+$/.test(part)) {
       const index = Number(part.slice(1));
       const math = inlineMatches[index];
       if (math === undefined || math === null) {

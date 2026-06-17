@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './styles/globals.css'
 import 'katex/dist/katex.min.css'
 
-const APP_VERSION = '1.1.0'
+const APP_VERSION = '1.2.0'
 const VERSION_KEY = 'artesioneedu-app-version'
 
 // Clear persisted stores from older app versions to prevent stale/corrupted data.

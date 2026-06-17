@@ -1,0 +1,221 @@
+Kuliah 11-Shrinkage Methods dalam Sains Data
+
+                 Ridge dan Lasso Regression
+
+                           Pengantar Sains Data
+                                Yeni Herdiyeni
+
+                    Prodi Sarjana Kecerdasan Buatan
+
+                                                                                                                                                                                                                1 / 16
+Alur Pembahasan
+
+Materi ini akan dibahas secara bertahap melalui lima langkah utama:
+   1 memahami use case prediksi hasil panen padi;
+   2 mengenal OLS sebagai model dasar regresi linear;
+   3 melihat permasalahan OLS pada data dengan fitur yang saling berkorelasi;
+   4 memahami bagaimana Ridge mengatasi masalah tersebut dengan menyusutkan semua koefisien;
+   5 memahami bagaimana Lasso menyusutkan koefisien sekaligus melakukan seleksi fitur.
+
+                                                                                                                                                                                                                                                                 2 / 16
+1. Use Case: Prediksi Hasil Panen Padi
+
+Kasus
+
+Kita ingin memprediksi hasil panen padi berdasarkan sejumlah variabel lingkungan dan budidaya.
+
+Contoh fitur yang digunakan                             Contoh hubungan satu fitur (rainfall) dengan target yield.
+      curah hujan (rainfall )
+      kelembapan udara (humidity )                                                                                                                                3 / 16
+      temperatur
+      kelembapan tanah
+      irigasi
+      pupuk A dan pupuk B
+      cahaya matahari
+      pH tanah
+      indeks hama
+
+Tujuan Membangun model yang dapat memperkirakan hasil
+panen berdasarkan kombinasi seluruh variabel tersebut.
+Mengapa Kasus Ini Menarik untuk Dipelajari?
+
+Kenyataan pada data nyata
+
+Faktor-faktor yang memengaruhi hasil panen biasanya tidak berdiri sendiri. Banyak variabel bergerak bersama
+dan saling berhubungan.
+
+       Saat curah hujan meningkat, kelembapan tanah sering ikut meningkat.
+       Temperatur dapat berhubungan dengan kelembapan udara.
+       Pupuk A dan pupuk B dapat memiliki pola penggunaan yang mirip.
+
+Akibatnya
+
+Model menjadi lebih sulit membedakan mana pengaruh murni dari tiap variabel. Di sinilah persoalan regresi
+mulai muncul.
+
+                                                                                                                                                                                                                                                                 4 / 16
+2. Apa Itu OLS?
+
+Ordinary Least Squares (OLS)
+
+OLS adalah metode regresi linear yang mencari model terbaik dengan cara meminimalkan jumlah kuadrat error
+antara nilai aktual dan nilai prediksi.
+
+                                                   n
+
+                                         min (yi - y^i )2
+
+                                                 i =1
+
+yi : hasil panen aktual
+y^i : hasil panen yang diprediksi model
+
+Dalam use case ini
+
+                              yield = 0 + 1(rainfall) + 2(temperature) + · · · + p(pest index)
+Koefisien  menunjukkan seberapa besar kontribusi masing-masing fitur terhadap hasil panen.
+
+                                                                                                5 / 16
+Bagaimana Membaca OLS pada Use Case Ini?
+
+Interpretasi sederhana                                             Contoh koefisien OLS setelah fitur distandardisasi.
+      OLS mencoba menarik satu hubungan linear terbaik
+      dari data.
+      Jika koefisien suatu fitur positif, kenaikan fitur tersebut
+      cenderung meningkatkan prediksi hasil panen.
+      Jika koefisien negatif, kenaikan fitur tersebut cenderung
+      menurunkan prediksi hasil panen.
+
+Kekuatan OLS
+
+      sederhana;
+      mudah dijelaskan;
+      cocok sebagai model awal atau baseline.
+
+                                                                                                                        6 / 16
+3. Permasalahan OLS: Fitur Saling Berkorelasi
+
+Pada data hasil panen, banyak prediktor saling berhubungan. Kondisi ini disebut multikolinearitas.
+
+                                                                                                                                                                                                                                                                 7 / 16
+Permasalahan OLS: Koefisien Bisa Tidak Stabil
+
+Koefisien OLS dapat berubah cukup besar ketika data sedikit berubah. Hal ini menunjukkan bahwa model
+memang bisa fit pada data latih, tetapi belum tentu stabil untuk interpretasi dan prediksi baru.
+
+Makna visualisasi
+
+Setiap box menunjukkan variasi koefisien dari banyak sampel ulang. Semakin lebar variasinya, semakin tidak
+stabil estimasi koefisien OLS.
+
+                                                                                                                                                                                                                                                                 8 / 16
+Jadi, Mengapa Perlu Shrinkage?
+
+Ide utamanya sederhana                                     Variabilitas koefisien OLS dibandingkan Ridge.
+      OLS hanya fokus mengecilkan error.
+      OLS tidak menahan koefisien agar tetap kecil.
+      Pada data yang kompleks, model bisa menjadi terlalu
+      "percaya diri."
+
+Shrinkage hadir untuk
+      tetap meminimalkan error prediksi;
+      sekaligus menambahkan penalti pada besar koefisien;
+      membuat model lebih stabil dan lebih baik dalam
+      generalisasi.
+
+                                                                                                           9 / 16
+4. Ridge Regression
+
+Gagasan utama Ridge
+
+Ridge menggunakan OLS sebagai dasar, lalu menambahkan penalti terhadap kuadrat koefisien. Dengan
+demikian, semua koefisien didorong untuk mengecil.
+
+                               n                        p   2  p
+
+                     min          yi - 0 - xij j               +  j2
+
+                     0, i =1                          j =1     j =1
+
+jika  = 0, Ridge sama seperti OLS;
+jika  membesar, penalti makin kuat;
+semua koefisien mengecil, tetapi umumnya tidak menjadi nol.
+
+                                                                                                  10 / 16
+Intuisi Ridge pada Kasus Hasil Panen
+
+Mengapa Ridge membantu?
+      saat beberapa fitur sama-sama relevan,
+      tetapi saling berkorelasi,
+      Ridge membagi pengaruh secara lebih hati-hati.
+
+Pesan sederhana
+
+Ridge berkata: "Semua fitur boleh tetap masuk,
+tetapi jangan ada koefisien yang terlalu ekstrem."
+
+                                                                                                      Semua koefisien menyusut bertahap ketika  membesar.
+
+                                                                                                                                                                                                                                                                11 / 16
+5. Lasso Regression
+
+Gagasan utama Lasso
+
+Lasso juga berangkat dari OLS, tetapi penalti yang digunakan adalah jumlah nilai absolut koefisien. Penalti ini
+membuat sebagian koefisien dapat menjadi tepat nol.
+
+                               n                        p   2  p
+
+                     min          yi - 0 - xij j               +  |j |
+
+                     0, i =1                          j =1     j =1
+
+beberapa koefisien menyusut kuat sampai nol;
+model menjadi lebih ringkas;
+Lasso dapat melakukan seleksi fitur otomatis.
+
+                                                                        12 / 16
+Intuisi Lasso pada Kasus Hasil Panen
+
+Mengapa Lasso menarik?
+      tidak semua fitur selalu penting;
+      beberapa fitur mungkin hanya memberi
+      kontribusi kecil;
+      Lasso membantu memilih fitur yang paling
+      dominan.
+
+Pesan sederhana
+
+Lasso berkata: "Jika suatu fitur tidak cukup penting,
+lebih baik koefisiennya dibuat nol."
+
+                                                       Beberapa koefisien menjadi nol ketika  diperbesar.
+
+                                                                                                           13 / 16
+Efek Seleksi Fitur pada Lasso
+
+Interpretasi
+
+Semakin besar penalti, semakin banyak fitur yang dieliminasi dari model. Karena itu, Lasso sangat berguna saat
+kita juga ingin menyederhanakan model, bukan hanya meningkatkan kestabilan.
+
+                                                                                                                                                                                                                                                               14 / 16
+Ringkasan: OLS, Ridge, dan Lasso
+
+                                                                                                                                                                                                                                                               15 / 16
+Kapan Menggunakan Ridge dan Kapan Menggunakan Lasso?
+
+Gunakan Ridge jika...                       Gunakan Lasso jika...
+
+      banyak fitur sama-sama penting;             ingin model yang lebih ringkas;
+      terdapat multikolinearitas;                 ingin seleksi fitur otomatis;
+      fokus utamanya adalah kestabilan dan        diduga hanya sebagian kecil fitur yang dominan.
+      akurasi prediksi.
+
+Kalimat penutup
+
+Pada masalah prediksi hasil panen, Ridge membantu ketika banyak variabel sama-sama relevan, sedangkan Lasso
+membantu ketika kita juga ingin mengetahui fitur mana yang benar-benar penting.
+
+                                                                                                   16 / 16
+

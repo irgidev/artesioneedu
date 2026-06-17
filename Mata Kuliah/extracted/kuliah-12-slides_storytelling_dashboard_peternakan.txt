@@ -1,0 +1,606 @@
+Kuliah 13 - Data Storytelling & Dashboarding dalam Sains Data
+
+                            Studi Kasus Peternakan Sapi Perah
+
+                                          Yeni Herdiyeni
+
+                                      Program Studi Kecerdasan Buatan - SSMI IPB
+
+                                          May 20, 2026
+
+Yeni Herdiyeni - Pengantar Sains Data  1/39
+Skenario Use Case: Peternakan Sapi Perah
+
+Situasi
+
+Sebuah peternakan sapi perah memiliki 120 ekor sapi. Setiap hari, pengelola mencatat produksi susu,
+konsumsi pakan, suhu kandang, kelembapan, aktivitas sapi, dan status kesehatan.
+
+Masalah yang dihadapi                            Pertanyaan bisnis/data
+
+      Produksi susu kadang turun tanpa sebab           Kapan produksi susu menurun?
+      yang langsung terlihat.
+                                                       Faktor apa yang berkaitan dengan penurunan
+      Beberapa sapi sakit terlambat terdeteksi.        tersebut?
+
+      Pengelola membutuhkan prioritas                  Sapi mana yang sehat, berisiko, atau sakit?
+      pemeriksaan.
+                                                       Bagaimana hasilnya disajikan dalam
+                                                       dashboard?
+
+Yeni Herdiyeni - Pengantar Sains Data            2/39
+Cerita yang Ingin Dibangun
+
+Masalah                                Data       EDA      Model
+
+Rekomendasi                            Dashboard  Insight  Evaluasi
+
+Inti cerita
+
+Data digunakan untuk memahami penurunan produksi susu, menemukan faktor risiko, membangun
+model pendukung keputusan, mengevaluasi keandalannya, lalu menyajikannya dalam dashboard yang
+mudah dipahami.
+
+Yeni Herdiyeni - Pengantar Sains Data                      3/39
+Capaian Pembelajaran
+
+Setelah mengikuti kuliah ini, mahasiswa mampu:
+   1 menjelaskan konsep data storytelling dalam sains data;
+   2 menghubungkan EDA dengan penyusunan narasi data;
+   3 menjelaskan hasil model klasifikasi dan clustering secara kontekstual;
+   4 menginterpretasikan evaluasi model untuk mendukung keputusan;
+   5 menyusun dashboard sederhana berbasis cerita;
+   6 mempresentasikan insight dan rekomendasi secara runtut.
+
+Yeni Herdiyeni - Pengantar Sains Data                                        4/39
+Apa itu Data Storytelling?
+
+Definisi sederhana
+
+Data storytelling adalah proses mengubah hasil analisis data menjadi cerita yang runtut, berbasis bukti,
+dan relevan dengan keputusan.
+
+Data                                   Visualisasi                      Narasi
+
+Fakta, angka, tabel, hasil EDA,        Grafik yang membantu audiens     Penjelasan yang menghubungkan
+hasil model, dan metrik evaluasi.      melihat pola, perbandingan, dan  data dengan konteks dan
+                                       anomali.                         rekomendasi.
+
+Pesan utama: bukan hanya "grafiknya apa", tetapi "maknanya apa".
+
+Yeni Herdiyeni - Pengantar Sains Data                                   5/39
+Visualization, Dashboard, dan Storytelling
+
+Konsep              Fokus                           Pertanyaan Kunci
+
+Data Visualization  Menampilkan pola dalam data     Apa yang terlihat dari data?
+Dashboard           Memantau indikator penting      Bagaimana kondisi saat ini?
+Data Storytelling   Menjelaskan makna dan tindakan  Apa pesan utama dan keputusan
+                                                    apa yang perlu diambil?
+
+Catatan penting
+
+Dashboard yang baik bukan sekadar kumpulan grafik. Dashboard harus membantu audiens mengikuti
+alur cerita dan memahami prioritas tindakan.
+
+Yeni Herdiyeni - Pengantar Sains Data               6/39
+Dataset Sintetis Peternakan
+
+Unit observasi                         Variabel utama
+      120 ekor sapi perah                    produksi susu harian
+      diamati selama 90 hari                 konsumsi pakan
+      total 10.800 observasi harian          suhu dan kelembapan kandang
+                                             THI atau indeks tekanan panas
+                                             aktivitas ternak
+                                             status kesehatan
+
+Target storytelling
+
+Menjelaskan hubungan antara kondisi lingkungan, perilaku ternak, produktivitas susu, dan risiko
+kesehatan sapi.
+
+Yeni Herdiyeni - Pengantar Sains Data                                       7/39
+Membaca Data di Python
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(
+       " dataset_peternakan_sapi_perah_sintetis . csv " ,
+       parse_dates =[ " date "]
+
+)
+
+df . head ()
+df . info ()
+
+Tujuan awal
+
+Memastikan struktur data, tipe data, jumlah observasi, dan variabel yang tersedia sebelum membuat
+visualisasi dan model.
+
+Yeni Herdiyeni - Pengantar Sains Data                      8/39
+EDA sebagai Awal Cerita
+
+Peran EDA
+
+EDA membantu menemukan bahan cerita: pola, tren, hubungan antarvariabel, anomali, dan dugaan
+awal penyebab masalah.
+
+Pertanyaan EDA dalam studi kasus ini:
+   1 Bagaimana tren produksi susu harian?
+   2 Apakah sapi dengan pakan lebih tinggi menghasilkan susu lebih banyak?
+   3 Apakah THI tinggi berkaitan dengan penurunan produksi susu?
+   4 Apakah status kesehatan ternak tersebar merata atau tidak?
+
+Yeni Herdiyeni - Pengantar Sains Data  9/39
+EDA 1: Tren Produksi Susu Harian       Cara membaca grafik
+
+Yeni Herdiyeni - Pengantar Sains Data        Garis menunjukkan rata-rata
+                                             produksi susu harian.
+
+                                             Penurunan tajam menjadi
+                                             titik awal investigasi.
+
+                                             Pola fluktuatif
+                                             mengindikasikan produksi
+                                             tidak stabil sepanjang waktu.
+
+                                       Narasi awal:
+
+                                               "Produksi susu mengalami
+                                               fluktuasi. Kita perlu mencari
+                                               faktor yang berkaitan dengan
+                                               periode penurunan."
+
+                                                                         10/39
+Pertanyaan Diskusi: Tren Produksi
+
+   1 Pada periode mana produksi susu terlihat menurun?
+   2 Apakah penurunan terjadi tiba-tiba atau bertahap?
+   3 Variabel apa yang perlu dibandingkan dengan tren produksi susu?
+   4 Jika Anda pengelola peternakan, keputusan apa yang mungkin diambil dari grafik ini?
+
+Yeni Herdiyeni - Pengantar Sains Data  11/39
+EDA 2: Distribusi Status Kesehatan Ternak
+
+Yeni Herdiyeni - Pengantar Sains Data      Insight
+                                                 Sebagian besar observasi berada
+                                                 pada status sehat.
+                                                 Namun, kategori berisiko dan
+                                                 sakit tetap muncul dalam jumlah
+                                                 signifikan.
+                                                 Kategori berisiko penting untuk
+                                                 deteksi dini.
+
+                                           Pesan storytelling
+
+                                           Fokus analisis bukan hanya sapi yang
+                                           sudah sakit, tetapi sapi yang mulai
+                                           menunjukkan tanda risiko.
+
+                                                                                    12/39
+EDA 3: Konsumsi Pakan vs Produksi Susu
+
+                                        Interpretasi
+
+                                              Ada kecenderungan positif
+                                              antara pakan dan produksi susu.
+
+                                              Namun, hubungan tidak
+                                              sempurna.
+
+                                              Beberapa sapi dengan pakan
+                                              cukup tinggi tetap
+                                              menghasilkan susu rendah.
+
+                                        Makna: produksi susu dipengaruhi
+                                        oleh kombinasi faktor, bukan hanya
+                                        pakan.
+
+Yeni Herdiyeni - Pengantar Sains Data   13/39
+Pertanyaan Diskusi: Pakan dan Produksi Susu
+
+   1 Apakah hubungan antara konsumsi pakan dan produksi susu terlihat positif?
+   2 Mengapa ada sapi dengan konsumsi pakan tinggi tetapi produksi susu rendah?
+   3 Apakah status kesehatan memengaruhi pola hubungan tersebut?
+   4 Bagaimana grafik ini mendukung narasi bahwa produktivitas dipengaruhi banyak faktor?
+
+Yeni Herdiyeni - Pengantar Sains Data  14/39
+EDA 4: THI dan Produksi Susu           THI
+                                             THI menggabungkan suhu dan
+Yeni Herdiyeni - Pengantar Sains Data        kelembapan.
+                                             Nilai tinggi menunjukkan
+                                             tekanan panas.
+
+                                       Insight
+                                             Ketika THI meningkat, produksi
+                                             susu cenderung menurun.
+                                             Ini mengindikasikan
+                                             kemungkinan heat stress.
+
+                                                                            15/39
+EDA 5: Heatmap Korelasi                Pola utama
+                                             Produksi susu berkorelasi positif
+Yeni Herdiyeni - Pengantar Sains Data        dengan pakan dan aktivitas.
+                                             Produksi susu berkorelasi negatif
+                                             dengan suhu dan THI.
+                                             THI sangat berkaitan dengan
+                                             suhu dan kelembapan.
+
+                                       Narasi EDA
+
+                                       Produktivitas sapi perah dipengaruhi
+                                       oleh faktor nutrisi, aktivitas, dan
+                                       tekanan lingkungan.
+
+                                                                               16/39
+Dari EDA ke Model
+
+Mengapa perlu model?
+
+EDA membantu menemukan pola, tetapi model membantu membuat prediksi atau segmentasi yang
+lebih sistematis.
+
+Klasifikasi                                       Clustering
+      Ada label target.                                 Tidak menggunakan label target.
+      Tujuan: memprediksi status kesehatan sapi.        Tujuan: menemukan kelompok profil ternak.
+      Output: Sehat, Berisiko, Sakit.                   Output: cluster sapi dengan karakteristik
+                                                        serupa.
+
+Yeni Herdiyeni - Pengantar Sains Data             17/39
+Klasifikasi: Membentuk Data Ringkasan
+
+agg = df.groupby("cow_id").agg(
+        avg_thi_index=("thi_index", "mean"),
+        avg_feed_kg=("feed_kg", "mean"),
+        avg_activity_index =("activity_index", "mean"),
+        avg_milk_liter=("milk_liter", "mean"),
+        min_milk_liter=("milk_liter", "min"),
+        max_thi_index=("thi_index", "max"),
+        sick_days=("health_status", lambda x: int((x == "Sakit").sum())),
+        risk_days=("health_status", lambda x: int((x == "Berisiko").sum()))
+
+). reset_index ()
+
+Mengapa diringkas?
+
+Prediksi status akhir sapi lebih mudah dilakukan pada level individu sapi, bukan pada level observasi
+harian.
+
+Yeni Herdiyeni - Pengantar Sains Data  18/39
+Klasifikasi: Melatih Model Random Forest                     19/39
+
+ from sklearn.model_selection import train_test_split
+ from sklearn.ensemble import RandomForestClassifier
+
+ X = agg[features]
+ y = agg["final_health_status"]
+
+ X_train , X_test , y_train , y_test = train_test_split(
+         X, y, test_size =0.25, random_state=42, stratify=y
+
+ )
+
+ clf = RandomForestClassifier(
+         n_estimators =250 ,
+         random_state =42 ,
+         class_weight="balanced",
+         max_depth =6
+
+ )
+
+ clf.fit(X_train , y_train)
+ y_pred = clf.predict(X_test)
+
+Yeni Herdiyeni - Pengantar Sains Data
+Evaluasi Model Klasifikasi
+
+Hasil ringkas
+
+Model memperoleh akurasi sekitar 0.80 dan macro F1-score sekitar 0.758. Namun, angka ini harus
+dibaca secara kontekstual.
+
+Metrik     Makna dalam kasus peternakan
+Accuracy
+Precision  Seberapa sering model benar secara umum.
+Recall     Dari sapi yang diprediksi sakit/berisiko, berapa yang benar.
+           Dari semua sapi yang benar-benar sakit/berisiko, berapa yang
+F1-score   berhasil ditemukan.
+           Keseimbangan antara precision dan recall.
+
+Poin storytelling
+
+Dalam deteksi dini, recall untuk kelas berisiko sangat penting karena salah melewatkan sapi berisiko
+dapat menyebabkan keterlambatan penanganan.
+
+Yeni Herdiyeni - Pengantar Sains Data  20/39
+Confusion Matrix: Jenis Kesalahan Model
+
+                                                                           Cara membaca
+                                                                                  Baris menunjukkan kelas aktual.
+                                                                                  Kolom menunjukkan kelas prediksi.
+                                                                                  Diagonal adalah prediksi benar.
+                                                                                  Sel di luar diagonal adalah kesalahan
+                                                                                  model.
+
+                                                               Kesalahan kritis
+
+                                                                           Sapi sakit atau berisiko yang diprediksi sehat
+                                                                           adalah kesalahan yang berbahaya dalam
+                                                                           praktik peternakan.
+
+Yeni Herdiyeni - Pengantar Sains Data  21/39
+Feature Importance: Faktor yang Berpengaruh
+
+                                                                                     Interpretasi
+                                                                                           Aktivitas ternak menjadi sinyal
+                                                                                           penting.
+                                                                                           Produksi susu minimum
+                                                                                           menunjukkan penurunan
+                                                                                           ekstrem.
+                                                                                           THI memperkuat indikasi
+                                                                                           tekanan panas.
+                                                                                           Riwayat penyakit juga relevan.
+
+                                                                                     Narasi: model mengonfirmasi bahwa
+                                                                                     produktivitas, perilaku, dan
+                                                                                     lingkungan saling berkaitan.
+
+Yeni Herdiyeni - Pengantar Sains Data  22/39
+Pertanyaan Diskusi: Evaluasi Model
+
+   1 Apakah model lebih baik dalam mengenali sapi sehat, berisiko, atau sakit?
+   2 Mengapa akurasi saja tidak cukup?
+   3 Kesalahan model seperti apa yang paling merugikan peternak?
+   4 Bagaimana cara memperbaiki model agar lebih baik mengenali sapi berisiko?
+
+Yeni Herdiyeni - Pengantar Sains Data                                           23/39
+Clustering: Mengelompokkan Profil Sapi
+
+Tujuan
+
+Clustering digunakan untuk menemukan kelompok sapi dengan karakteristik serupa tanpa menggunakan
+label status kesehatan.
+
+Fitur yang digunakan:
+      rata-rata konsumsi pakan;
+      rata-rata aktivitas;
+      rata-rata produksi susu;
+      rata-rata THI;
+      riwayat penyakit;
+      bobot tubuh.
+
+Makna storytelling
+
+Clustering membantu menyusun strategi pengelolaan berbeda untuk kelompok sapi yang berbeda.
+
+Yeni Herdiyeni - Pengantar Sains Data   24/39
+Clustering: Standardisasi dan K-Means
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+cluster_features = [
+       "avg_feed_kg", "avg_activity_index", "avg_milk_liter",
+       "avg_thi_index", "previous_disease_count", "body_weight_kg"
+
+]
+
+scaler = StandardScaler()
+Z = scaler.fit_transform(agg[cluster_features])
+
+kmeans = KMeans(n_clusters=3, random_state =42, n_init =20)
+agg["cluster"] = kmeans.fit_predict(Z)
+
+Mengapa standardisasi?
+
+Setiap fitur memiliki skala berbeda. Standardisasi mencegah fitur berskala besar mendominasi proses
+clustering.
+
+Yeni Herdiyeni - Pengantar Sains Data                               25/39
+Elbow Method: Memilih Jumlah Cluster
+
+                                       Cara membaca
+
+                                             Inertia turun ketika jumlah cluster
+                                             bertambah.
+
+                                             Titik siku menunjukkan jumlah
+                                             cluster yang cukup masuk akal.
+
+                                             Tidak selalu ada satu jawaban
+                                             mutlak.
+
+                                       Pesan: pemilihan cluster perlu
+                                       menggabungkan metrik dan
+                                       interpretasi domain.
+
+Yeni Herdiyeni - Pengantar Sains Data  26/39
+Silhouette Score: Keterpisahan Cluster  Makna
+                                              Nilai lebih tinggi menunjukkan
+Yeni Herdiyeni - Pengantar Sains Data         cluster lebih jelas.
+                                              Nilai rendah mengindikasikan
+                                              cluster saling tumpang tindih.
+                                              Tetap perlu interpretasi variabel
+                                              pembentuk cluster.
+
+                                        Catatan
+
+                                        Cluster yang baik secara matematis
+                                        belum tentu bermakna secara praktis.
+
+                                                                                27/39
+Visualisasi Cluster dengan PCA         Interpretasi
+                                             PCA membantu menampilkan
+Yeni Herdiyeni - Pengantar Sains Data        data berdimensi banyak
+                                             menjadi 2 dimensi.
+                                             Warna menunjukkan hasil
+                                             cluster.
+                                             Pemisahan visual membantu
+                                             komunikasi hasil.
+
+                                       Narasi: sapi tidak homogen; ada
+                                       beberapa profil pengelolaan yang
+                                       berbeda.
+
+                                                                            28/39
+Pertanyaan Diskusi: Clustering
+
+   1 Apakah cluster terlihat cukup terpisah?
+   2 Apa makna praktis dari setiap cluster?
+   3 Apakah cluster otomatis sama dengan kelas sehat, berisiko, dan sakit?
+   4 Mengapa interpretasi domain tetap diperlukan setelah clustering?
+
+Yeni Herdiyeni - Pengantar Sains Data                                       29/39
+Merumuskan Insight
+
+Insight bukan deskripsi grafik
+
+Insight adalah kesimpulan berbasis data yang membantu pengambilan keputusan.
+
+Insight utama dari studi kasus:
+   1 Produksi susu mengalami fluktuasi dan penurunan pada periode tertentu.
+   2 Pakan berkaitan positif dengan produksi susu.
+   3 THI berkaitan negatif dengan produksi susu.
+   4 Aktivitas, produksi susu minimum, dan THI penting untuk klasifikasi kesehatan.
+   5 Kelas berisiko perlu diperhatikan sebagai sinyal deteksi dini.
+   6 Clustering membantu menyusun profil pengelolaan ternak.
+
+Yeni Herdiyeni - Pengantar Sains Data                                                30/39
+Dari Insight ke Rekomendasi
+
+Insight                                           Rekomendasi
+                                                        Pantau zona kandang dengan THI tinggi.
+      THI tinggi berkaitan dengan penurunan             Prioritaskan pemeriksaan sapi berisiko/sakit.
+      produksi.                                         Evaluasi pakan untuk sapi produksi rendah.
+                                                        Terapkan strategi pengelolaan berbeda per
+      Aktivitas rendah menjadi sinyal risiko.           cluster.
+
+      Beberapa sapi berulang kali masuk kategori
+      berisiko.
+
+      Cluster menunjukkan profil ternak berbeda.
+
+Yeni Herdiyeni - Pengantar Sains Data             31/39
+Dashboard sebagai Media Storytelling
+
+Prinsip
+
+Dashboard harus membantu audiens memahami kondisi, menemukan masalah, mengevaluasi model,
+dan menentukan tindakan.
+
+Overview  Explore  Explain  Evaluate                                                 Act
+
+       Overview: jumlah sapi, rata-rata susu, jumlah sapi berisiko, performa model.  32/39
+       Explore: pola EDA.
+       Explain: hasil model dan faktor penting.
+       Evaluate: confusion matrix dan metrik.
+       Act: rekomendasi tindakan.
+
+Yeni Herdiyeni - Pengantar Sains Data
+Komponen Dashboard Peternakan
+
+ Indikator utama                       Visualisasi model
+        jumlah sapi;                         confusion matrix;
+        rata-rata produksi susu;             feature importance;
+        jumlah sapi berisiko/sakit;          elbow method;
+        macro F1-score model.                visualisasi cluster PCA.
+
+ Visualisasi EDA                       Aksi
+        tren produksi susu;                  daftar sapi prioritas;
+        distribusi status kesehatan;         rekomendasi pemeriksaan;
+        pakan vs susu;                       rekomendasi pengelolaan kandang.
+        THI vs susu.
+                                                                                                 33/39
+Yeni Herdiyeni - Pengantar Sains Data
+Struktur Dashboard HTML Sederhana                             34/39
+
+ <h1>Dashboard Data Storytelling: Peternakan Sapi Perah</h1>
+
+ <div class="card -container">
+     <div class="card">Jumlah Sapi</div>
+     <div class="card">Rata -rata Produksi Susu</div>
+     <div class="card">Sapi Berisiko/Sakit</div>
+     <div class="card">Macro F1 Model</div>
+
+ </ div >
+
+ <div class="grid">
+     <img src="figures/01 _tren_produksi_susu_harian.png">
+     <img src="figures/02 _distribusi_status_kesehatan.png">
+     <img src="figures/03 _scatter_pakan_vs_susu.png">
+     <img src="figures/04_thi_vs_susu.png">
+
+ </ div >
+
+Yeni Herdiyeni - Pengantar Sains Data
+Pertanyaan Evaluasi Dashboard
+
+   1 Apakah dashboard sudah memiliki alur cerita yang jelas?
+   2 Grafik mana yang sebaiknya muncul paling awal?
+   3 Apakah dashboard terlalu teknis untuk peternak?
+   4 Informasi apa yang perlu ditambahkan agar dashboard lebih operasional?
+   5 Bagaimana rekomendasi ditampilkan agar mudah dipahami pengguna non-teknis?
+
+Yeni Herdiyeni - Pengantar Sains Data                                            35/39
+Alur Presentasi Data Storytelling Mahasiswa                           36/39
+
+    1 Masalah: produktivitas susu dan kesehatan sapi perlu dipantau.
+    2 Data: jelaskan variabel dan sumber data.
+    3 EDA: tunjukkan pola utama dari visualisasi.
+    4 Model klasifikasi: jelaskan prediksi status kesehatan.
+    5 Evaluasi: jelaskan metrik dan jenis kesalahan model.
+    6 Clustering: jelaskan profil kelompok sapi.
+    7 Dashboard: tunjukkan bagaimana semua insight disatukan.
+    8 Rekomendasi: tutup dengan tindakan yang dapat dilakukan.
+
+Yeni Herdiyeni - Pengantar Sains Data
+Contoh Narasi Presentasi
+
+       Peternakan sapi perah perlu menjaga produktivitas susu dan mendeteksi risiko kesehatan lebih
+       awal. Berdasarkan data 120 sapi selama 90 hari, produksi susu terlihat berfluktuasi dan menu-
+       run pada beberapa periode.
+
+       EDA menunjukkan bahwa konsumsi pakan berkaitan positif dengan produksi susu, sedangkan
+       THI berkaitan negatif dengan produksi susu. Model klasifikasi membantu mengidentifikasi sapi
+       sehat, berisiko, dan sakit. Evaluasi model menunjukkan bahwa kelas berisiko perlu diperhatikan
+       karena penting untuk deteksi dini.
+
+       Dashboard kemudian digunakan untuk menyatukan indikator utama, hasil EDA, evaluasi
+       model, dan rekomendasi tindakan sehingga pengelola dapat menentukan sapi dan kandang
+       yang perlu diprioritaskan.
+
+Yeni Herdiyeni - Pengantar Sains Data  37/39
+Diskusi
+
+Jawablah pertanyaan berikut berdasarkan dataset, kode, dan visualisasi.
+   1 Jelaskan cerita utama yang dapat dibangun dari data peternakan sapi perah.
+   2 Pilih tiga visualisasi paling penting dan jelaskan alasannya.
+   3 Mengapa THI menjadi variabel penting dalam analisis ini?
+   4 Interpretasikan confusion matrix model klasifikasi.
+   5 Mengapa recall untuk kelas berisiko penting dalam deteksi dini?
+   6 Jelaskan makna praktis dari hasil clustering.
+   7 Susun tiga rekomendasi untuk pengelola peternakan.
+
+Yeni Herdiyeni - Pengantar Sains Data                                            38/39
+Penutup
+
+Pesan utama
+
+Data storytelling membantu mengubah hasil teknis menjadi cerita yang bermakna dan dapat digunakan
+untuk pengambilan keputusan.
+
+Dalam studi kasus peternakan sapi perah:
+      EDA menemukan pola awal dan dugaan faktor penyebab;
+      klasifikasi membantu memprediksi status kesehatan ternak;
+      clustering membantu memahami profil kelompok sapi;
+      evaluasi model membantu menilai keandalan hasil;
+      dashboard menyatukan insight dan rekomendasi.
+
+                                      Tujuan akhir: bukan hanya membuat grafik,       39/39
+                            tetapi membantu orang mengambil keputusan berbasis data.
+
+Yeni Herdiyeni - Pengantar Sains Data
+

@@ -1,0 +1,519 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\title{Kuliah 08 - Metode Regresi Nonlinear}
+\author{Yeni Herdiyeni}
+\date{}
+\maketitle
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Kuliah 08 - Metode Regresi Nonlinear}
+
+\textbf{Topik:} Regresi Polynomial, Fungsi Tangga (Step Function), dan Basis Function  
+
+\textbf{Pengampu:} Yeni Herdiyeni, Program Studi Kecerdasan Buatan, IPB University  
+
+\textbf{Tanggal:} 16 April 2026
+
+
+\hrule
+
+
+\subsection{1. Pendahuluan: Filosofi Regresi Nonlinear}
+
+Dalam regresi linear sederhana, hubungan antara variabel independen $x$ dan variabel dependen $y$ diasumsikan berbentuk garis lurus:
+
+
+\\[
+\hat{y} = \beta_0 + \beta_1 x
+\\]
+
+
+Namun, banyak fenomena nyata - mulai dari pertanian, kesehatan, hingga industri - memiliki hubungan yang \textbf{tidak linear}. Misalnya, penambahan pupuk mungkin meningkatkan hasil panen pada awalnya, tetapi setelah titik optimal tertentu, penambahan lebih lanjut justru dapat menurunkan produksi karena keracunan nutrisi atau salinitas tanah.
+
+
+\textbf{Inti dari regresi nonlinear} yang dibahas dalam kuliah ini bukanlah membuat model yang sulit diestimasi secara matematis. Sebaliknya, pendekatannya adalah:
+
+
+\begin{quote}
+\textbf{Membuat model tetap linear pada parameter, tetapi lebih fleksibel terhadap bentuk hubungan $x \rightarrow y$.}\end{quote}
+
+
+Dengan kata lain, kita mengubah $x$ menjadi sekumpulan fitur baru $h_1(x), h_2(x), \dots, h_M(x)$, lalu melakukan regresi linear pada fitur-fitur hasil transformasi tersebut.
+
+
+\subsubsection{Bentuk Umum Basis Function Regression}
+
+\\[
+\hat{y}(x) = \beta_0 + \sum_{m=1}^{M} \beta_m h_m(x)
+\\]
+
+
+Di mana:
+
+
+Model ini tetap linear terhadap parameter $\beta$, sehingga estimasi dengan \textbf{Ordinary Least Squares (OLS)} masih dapat digunakan. Yang berubah adalah bahasa representasi dari $x$.
+
+
+\subsubsection{Tiga Keluarga Penting}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+No & Metode & Fungsi Basis & Karakteristik \\
+\hline
+1 & \textbf{Polynomial Regression} & $h_m(x) = x^m$ & Global, halus, mudah diinterpretasi \\
+\hline
+2 & \textbf{Step Function Regression} & $h_m(x) = \mathbb{I}(x \in A_m)$ & Lokal per interval, diskrit, mudah dibaca \\
+\hline
+3 & \textbf{Basis Function Regression} & Spline, RBF, Fourier, dll. & Lokal/fleksibel, kuat untuk pola kompleks \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Filosofi utama:} Hubungan data dapat dibuat fleksibel dengan memilih bahasa representasi yang tepat untuk $x$: global, lokal, halus, atau bertingkat.\end{quote}
+
+
+\hrule
+
+
+\subsection{2. Regresi Polynomial}
+
+\subsubsection{2.1 Konsep dan Model Matematis}
+
+Regresi polynomial memperluas regresi linear dengan menambahkan pangkat-pangkat dari $x$:
+
+
+\\[
+\hat{y}(x) = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \dots + \beta_d x^d
+\\]
+
+
+Di mana $d$ adalah derajat (degree) polynomial. Setiap pangkat $x^m$ memberikan kemampuan tambahan bagi kurva untuk "membengkok".
+
+
+\textbf{Filosofi polynomial:} satu kurva global mencoba menjelaskan seluruh domain input.
+
+
+\subsubsection{2.2 Transformasi Fitur}
+
+Setiap data $x$ diubah menjadi vektor fitur baru:
+
+
+\\[
+x \rightarrow (x, x^2, x^3, x^4, x^5)
+\\]
+
+
+Dalam bentuk matriks desain:
+
+
+\\[
+X_{\text{poly}} =
+
+\begin{bmatrix}
+
+x_1 & x_1^2 & x_1^3 & x_1^4 & x_1^5 \\
+
+x_2 & x_2^2 & x_2^3 & x_2^4 & x_2^5 \\
+
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+
+x_n & x_n^2 & x_n^3 & x_n^4 & x_n^5
+
+\end{bmatrix}
+\\]
+
+
+Kita menciptakan ruang fitur baru yang lebih kaya, tetapi estimasi parameter tetap menggunakan least squares.
+
+
+\subsubsection{2.3 Estimasi Parameter}
+
+\\[
+\min_{\beta} \sum_{i=1}^{n} (y_i - \hat{y}(x_i))^2
+\\]
+
+
+Model tetap linear terhadap parameter, sehingga solusi closed-form OLS masih berlaku:
+
+
+\\[
+\hat{\beta} = (X_{\text{poly}}^T X_{\text{poly}})^{-1} X_{\text{poly}}^T y
+\\]
+
+
+\subsubsection{2.4 Use Case: Pertanian - Prediksi Hasil Panen}
+
+Regresi polynomial cocok untuk memprediksi hasil panen berdasarkan dosis pupuk, intensitas penyiraman, atau umur tanaman. Hubungannya sering tidak linear:
+
+
+
+Interpretasi:
+
+
+\subsubsection{2.5 Implementasi Python}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+# x perlu diubah menjadi matriks kolom
+x = x.reshape(-1, 1)
+
+model = make_pipeline(
+    PolynomialFeatures(degree=5, include_bias=False),
+    LinearRegression()
+)
+
+model.fit(x, y)
+y_pred = model.predict(xx.reshape(-1, 1))
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Parameter kunci:} \texttt{degree} mengontrol fleksibilitas. Degree kecil menghasilkan bias tinggi (underfitting), sedangkan degree besar menghasilkan varians tinggi dan rawan overfitting.\end{quote}
+
+
+\subsubsection{2.6 Kelebihan dan Kelemahan}
+
+\textbf{Kelebihan:}
+
+
+\textbf{Kelemahan:}
+
+
+\hrule
+
+
+\subsection{3. Regresi Fungsi Tangga (Step Function)}
+
+\subsubsection{3.1 Konsep dan Model Matematis}
+
+Step function membagi domain $x$ menjadi beberapa interval diskrit, dan setiap interval memiliki level prediksi yang relatif konstan:
+
+
+\\[
+\hat{y}(x) = \beta_0 + \sum_{m=1}^{M} \beta_m \mathbb{I}(c_{m-1} \leq x < c_m)
+\\]
+
+
+Di mana:
+
+
+\textbf{Filosofi step function:} data dibagi menjadi beberapa interval, dan setiap interval memiliki level rata-rata sendiri.
+
+
+\subsubsection{3.2 Use Case: Medis - Risiko Komplikasi Pasien}
+
+Dalam praktik klinis, dokter sering menggunakan kategori ambang, misalnya kadar gula darah:
+
+
+\begin{tabular}{|l|l|l|}
+\hline
+Kategori & Rentang & Interpretasi \\
+\hline
+Normal & $x < 100$ & Risiko rendah \\
+\hline
+Borderline & $100 \leq x < 126$ & Risiko sedang \\
+\hline
+Tinggi & $x \geq 126$ & Risiko tinggi \\
+\hline
+\end{tabular}
+
+
+Model:
+
+
+\\[
+\hat{y} = \beta_0 + \beta_1 \mathbb{I}(x \in A_1) + \beta_2 \mathbb{I}(x \in A_2) + \beta_3 \mathbb{I}(x \in A_3)
+\\]
+
+
+Makna:
+
+
+\subsubsection{3.3 Transformasi Fitur: Binning dan One-Hot Encoding}
+
+Misalkan $x \in [0, 1]$ dibagi menjadi 8 interval:
+
+
+\\[
+A_1 = [0, 0.125), \quad A_2 = [0.125, 0.25), \quad \dots, \quad A_8 = [0.875, 1]
+\\]
+
+
+Setiap nilai $x$ diubah menjadi vektor indikator:
+
+
+\\[
+x \rightarrow (\mathbb{I}(x \in A_1), \mathbb{I}(x \in A_2), \dots, \mathbb{I}(x \in A_8))
+\\]
+
+
+Contoh: jika $x \in A_3$, maka representasinya adalah $(0, 0, 1, 0, 0, 0, 0, 0)$.
+
+
+\subsubsection{3.4 Implementasi Python}
+
+\begin{lstlisting}[language=Python]
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import KBinsDiscretizer
+from sklearn.linear_model import LinearRegression
+
+x = x.reshape(-1, 1)
+
+model = make_pipeline(
+    KBinsDiscretizer(n_bins=8, encode="onehot-dense", strategy="uniform"),
+    LinearRegression()
+)
+
+model.fit(x, y)
+y_pred = model.predict(xx.reshape(-1, 1))
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Parameter kunci:} \texttt{n_bins} menentukan resolusi model. Bin sedikit menghasilkan model terlalu kasar (high bias), sedangkan bin terlalu banyak membuat model sensitif terhadap noise (high variance).\end{quote}
+
+
+\subsubsection{3.5 Kelebihan dan Kelemahan}
+
+\textbf{Kelebihan:}
+
+
+\textbf{Kelemahan:}
+
+
+\hrule
+
+
+\subsection{4. Regresi Basis Function}
+
+\subsubsection{4.1 Konsep Umum}
+
+Regresi basis function adalah kerangka umum yang mencakup polynomial dan step function sebagai kasus khusus. Bentuk umumnya:
+
+
+\\[
+\hat{y}(x) = \beta_0 + \sum_{m=1}^{M} \beta_m h_m(x)
+\\]
+
+
+Kita dapat memilih basis $h_m(x)$ sesuai dengan geometri dan karakteristik masalah:
+
+
+\begin{tabular}{|l|l|l|}
+\hline
+Jenis Basis & Karakteristik & Cocok untuk \\
+\hline
+\textbf{Polynomial} & Global, halus & Pola mulus di seluruh domain \\
+\hline
+\textbf{Step/Indikator} & Lokal per interval & Sistem berbasis ambang \\
+\hline
+\textbf{Spline} & Halus dan lokal & Pola kompleks dengan kehalusan \\
+\hline
+\textbf{Gaussian RBF} & Lokal di sekitar pusat & Pola non-seragam, multi-modal \\
+\hline
+\textbf{Fourier} & Periodik & Data dengan pola musiman/siklis \\
+\hline
+\end{tabular}
+
+
+\textbf{Filosofi basis function:} kita merancang basis sesuai geometri masalah. Basis lokal memberikan fleksibilitas tinggi tanpa harus menggoyang seluruh kurva.
+
+
+\subsubsection{4.2 Use Case: Industri - Prediksi Kualitas Produk}
+
+Dalam sistem industri, pola sering kompleks dan lokal:
+
+
+Basis function cocok ketika pola data tidak cukup dijelaskan oleh satu kurva global sederhana.
+
+
+\subsubsection{4.3 Radial Basis Function (RBF) Gaussian}
+
+Salah satu basis lokal yang populer adalah Gaussian RBF:
+
+
+\\[
+h_j(x) = \exp\left(-\gamma (x - c_j)^2\right)
+\\]
+
+
+Di mana:
+
+
+Setiap basis berbentuk lonceng (bell curve):
+
+
+\subsubsection{4.4 Implementasi Python: RBF Custom Transformer}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LinearRegression
+
+class RBFFeatures:
+    def __init__(self, centers, gamma=90):
+        self.centers = np.asarray(centers)
+        self.gamma = gamma
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X = np.asarray(X).reshape(-1, 1)
+        return np.exp(-self.gamma * (X - self.centers) ** 2)
+
+
+# Membuat 12 pusat basis di selang [0, 1]
+centers = np.linspace(0, 1, 12).reshape(1, -1)
+
+model = make_pipeline(
+    RBFFeatures(centers=centers, gamma=90),
+    LinearRegression()
+)
+
+model.fit(x, y)
+y_pred = model.predict(xx.reshape(-1, 1))
+\end{lstlisting}
+
+\subsubsection{4.5 Representasi Matriks Fitur RBF}
+
+\\[
+\Phi =
+
+\begin{bmatrix}
+
+h_1(x_1) & h_2(x_1) & \dots & h_M(x_1) \\
+
+h_1(x_2) & h_2(x_2) & \dots & h_M(x_2) \\
+
+\vdots & \vdots & \ddots & \vdots \\
+
+h_1(x_n) & h_2(x_n) & \dots & h_M(x_n)
+
+\end{bmatrix}
+\\]
+
+
+Setiap kolom adalah satu Gaussian basis, dan setiap baris adalah representasi satu data dalam ruang basis.
+
+
+\subsubsection{4.6 Model Matematis RBF Regression}
+
+\\[
+\hat{y}(x) = \beta_0 + \sum_{j=1}^{M} \beta_j \exp\left(-\gamma (x - c_j)^2\right)
+\\]
+
+
+Estimasi parameter tetap menggunakan least squares:
+
+
+\\[
+\min_{\beta} \sum_{i=1}^{n} (y_i - \hat{y}(x_i))^2
+\\]
+
+
+Model ini \textbf{linear terhadap parameter} tetapi \textbf{nonlinear terhadap variabel $x$}.
+
+
+\hrule
+
+
+\subsection{5. Perspektif Umum: Nonlinear sebagai Linear di Ruang Fitur Baru}
+
+Semua metode yang dibahas memiliki satu kesamaan mendasar:
+
+
+\begin{quote}
+\textbf{Nonlinear regression ini sebenarnya adalah linear regression di ruang fitur baru.}\end{quote}
+
+
+Perbedaannya terletak pada bagaimana kita merepresentasikan $x$:
+
+
+\begin{tabular}{|l|l|l|}
+\hline
+Metode & Cara Berpikir & Representasi \\
+\hline
+\textbf{Polynomial} & Berpikir global & Satu cerita besar untuk semua data \\
+\hline
+\textbf{Step Function} & Berpikir diskrit & Memecah dunia menjadi kategori \\
+\hline
+\textbf{RBF/Basis Function} & Berpikir lokal & Banyak sudut pandang lokal yang saling overlap \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Pesan Penting}
+
+Bukan modelnya yang berbeda, tetapi \textbf{cara kita merepresentasikan dan memahami data}.
+
+
+\hrule
+
+
+\subsection{6. Kapan Menggunakan Metode yang Mana?}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Polynomial & Step Function & Basis Function (RBF/Spline) \\
+\hline
+Pola halus global & Ingin segmentasi kasar & Pola kompleks dan lokal \\
+\hline
+Domain sempit & Perlu interpretasi interval & Ingin fleksibilitas terkontrol \\
+\hline
+Ingin model sederhana & Hubungan tidak perlu halus & Siap melakukan tuning basis \\
+\hline
+Efek berubah secara gradual & Sistem berbasis ambang & Data memiliki pola multi-modal \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{7. Penutup Filosofis}
+
+Regresi nonlinear bukan sekadar menggambar kurva bengkok. Intinya adalah \textbf{mewakili realitas dengan basis yang sesuai}, lalu mengestimasi bobotnya secara sistematis.
+
+
+Dengan memahami polynomial, step function, dan basis function, kita memiliki kerangka berpikir untuk memilih representasi data yang paling tepat sesuai konteks domain.
+
+
+\hrule
+
+
+\subsection{8. Ringkasan}
+
+\begin{enumerate}
+\item \textbf{Regresi fungsi tangga} membagi $x$ menjadi interval diskrit dengan prediksi konstan per interval.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Regresi basis function} menggunakan basis umum seperti RBF, spline, atau Fourier untuk fleksibilitas lebih tinggi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Semua metode tetap linear terhadap parameter, sehingga dapat diestimasi dengan OLS.
+\end{enumerate}
+
+\begin{enumerate}
+\item Pemilihan metode bergantung pada karakteristik pola data: global, diskrit, atau lokal.
+\end{enumerate}
+
+\begin{enumerate}
+\item Fleksibilitas harus diimbangi dengan waspada terhadap overfitting.
+\end{enumerate}
+
+
+
+\end{document}

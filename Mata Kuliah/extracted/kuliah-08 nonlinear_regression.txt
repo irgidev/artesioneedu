@@ -1,0 +1,555 @@
+Kuliah 08 - Metode Regresi Nonlinear
+
+     Regresi Polynomial, Fungsi Tangga, dan Basis Function
+
+                                           Yeni Herdiyeni
+                              Program Studi Kecerdasan Buatan
+
+                                           IPB University
+
+Fokus utama: bagaimana membuat model tetap linear pada parameter, tetapi lebih fleksibel
+                                     terhadap bentuk hubungan x  y.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                        1 / 28
+Ide besar: nonlinear dalam variabel, tetap terstruktur dalam model
+
+Bentuk umum                                                Tiga keluarga penting
+
+                                                       M      1 Polynomial regression
+                                                                 Memakai pangkat x, x2, x3, . . .
+                  y^(x) = 0 + mhm(x)
+                                                              2 Step function regression
+                                                     m=1         Memakai indikator interval
+
+      Kita tidak langsung memodelkan garis lurus pada         3 Basis function regression
+      x.                                                         Memakai basis umum: spline, RBF, Fourier,
+      Kita terlebih dahulu mengubah x menjadi                    dst.
+      sekumpulan fitur baru h1(x), h2(x), . . . , hM (x).
+      Setelah itu, regresi dilakukan secara linear pada
+      fitur hasil transformasi tersebut.
+
+Filosofi utama
+
+Hubungan dapat dibuat fleksibel dengan memilih
+bahasa representasi yang tepat untuk x: global, lokal,
+halus, atau bertingkat.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear         April 16, 2026  2 / 28
+Use Case 1: Pertanian -- Regresi Polynomial
+
+Contoh kasus                                              Ilustrasi ide
+
+Memprediksi hasil panen berdasarkan:                                   y^ = 0 + 1x + 2x2 + 3x3
+      dosis pupuk,                                        dengan:
+      intensitas penyiraman,
+      atau umur tanaman.                                        x = dosis pupuk
+                                                                y^ = prediksi hasil panen
+Sering kali hubungan tidak linear:
+      pada awalnya, penambahan pupuk meningkatkan hasil,  Interpretasi:
+      tetapi setelah titik tertentu, peningkatannya             orde rendah: kurva sederhana
+      melambat,                                                 orde lebih tinggi: lebih fleksibel
+      bahkan bisa menurun jika berlebihan.                      terlalu tinggi: risiko overfitting
+
+Mengapa polynomial?                                       Pesan praktis
+
+Polynomial cocok ketika pola hubungan berubah secara      Gunakan saat hubungan membentuk kurva halus
+halus dan global, misalnya naik lalu melandai, atau       dan ingin tetap mudah dijelaskan.
+membentuk kurva optimum.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear        April 16, 2026                            3 / 28
+Contoh Regresi Polynomial
+
+Yeni Herdiyeni             Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  4 / 28
+Contoh Regresi Polynomial
+
+Yeni Herdiyeni             Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  5 / 28
+1. Regresi Polynomial
+
+Model                                                   Basis polynomial bersifat global: satu fungsi
+                                                              mencoba menjelaskan seluruh data
+           y^(x) = 0 + 1x + 2x2 + · · · + dxd
+
+      Filosofi: satu kurva global menjelaskan seluruh
+      domain input.
+      Cocok saat pola cukup halus dan perubahan
+      bentuknya dapat ditangkap oleh kombinasi
+      pangkat rendah sampai menengah.
+      Sederhana, mudah dijelaskan, dan mudah dihitung.
+      Kelemahan: mudah tidak stabil di tepi domain dan
+      sensitif saat derajat terlalu tinggi.
+
+Intuisi
+
+Setiap pangkat xm menambah kemampuan kurva untuk
+membengkok. Derajat menentukan kapasitas model.
+
+Yeni Herdiyeni         Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                              6 / 28
+Ilustrasi Python: Regresi Polynomial
+
+                                                                                                                                          import numpy as np
+                                                                                                                                          from sklearn.pipeline import make_pipeline
+                                                                                                                                          from sklearn.preprocessing import PolynomialFeatures
+                                                                                                                                          from sklearn.linear_model import LinearRegression
+
+                                                                                                                                          x = x.reshape(-1, 1)
+                                                                                                                                          model = make_pipeline(
+
+                                                                                                                                               PolynomialFeatures(degree=5,
+                                                                                                                                                                           include_bias=False),
+
+                                                                                                                                               LinearRegression()
+                                                                                                                                          )
+                                                                                                                                          model.fit(x, y)
+                                                                                                                                          y_pred = model.predict(xx.reshape(-1, 1))
+
+                                                                           degree mengontrol fleksibilitas.
+                                                                           Degree kecil: bias tinggi.
+                                                                           Degree besar: varians tinggi dan rawan
+                                                                           overfitting.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                                                                                                                               7 / 28
+Transformasi Fitur: Dari x ke Polynomial Basis
+
+Transformasi yang dilakukan
+
+Setiap data x diubah menjadi:
+
+                                      x  (x, x2, x3, x4, x5)
+
+Dalam bentuk matriks
+
+                                         x1 x21 x31 x14 x15 
+
+                                         x2 x22 x32 x24 x52 
+
+                               Xpoly  =    ...      ...  ...  ...  ...  
+                                                                        
+                                                                        
+
+                                           xn xn2 xn3 xn4 xn5
+
+Makna
+
+Kita menciptakan ruang fitur baru yang lebih kaya.
+
+Yeni Herdiyeni                 Kuliah 08 Metode Regresi Nonlinear         April 16, 2026  8 / 28
+Model Matematis Polynomial Regression
+
+Bentuk model                                       Ilustrasi Least Squares
+
+y^(x) = 0 + 1x + 2x2 + 3x3 + 4x4 + 5x5
+
+Estimasi parameter
+
+                                            n
+
+                      min (yi - y^(xi))2
+                                    
+                                          i=1
+
+Model tetap linear terhadap parameter              Garis vertikal = error
+Tetapi nonlinear terhadap variabel x               Model meminimalkan total error kuadrat
+
+Insight
+
+Nonlinear regression ini sebenarnya adalah linear
+regression di ruang fitur baru.
+
+Yeni Herdiyeni                                 Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  9 / 28
+Melihat dari Perspektif Basis Function
+
+Bentuk umum
+
+                                             M
+
+                  y^(x) = 0 + mhm(x)
+
+                                           m=1
+
+Untuk polynomial
+
+                  h1(x) = x, h2(x) = x2, h3(x) = x3, . . .
+
+Setiap hm(x) adalah basis function
+Model adalah kombinasi linear dari basis tersebut
+
+Yeni Herdiyeni    Kuliah 08 Metode Regresi Nonlinear        April 16, 2026  10 / 28
+Use Case 2: Medis -- Regresi Fungsi Tangga
+
+Contoh kasus                                             Ilustrasi ide
+
+Memprediksi risiko komplikasi pasien berdasarkan kadar   Misal kadar gula darah dibagi menjadi interval:
+gula darah, tekanan darah, atau kadar kolesterol.
+Dalam praktik klinis, dokter sering memakai kategori            x < 100, 100  x < 126, x  126
+ambang, misalnya:
+                                                         Model:
+      normal,
+      borderline,                                        y^ = 0+1I(x  A1)+2I(x  A2)+3I(x  A3)
+      tinggi,
+      sangat tinggi.                                     Makna
+
+Mengapa step function?                                         Dalam satu interval, prediksi relatif konstan
+                                                               Saat melewati ambang, prediksi berubah
+Step function cocok ketika keputusan dibuat berdasarkan        meloncat
+rentang nilai atau cut-off klinis, bukan perubahan yang        Sangat mudah dijelaskan ke pengguna
+sepenuhnya halus.                                              non-teknis
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear       April 16, 2026  11 / 28
+2. Regresi Fungsi Tangga (Step Function)
+
+Model
+
+                                              M
+
+            y^(x) = 0 + m 1(cm-1  x < cm)
+
+                                            m=1
+
+Filosofi: data dibagi menjadi beberapa interval, lalu      Basis indikator bersifat lokal per interval:
+setiap interval memiliki level rata-rata sendiri.      perubahan koefisien terutama memengaruhi satu
+
+Cocok saat kita ingin interpretasi yang sangat                                   segmen.
+sederhana atau ketika perubahan dipandang diskrit
+per segmen.
+
+Sangat mudah dibaca: "rentang ini punya respons
+rata-rata sekian."
+
+Kelemahan: batas antar-bin tidak halus dan hasil
+bergantung pada jumlah serta posisi titik potong.
+
+Intuisi
+
+Regresi Fungsi Tangga tidak membuat satu kurva halus, tp membangun representasi potongan-potongan
+
+konstan.
+
+          Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                       12 / 28
+Ilustrasi Python: Regresi Fungsi Tangga
+
+                from sklearn.pipeline import make_pipeline
+                from sklearn.preprocessing import KBinsDiscretizer
+                from sklearn.linear_model import LinearRegression
+
+                x = x.reshape(-1, 1)
+                model = make_pipeline(
+
+                     KBinsDiscretizer(n_bins=8,
+                                              encode="onehot-dense",
+                                              strategy="uniform"),
+
+                     LinearRegression()
+                )
+                model.fit(x, y)
+                y_pred = model.predict(xx.reshape(-1, 1))
+
+                      n_bins menentukan resolusi model.
+
+                      Bin sedikit: terlalu kasar.
+
+                      Bin terlalu banyak: sensitif terhadap noise.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  13 / 28
+Dari Kode ke Ide: Step Function Regression
+
+Potongan kode
+
+model = make_pipeline(
+KBinsDiscretizer(n_bins=8,
+encode="onehot-dense"),
+LinearRegression()
+)
+
+Pertanyaan penting
+
+Apa yang berubah dari polynomial regression?
+
+       Kita tidak lagi menggunakan x secara langsung
+       Kita mengubah x menjadi kategori interval
+       Lalu tetap menggunakan regresi linear
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear    April 16, 2026  14 / 28
+Transformasi Fitur: Binning
+
+Pembagian domain
+
+Misalkan x  [0, 1] dibagi menjadi 8 interval:
+                                                            A1, A2, A3, . . . , A8
+
+Contoh
+
+      A1 = [0, 0.125)
+      A2 = [0.125, 0.25)
+      ...
+      A8 = [0.875, 1]
+
+Makna
+
+Nilai kontinu diubah menjadi kategori diskrit.
+
+Yeni Herdiyeni               Kuliah 08 Metode Regresi Nonlinear                     April 16, 2026  15 / 28
+Representasi One-Hot
+
+Transformasi
+
+                      x  (I(x  A1), I(x  A2), . . . , I(x  A8))
+
+Contoh
+
+Jika x  A3:
+
+                                          (0, 0, 1, 0, 0, 0, 0, 0)
+
+      Setiap interval menjadi satu fitur
+      Hanya satu fitur bernilai 1
+
+Insight
+
+Ini adalah indicator basis function.
+
+Yeni Herdiyeni                            Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  16 / 28
+Model Matematis Step Function
+
+Bentuk model
+
+                                                                     8
+
+                                          y^(x) = 0 + jI(x  Aj)
+
+                                                                   j=1
+
+Estimasi parameter                                  n
+
+      Model tetap linear terhadap         min (yi - y^(xi))2
+      Representasi input berubah drastis    
+                                                  i=1
+
+Yeni Herdiyeni                            Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  17 / 28
+Use Case 3: Industri -- Basis Function Regression
+
+Contoh kasus                                             Ilustrasi ide
+
+Memprediksi kualitas produk atau tingkat cacat                                                            M
+berdasarkan: suhu mesin, getaran, tekanan, atau waktu
+operasi.                                                               y^(x) = 0 + mhm(x)
+Pada sistem industri, pola sering kompleks dan lokal:
+                                                                                                        m=1
+      pada rentang suhu tertentu kualitas stabil,
+                                                         Contoh basis:
+      pada area lain terjadi penurunan tajam,                  Gaussian RBF
+                                                               spline
+      beberapa efek hanya muncul di wilayah tertentu.          Fourier basis
+
+Mengapa basis function?                                  Makna
+
+Basis function cocok ketika hubungan perlu fleksibel,          tiap basis menangkap pola tertentu
+terutama jika pola bersifat lokal, halus, atau memiliki        model akhir adalah kombinasi banyak pola
+banyak bentuk kompleks.                                        kecil
+Gunakan saat pola data tidak cukup dijelaskan oleh satu        lebih fleksibel daripada polynomial global
+bentuk kurva global sederhana.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear       April 16, 2026                                      18 / 28
+3. Regresi Basis Function
+
+Model umum
+
+                                                       M
+
+                  y^(x) = 0 + mhm(x)
+
+                                                     m=1
+
+Filosofi: kita merancang basis sesuai geometri            Basis lokal memberi fleksibilitas tinggi tanpa harus
+masalah.                                                                 menggoyang seluruh kurva.
+
+Polynomial dan step function sebenarnya hanyalah
+kasus khusus dari pendekatan basis function.
+
+Kita dapat memilih basis yang global atau lokal,
+halus atau periodik.
+
+Contoh basis
+
+Spline: halus dan lokal
+Gaussian RBF: lokal di sekitar pusat tertentu
+Fourier: cocok untuk pola periodik
+
+Yeni Herdiyeni                                            Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  19 / 28
+Ilustrasi Python: Basis Function dengan Gaussian RBF
+
+                import numpy as np
+                from sklearn.pipeline import make_pipeline
+                from sklearn.linear_model import LinearRegression
+
+                class RBFFeatures:
+                     def __init__(self, centers, gamma=90):
+                           self.centers = np.asarray(centers)
+                           self.gamma = gamma
+                     def fit(self, X, y=None):
+                           return self
+                     def transform(self, X):
+                           X = np.asarray(X).reshape(-1, 1)
+                           return np.exp(-self.gamma *
+                                               (X - self.centers)**2)
+
+                centers = np.linspace(0, 1, 12).reshape(1, -1)
+                model = make_pipeline(RBFFeatures(centers),
+
+                                               LinearRegression())
+
+                      Banyaknya pusat dan nilai gamma
+                      mengontrol kelokalan basis.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear    April 16, 2026   20 / 28
+Dari Kode ke Ide: RBF Regression
+
+Potongan kode
+
+class RBFFeatures:
+def transform(self, X):
+return exp(-gamma * (X - centers)^2)
+
+model = make_pipeline(RBFFeatures(centers),
+LinearRegression())
+
+Pertanyaan penting
+
+Apa yang berubah dibanding polynomial dan step function?
+
+      Kita tidak menggunakan x langsung
+      Kita membentuk fitur berbasis jarak terhadap titik tertentu
+      Lalu tetap menggunakan regresi linear
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear                 April 16, 2026  21 / 28
+Transformasi Fitur: Gaussian Basis
+
+Fungsi basis                                        Ilustrasi Gaussian RBF
+
+                    hj(x) = exp -(x - cj)2          Setiap kurva adalah satu basis hj (x) dengan center berbeda
+
+Transformasi
+
+                 x  (h1(x), h2(x), . . . , hM (x))
+
+      cj = center (titik referensi)
+      setiap basis aktif di sekitar center
+
+Makna
+
+Kita merepresentasikan x berdasarkan kedekatannya
+terhadap beberapa titik.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  22 / 28
+Representasi Matriks Fitur
+
+Matriks fitur
+
+                            h1(x1) h2(x1) . . . hM (x1)
+
+                            h1(x2) h2(x2) . . . hM (x2)
+
+                =                      ...  ...  ...                       ...  
+                                                                                
+                                                                                
+
+                                       h1(xn) h2(xn) . . . hM (xn)
+
+Setiap kolom = satu Gaussian basis
+Setiap baris = representasi satu data
+
+Yeni Herdiyeni                         Kuliah 08 Metode Regresi Nonlinear         April 16, 2026  23 / 28
+Model Matematis RBF Regression
+
+Bentuk model
+
+                                                            M
+
+                                  y^(x) = 0 + j exp -(x - cj )2
+
+                                                           j=1
+
+Estimasi parameter                          n
+
+      Linear terhadap parameter   min (yi - y^(xi))2
+      Nonlinear terhadap x          
+                                          i=1
+
+Yeni Herdiyeni                    Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  24 / 28
+Intuisi: Fungsi Lokal
+
+Karakteristik
+
+       Setiap basis berbentuk lonceng (Gaussian)
+       Nilai tinggi dekat center
+       Nilai kecil jauh dari center
+
+Makna
+
+       Model belajar secara lokal
+       Setiap bagian domain punya pengaruh sendiri
+
+Insight
+
+RBF adalah kombinasi banyak fungsi lokal kecil.
+
+Yeni Herdiyeni  Kuliah 08 Metode Regresi Nonlinear  April 16, 2026  25 / 28
+Intuisi Gaussian RBF: Basis Lokal
+
+Fungsi basis                                Ilustrasi Gaussian RBF
+
+                    hj(x) = exp -(x - cj)2
+
+Setiap kurva berpusat di cj
+Nilai maksimum terjadi di center
+Semakin jauh dari center  nilai mengecil
+
+Peran 
+
+ besar  kurva sempit (sangat lokal)
+ kecil  kurva lebar (lebih global)
+
+Makna                                                                                   Garis berwarna = basis individu
+                                                                                Garis putus-putus = kombinasi semua basis
+      Setiap basis = fungsi lokal
+      Hanya aktif di sekitar center         Lebar kurva pada gambar dikontrol oleh 
+
+                            Yeni Herdiyeni  Model akhir adalah kombinasi banyak fungsi lokal
+                                            kecil yang saling overlap.
+
+                                            Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                             26 / 28
+Filosofi Intuisi: Model Nonlinear              Basis Function (RBF)
+
+Polynomial Regression                          "Banyak sudut pandang lokal"
+                                                     Setiap basis melihat area kecil
+"Satu cerita besar untuk semua data"                 Model adalah kombinasi perspektif lokal
+       Mencari satu fungsi global                    Cocok untuk pola kompleks dan tidak seragam
+       Semua titik dipengaruhi secara bersama
+       Cocok untuk pola halus dan kontinu
+
+Step Function Regression                       Intuisi besar
+
+"Memecah dunia menjadi kategori"                     Polynomial  berpikir global
+      Domain dibagi menjadi segmen                   Step function  berpikir diskrit
+      Setiap segmen punya aturan sendiri             RBF  berpikir lokal
+      Cocok untuk sistem berbasis ambang
+                                               Pesan penting
+
+                                               Bukan modelnya yang berbeda, tetapi
+                                               cara kita merepresentasikan dan memahami data.
+
+Yeni Herdiyeni                            Kuliah 08 Metode Regresi Nonlinear  April 16, 2026   27 / 28
+Kapan memakai metode yang mana?
+
+Polynomial                   Step Function                       Basis Function
+
+      Pola halus global            Ingin segmentasi kasar              Pola kompleks dan lokal
+      Domain sempit                Perlu interpretasi interval         Ingin fleksibilitas terkontrol
+      Ingin model sederhana        Hubungan tidak perlu halus          Siap melakukan tuning basis
+
+Penutup filosofis
+
+Nonlinear regression bukan sekadar menggambar kurva bengkok. Intinya adalah mewakili realitas
+dengan basis yang sesuai, lalu mengestimasi bobotnya secara sistematis.
+
+Yeni Herdiyeni               Kuliah 08 Metode Regresi Nonlinear  April 16, 2026                28 / 28
+

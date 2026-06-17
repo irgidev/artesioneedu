@@ -1,0 +1,437 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{indentfirst}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{orange},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{Kuliah 11 - Shrinkage Methods dalam Sains Data}
+\author{Yeni Herdiyeni}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Kuliah 11 - Shrinkage Methods dalam Sains Data}
+
+\textbf{Topik:} Ridge dan Lasso Regression  
+
+\textbf{Mata Kuliah:} Pengantar Sains Data  
+
+\textbf{Pengampu:} Yeni Herdiyeni, Program Studi Sarjana Kecerdasan Buatan, IPB University
+
+
+\hrule
+
+
+\subsection{1. Alur Pembahasan}
+
+Materi ini dibahas secara bertahap melalui lima langkah utama:
+
+
+\begin{enumerate}
+\item Mengenal \textbf{OLS} sebagai model dasar regresi linear.
+\end{enumerate}
+
+\begin{enumerate}
+\item Melihat permasalahan OLS pada data dengan fitur yang saling berkorelasi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Memahami bagaimana \textbf{Ridge} mengatasi masalah tersebut dengan menyusutkan semua koefisien.
+\end{enumerate}
+
+\begin{enumerate}
+\item Memahami bagaimana \textbf{Lasso} menyusutkan koefisien sekaligus melakukan seleksi fitur.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{2. Use Case: Prediksi Hasil Panen Padi}
+
+\subsubsection{2.1 Kasus}
+
+Kita ingin memprediksi hasil panen padi berdasarkan sejumlah variabel lingkungan dan budidaya.
+
+
+\textbf{Contoh fitur yang digunakan:}
+
+
+\begin{tabular}{|l|l|}
+\hline
+Fitur & Keterangan \\
+\hline
+\texttt{rainfall} & Curah hujan \\
+\hline
+\texttt{humidity} & Kelembapan udara \\
+\hline
+\texttt{temperature} & Temperatur \\
+\hline
+\texttt{soil_moisture} & Kelembapan tanah \\
+\hline
+\texttt{irrigation} & Irigasi \\
+\hline
+\texttt{fertilizer_A} & Pupuk A \\
+\hline
+\texttt{fertilizer_B} & Pupuk B \\
+\hline
+\texttt{sunlight} & Cahaya matahari \\
+\hline
+\texttt{soil_ph} & pH tanah \\
+\hline
+\texttt{pest_index} & Indeks hama \\
+\hline
+\end{tabular}
+
+
+\subsubsection{2.2 Tujuan}
+
+Membangun model yang dapat memperkirakan hasil panen berdasarkan kombinasi seluruh variabel tersebut.
+
+
+\subsubsection{2.3 Mengapa Kasus Ini Menarik?}
+
+Faktor-faktor yang memengaruhi hasil panen biasanya tidak berdiri sendiri. Banyak variabel bergerak bersama dan saling berhubungan:
+
+
+
+\textbf{Akibatnya:} Model menjadi lebih sulit membedakan mana pengaruh murni dari tiap variabel. Di sinilah persoalan \textbf{multikolinearitas} mulai muncul.
+
+
+\hrule
+
+
+\subsection{3. Apa Itu OLS?}
+
+\subsubsection{3.1 Ordinary Least Squares (OLS)}
+
+OLS adalah metode regresi linear yang mencari model terbaik dengan cara meminimalkan jumlah kuadrat error antara nilai aktual dan nilai prediksi:
+
+
+\\[
+\min_{\beta} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\\]
+
+
+Di mana:
+
+
+\subsubsection{3.2 Model OLS pada Use Case}
+
+\\[
+\text{yield} = \beta_0 + \beta_1(\text{rainfall}) + \beta_2(\text{temperature}) + \dots + \beta_p(\text{pest index})
+\\]
+
+
+Koefisien $\beta_j$ menunjukkan seberapa besar kontribusi masing-masing fitur terhadap hasil panen.
+
+
+\subsubsection{3.3 Cara Membaca OLS}
+
+
+\subsubsection{3.4 Kekuatan OLS}
+
+
+\hrule
+
+
+\subsection{4. Permasalahan OLS: Multikolinearitas}
+
+\subsubsection{4.1 Apa itu Multikolinearitas?}
+
+\textbf{Multikolinearitas} adalah kondisi di mana beberapa prediktor (fitur) saling berhubungan secara linear. Pada data hasil panen, banyak prediktor saling berhubungan.
+
+
+\subsubsection{4.2 Dampak Multikolinearitas pada OLS}
+
+Koefisien OLS dapat berubah cukup besar ketika data sedikit berubah. Hal ini menunjukkan bahwa model memang bisa \emph{fit} pada data latih, tetapi belum tentu \textbf{stabil} untuk interpretasi dan prediksi baru.
+
+
+\textbf{Makna visualisasi:} Setiap box dalam plot koefisien menunjukkan variasi koefisien dari banyak sampel ulang. Semakin lebar variasinya, semakin tidak stabil estimasi koefisien OLS.
+
+
+\subsubsection{4.3 Mengapa Perlu Shrinkage?}
+
+\textbf{Ide utamanya sederhana:}
+
+
+\textbf{Shrinkage hadir untuk:}
+
+\begin{enumerate}
+\item Sekaligus menambahkan penalti pada besar koefisien.
+\end{enumerate}
+
+\begin{enumerate}
+\item Membuat model lebih stabil dan lebih baik dalam generalisasi.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{5. Ridge Regression}
+
+\subsubsection{5.1 Gagasan Utama Ridge}
+
+Ridge menggunakan OLS sebagai dasar, lalu menambahkan penalti terhadap \textbf{kuadrat koefisien}. Dengan demikian, semua koefisien didorong untuk mengecil.
+
+
+\subsubsection{5.2 Fungsi Objektif Ridge}
+
+\\[
+\min_{\beta_0, \beta} \sum_{i=1}^{n} \left( y_i - \beta_0 - \sum_{j=1}^{p} x_{ij}\beta_j \right)^2 + \lambda \sum_{j=1}^{p} \beta_j^2
+\\]
+
+
+Di mana:
+
+
+\subsubsection{5.3 Pengaruh Nilai $\lambda$}
+
+\begin{tabular}{|l|l|}
+\hline
+Nilai $\lambda$ & Efek \\
+\hline
+$\lambda = 0$ & Ridge sama seperti OLS \\
+\hline
+$\lambda$ membesar & Penalti makin kuat \\
+\hline
+$\lambda$ sangat besar & Semua koefisien mendekati nol, tetapi umumnya tidak tepat nol \\
+\hline
+\end{tabular}
+
+
+\subsubsection{5.4 Intuisi Ridge pada Kasus Hasil Panen}
+
+\textbf{Mengapa Ridge membantu?}
+
+
+\begin{quote}
+\textbf{Pesan sederhana:} Ridge berkata, "Semua fitur boleh tetap masuk, tetapi jangan ada koefisien yang terlalu ekstrem."\end{quote}
+
+
+\subsubsection{5.5 Karakteristik Ridge}
+
+
+\hrule
+
+
+\subsection{6. Lasso Regression}
+
+\subsubsection{6.1 Gagasan Utama Lasso}
+
+Lasso juga berangkat dari OLS, tetapi penalti yang digunakan adalah \textbf{jumlah nilai absolut koefisien}. Penalti ini membuat sebagian koefisien dapat menjadi tepat nol.
+
+
+\subsubsection{6.2 Fungsi Objektif Lasso}
+
+\\[
+\min_{\beta_0, \beta} \sum_{i=1}^{n} \left( y_i - \beta_0 - \sum_{j=1}^{p} x_{ij}\beta_j \right)^2 + \lambda \sum_{j=1}^{p} \lvert \beta_j \rvert
+\\]
+
+
+Di mana:
+
+
+\subsubsection{6.3 Pengaruh Nilai $\lambda$}
+
+\begin{tabular}{|l|l|}
+\hline
+Nilai $\lambda$ & Efek \\
+\hline
+$\lambda$ kecil & Hampir sama seperti OLS \\
+\hline
+$\lambda$ membesar & Beberapa koefisien menyusut kuat sampai nol \\
+\hline
+$\lambda$ sangat besar & Hanya sedikit fitur yang tersisa \\
+\hline
+\end{tabular}
+
+
+\subsubsection{6.4 Intuisi Lasso pada Kasus Hasil Panen}
+
+\textbf{Mengapa Lasso menarik?}
+
+
+\begin{quote}
+\textbf{Pesan sederhana:} Lasso berkata, "Jika suatu fitur tidak cukup penting, lebih baik koefisiennya dibuat nol."\end{quote}
+
+
+\subsubsection{6.5 Efek Seleksi Fitur pada Lasso}
+
+Semakin besar penalti $\lambda$, semakin banyak fitur yang dieliminasi dari model. Karena itu, Lasso sangat berguna saat kita juga ingin \textbf{menyederhanakan model}, bukan hanya meningkatkan kestabilan.
+
+
+\hrule
+
+
+\subsection{7. Perbandingan OLS, Ridge, dan Lasso}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Aspek & OLS & Ridge & Lasso \\
+\hline
+Fungsi tujuan & Minimalkan SSE & SSE + $\lambda \sum \beta_j^2$ & SSE + $\lambda \sum \lvert \beta_j \rvert$ \\
+\hline
+Penalti & Tidak ada & $L2$ & $L1$ \\
+\hline
+Koefisien & Tidak dibatasi & Menyusut, tapi tidak nol & Bisa menjadi tepat nol \\
+\hline
+Seleksi fitur & Tidak & Tidak & Ya \\
+\hline
+Multikolinearitas & Rentan & Tangguh & Tangguh \\
+\hline
+Kompleksitas model & Penuh & Penuh & Lebih ringkas \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Visualisasi Efek Penalti}
+
+
+\hrule
+
+
+\subsection{8. Kapan Menggunakan Ridge dan Kapan Lasso?}
+
+\subsubsection{Gunakan Ridge Jika...}
+
+
+\subsubsection{Gunakan Lasso Jika...}
+
+
+\subsubsection{Kombinasi: Elastic Net}
+
+Dalam praktik, sering digunakan \textbf{Elastic Net} yang menggabungkan penalti $L1$ dan $L2$:
+
+
+\\[
+\min_{\beta} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \lambda_1 \sum_{j=1}^{p} \lvert \beta_j \rvert  + \lambda_2 \sum_{j=1}^{p} \beta_j^2
+\\]
+
+
+Elastic Net memberikan keuntungan baik Ridge (stabil terhadap multikolinearitas) maupun Lasso (seleksi fitur).
+
+
+\hrule
+
+
+\subsection{9. Implementasi Python}
+
+\subsubsection{9.1 Ridge Regression}
+
+\begin{lstlisting}[language=Python]
+from sklearn.linear_model import Ridge
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+# Ridge dengan alpha = lambda
+ridge_model = make_pipeline(
+    StandardScaler(),
+    Ridge(alpha=1.0)
+)
+
+ridge_model.fit(X_train, y_train)
+y_pred_ridge = ridge_model.predict(X_test)
+\end{lstlisting}
+
+\subsubsection{9.2 Lasso Regression}
+
+\begin{lstlisting}[language=Python]
+from sklearn.linear_model import Lasso
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+# Lasso dengan alpha = lambda
+lasso_model = make_pipeline(
+    StandardScaler(),
+    Lasso(alpha=0.1)
+)
+
+lasso_model.fit(X_train, y_train)
+y_pred_lasso = lasso_model.predict(X_test)
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Catatan:} Standardisasi fitur sangat penting sebelum menerapkan Ridge atau Lasso karena penalti sensitif terhadap skala fitur.\end{quote}
+
+
+\hrule
+
+
+\subsection{10. Interpretasi Hasil dalam Konteks Pertanian}
+
+\subsubsection{10.1 Ridge: Semua Faktor Dipertimbangkan}
+
+Dalam prediksi hasil panen, Ridge cocok ketika kita percaya bahwa banyak variabel lingkungan dan budidaya secara kolektif memengaruhi hasil panen, meskipun beberapa di antaranya saling berkorelasi.
+
+
+\subsubsection{10.2 Lasso: Memilih Faktor Kunci}
+
+Lasso cocok ketika kita ingin menyederhanakan model dan hanya menyimpan faktor-faktor yang paling berpengaruh. Misalnya, dari 10 fitur, mungkin hanya 4 atau 5 yang benar-benar dominan dalam memprediksi hasil panen.
+
+
+\subsubsection{10.3 Kalimat Penutup}
+
+\begin{quote}
+Pada masalah prediksi hasil panen, \textbf{Ridge} membantu ketika banyak variabel sama-sama relevan, sedangkan \textbf{Lasso} membantu ketika kita juga ingin mengetahui fitur mana yang benar-benar penting.\end{quote}
+
+
+\hrule
+
+
+\subsection{11. Ringkasan}
+
+\begin{enumerate}
+\item \textbf{Multikolinearitas} dapat membuat koefisien OLS tidak stabil.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Ridge Regression} menambahkan penalti $L2$ untuk menyusutkan semua koefisien dan mengatasi multikolinearitas.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Lasso Regression} menambahkan penalti $L1$ untuk menyusutkan koefisien dan melakukan seleksi fitur otomatis.
+\end{enumerate}
+
+\begin{enumerate}
+\item Gunakan \textbf{Ridge} jika banyak fitur sama-sama penting dan ada multikolinearitas.
+\end{enumerate}
+
+\begin{enumerate}
+\item Gunakan \textbf{Lasso} jika ingin model yang lebih ringkas dan dapat diinterpretasikan.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Standardisasi fitur} wajib dilakukan sebelum menerapkan Ridge atau Lasso.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Elastic Net} menggabungkan keunggulan kedua metode.
+\end{enumerate}
+
+
+
+\end{document}

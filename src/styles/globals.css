@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #6C63FF;
+  --color-primary-light: #8B83FF;
+  --color-primary-dark: #5A52E0;
+  --color-secondary: #4ECDC4;
+  --color-secondary-light: #6FE0D9;
+  --color-success: #06D6A0;
+  --color-success-light: #34E8BA;
+  --color-danger: #EF476F;
+  --color-danger-light: #F37A96;
+  --color-warning: #FFD166;
+  --color-warning-light: #FFE090;
+  --color-dark: #1A1A2E;
+  --color-dark-secondary: #16213E;
+  --color-light: #FAFAFE;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F9FAFB;
+    color: #111827;
+    min-height: 100dvh;
+  }
+
+  .dark body {
+    background-color: #0F0F1A;
+    color: #F3F4F6;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.25);
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  background-color: rgba(108, 99, 255, 0.05);
+}
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(6, 214, 160, 0.25);
+  transition: all 0.2s;
+}
+.btn-success:hover {
+  filter: brightness(1.1);
+}
+.btn-success:active {
+  transform: scale(0.97);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(239, 71, 111, 0.25);
+  transition: all 0.2s;
+}
+.btn-danger:hover {
+  filter: brightness(1.1);
+}
+.btn-danger:active {
+  transform: scale(0.97);
+}
+
+/* Card styles */
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #F3F4F6;
+  padding: 1.25rem;
+  transition: box-shadow 0.2s;
+}
+
+.card-interactive {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #F3F4F6;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.card-interactive:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+.card-interactive:active {
+  transform: scale(0.98);
+}
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background-color: rgba(15, 15, 26, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(108, 99, 255, 0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.5s; }
+
+/* Safe area for iOS */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.h-safe-area-inset-bottom {
+  height: env(safe-area-inset-bottom, 0);
+}
+
+/* Utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

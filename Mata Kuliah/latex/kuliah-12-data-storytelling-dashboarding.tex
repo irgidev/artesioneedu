@@ -1,0 +1,779 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{indentfirst}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{orange},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{Kuliah 12 - Data Storytelling & Dashboarding dalam Sains Data}
+\author{Yeni Herdiyeni}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Kuliah 12 - Data Storytelling & Dashboarding dalam Sains Data}
+
+\textbf{Topik:} Studi Kasus Peternakan Sapi Perah  
+
+\textbf{Pengampu:} Yeni Herdiyeni, Program Studi Kecerdasan Buatan, SSMI IPB  
+
+\textbf{Tanggal:} 20 Mei 2026
+
+
+\begin{quote}
+\textbf{Catatan:} File asli berjudul \texttt{kuliah-12-slides_storytelling_dashboard_peternakan.pdf}, namun di dalam slide tertulis "Kuliah 13". Dokumen ini mengikuti konteks materi data storytelling dan dashboarding.\end{quote}
+
+
+\hrule
+
+
+\subsection{1. Skenario Use Case: Peternakan Sapi Perah}
+
+\subsubsection{1.1 Situasi}
+
+Sebuah peternakan sapi perah memiliki \textbf{120 ekor sapi}. Setiap hari, pengelola mencatat:
+
+
+
+\subsubsection{1.2 Masalah yang Dihadapi}
+
+
+\subsubsection{1.3 Pertanyaan Bisnis/Data}
+
+
+\subsubsection{1.4 Cerita yang Ingin Dibangun}
+
+\begin{lstlisting}[language=Python]
+Masalah  menjadi  Data  menjadi  EDA  menjadi  Model  menjadi  Evaluasi  menjadi  Insight  menjadi  Dashboard  menjadi  Rekomendasi
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Inti cerita:} Data digunakan untuk memahami penurunan produksi susu, menemukan faktor risiko, membangun model pendukung keputusan, mengevaluasi keandalannya, lalu menyajikannya dalam dashboard yang mudah dipahami.\end{quote}
+
+
+\hrule
+
+
+\subsection{2. Capaian Pembelajaran}
+
+Setelah mengikuti kuliah ini, mahasiswa mampu:
+
+
+\begin{enumerate}
+\item Menghubungkan EDA dengan penyusunan narasi data.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menjelaskan hasil model klasifikasi dan clustering secara kontekstual.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menginterpretasikan evaluasi model untuk mendukung keputusan.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menyusun dashboard sederhana berbasis cerita.
+\end{enumerate}
+
+\begin{enumerate}
+\item Mempresentasikan insight dan rekomendasi secara runtut.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{3. Apa itu Data Storytelling?}
+
+\subsubsection{3.1 Definisi}
+
+\begin{quote}
+\textbf{Data storytelling adalah proses mengubah hasil analisis data menjadi cerita yang runtut, berbasis bukti, dan relevan dengan keputusan.}\end{quote}
+
+
+\subsubsection{3.2 Tiga Komponen Utama}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Komponen & Peran & Contoh \\
+\hline
+\textbf{Data} & Fakta, angka, tabel, hasil EDA, hasil model, metrik evaluasi. & Produksi susu rata-rata, jumlah sapi sakit \\
+\hline
+\textbf{Visualisasi} & Grafik yang membantu audiens melihat pola, perbandingan, dan anomali. & Line chart tren produksi, scatter plot, heatmap \\
+\hline
+\textbf{Narasi} & Penjelasan yang menghubungkan data dengan konteks dan rekomendasi. & "THI tinggi berkaitan dengan penurunan produksi" \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Pesan utama:} Bukan hanya "grafiknya apa", tetapi "maknanya apa".\end{quote}
+
+
+\subsubsection{3.3 Perbedaan Visualization, Dashboard, dan Storytelling}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Konsep & Fokus & Pertanyaan Kunci \\
+\hline
+\textbf{Data Visualization} & Menampilkan pola dalam data & Apa yang terlihat dari data? \\
+\hline
+\textbf{Dashboard} & Memantau indikator penting & Bagaimana kondisi saat ini? \\
+\hline
+\textbf{Data Storytelling} & Menjelaskan makna dan tindakan & Apa pesan utama dan keputusan apa yang perlu diambil? \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Catatan penting:} Dashboard yang baik bukan sekadar kumpulan grafik. Dashboard harus membantu audiens mengikuti alur cerita dan memahami prioritas tindakan.\end{quote}
+
+
+\hrule
+
+
+\subsection{4. Dataset Sintetis Peternakan}
+
+\subsubsection{4.1 Unit Observasi}
+
+
+\subsubsection{4.2 Variabel Utama}
+
+\begin{tabular}{|l|l|}
+\hline
+Variabel & Keterangan \\
+\hline
+\texttt{milk_liter} & Produksi susu harian \\
+\hline
+\texttt{feed_kg} & Konsumsi pakan \\
+\hline
+\texttt{temperature} & Suhu kandang \\
+\hline
+\texttt{humidity} & Kelembapan kandang \\
+\hline
+\texttt{thi_index} & Temperature-Humidity Index (indeks tekanan panas) \\
+\hline
+\texttt{activity_index} & Aktivitas ternak \\
+\hline
+\texttt{health_status} & Status kesehatan (Sehat / Berisiko / Sakit) \\
+\hline
+\end{tabular}
+
+
+\subsubsection{4.3 Target Storytelling}
+
+Menjelaskan hubungan antara kondisi lingkungan, perilaku ternak, produktivitas susu, dan risiko kesehatan sapi.
+
+
+\hrule
+
+
+\subsection{5. Membaca Data di Python}
+
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_csv(
+    "dataset_peternakan_sapi_perah_sintetis.csv",
+    parse_dates=["date"]
+)
+
+df.head()
+df.info()
+\end{lstlisting}
+
+\textbf{Tujuan awal:} Memastikan struktur data, tipe data, jumlah observasi, dan variabel yang tersedia sebelum membuat visualisasi dan model.
+
+
+\hrule
+
+
+\subsection{6. EDA sebagai Awal Cerita}
+
+\subsubsection{6.1 Peran EDA}
+
+EDA membantu menemukan bahan cerita: pola, tren, hubungan antar variabel, anomali, dan dugaan awal penyebab masalah.
+
+
+\textbf{Pertanyaan EDA dalam studi kasus ini:}
+
+
+\begin{enumerate}
+\item Apakah sapi dengan pakan lebih tinggi menghasilkan susu lebih banyak?
+\end{enumerate}
+
+\begin{enumerate}
+\item Apakah THI tinggi berkaitan dengan penurunan produksi susu?
+\end{enumerate}
+
+\begin{enumerate}
+\item Apakah status kesehatan ternak tersebar merata atau tidak?
+\end{enumerate}
+
+
+\subsubsection{6.2 EDA 1: Tren Produksi Susu Harian}
+
+\textbf{Cara membaca grafik:}
+
+
+\textbf{Narasi awal:}
+
+
+\begin{quote}
+"Produksi susu mengalami fluktuasi. Kita perlu mencari faktor yang berkaitan dengan periode penurunan."\end{quote}
+
+
+\textbf{Pertanyaan diskusi:}
+
+\begin{enumerate}
+\item Apakah penurunan terjadi tiba-tiba atau bertahap?
+\end{enumerate}
+
+\begin{enumerate}
+\item Variabel apa yang perlu dibandingkan dengan tren produksi susu?
+\end{enumerate}
+
+\begin{enumerate}
+\item Jika Anda pengelola peternakan, keputusan apa yang mungkin diambil dari grafik ini?
+\end{enumerate}
+
+
+\subsubsection{6.3 EDA 2: Distribusi Status Kesehatan Ternak}
+
+\textbf{Insight:}
+
+
+\textbf{Pesan storytelling:}
+
+
+\begin{quote}
+Fokus analisis bukan hanya sapi yang sudah sakit, tetapi sapi yang mulai menunjukkan tanda risiko.\end{quote}
+
+
+\subsubsection{6.4 EDA 3: Konsumsi Pakan vs Produksi Susu}
+
+\textbf{Interpretasi:}
+
+
+\textbf{Makna:} Produksi susu dipengaruhi oleh kombinasi faktor, bukan hanya pakan.
+
+
+\subsubsection{6.5 EDA 4: THI dan Produksi Susu}
+
+\textbf{THI (Temperature-Humidity Index)} menggabungkan suhu dan kelembapan. Nilai tinggi menunjukkan tekanan panas.
+
+
+\textbf{Insight:}
+
+
+\subsubsection{6.6 EDA 5: Heatmap Korelasi}
+
+\textbf{Pola utama:}
+
+
+\textbf{Narasi EDA:}
+
+
+\begin{quote}
+Produktivitas sapi perah dipengaruhi oleh faktor nutrisi, aktivitas, dan tekanan lingkungan.\end{quote}
+
+
+\hrule
+
+
+\subsection{7. Dari EDA ke Model}
+
+\subsubsection{7.1 Mengapa Perlu Model?}
+
+EDA membantu menemukan pola, tetapi model membantu membuat prediksi atau segmentasi yang lebih sistematis.
+
+
+\subsubsection{7.2 Dua Pendekatan Model}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Aspek & Klasifikasi & Clustering \\
+\hline
+\textbf{Label} & Ada label target & Tidak menggunakan label target \\
+\hline
+\textbf{Tujuan} & Memprediksi status kesehatan sapi & Menemukan kelompok profil ternak \\
+\hline
+\textbf{Output} & Sehat / Berisiko / Sakit & Cluster sapi dengan karakteristik serupa \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{8. Klasifikasi: Prediksi Status Kesehatan Sapi}
+
+\subsubsection{8.1 Membentuk Data Ringkasan}
+
+Prediksi status akhir sapi lebih mudah dilakukan pada level individu sapi, bukan pada level observasi harian.
+
+
+\begin{lstlisting}[language=Python]
+agg = df.groupby("cow_id").agg(
+    avg_thi_index=("thi_index", "mean"),
+    avg_feed_kg=("feed_kg", "mean"),
+    avg_activity_index=("activity_index", "mean"),
+    avg_milk_liter=("milk_liter", "mean"),
+    min_milk_liter=("milk_liter", "min"),
+    max_thi_index=("thi_index", "max"),
+    sick_days=("health_status", lambda x: int((x == "Sakit").sum())),
+    risk_days=("health_status", lambda x: int((x == "Berisiko").sum()))
+).reset_index()
+\end{lstlisting}
+
+\subsubsection{8.2 Melatih Model Random Forest}
+
+\begin{lstlisting}[language=Python]
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+X = agg[features]
+y = agg["final_health_status"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42, stratify=y
+)
+
+clf = RandomForestClassifier(
+    n_estimators=250,
+    random_state=42,
+    class_weight="balanced",
+    max_depth=6
+)
+
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+\end{lstlisting}
+
+\subsubsection{8.3 Evaluasi Model Klasifikasi}
+
+\textbf{Hasil ringkas:} Model memperoleh akurasi sekitar 0.80 dan macro F1-score sekitar 0.758. Namun, angka ini harus dibaca secara kontekstual.
+
+
+\begin{tabular}{|l|l|}
+\hline
+Metrik & Makna dalam Kasus Peternakan \\
+\hline
+\textbf{Accuracy} & Seberapa sering model benar secara umum \\
+\hline
+\textbf{Precision} & Dari sapi yang diprediksi sakit/berisiko, berapa yang benar \\
+\hline
+\textbf{Recall} & Dari semua sapi yang benar-benar sakit/berisiko, berapa yang berhasil ditemukan \\
+\hline
+\textbf{F1-score} & Keseimbangan antara precision dan recall \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Poin storytelling:} Dalam deteksi dini, \textbf{recall} untuk kelas berisiko sangat penting karena salah melewatkan sapi berisiko dapat menyebabkan keterlambatan penanganan.\end{quote}
+
+
+\subsubsection{8.4 Confusion Matrix}
+
+\textbf{Cara membaca:}
+
+
+\textbf{Kesalahan kritis:} Sapi sakit atau berisiko yang diprediksi sehat adalah kesalahan yang berbahaya dalam praktik peternakan.
+
+
+\subsubsection{8.5 Feature Importance}
+
+Faktor yang berpengaruh:
+
+
+\textbf{Narasi:} Model mengonfirmasi bahwa produktivitas, perilaku, dan lingkungan saling berkaitan.
+
+
+\subsubsection{8.6 Pertanyaan Diskusi Evaluasi Model}
+
+\begin{enumerate}
+\item Mengapa akurasi saja tidak cukup?
+\end{enumerate}
+
+\begin{enumerate}
+\item Kesalahan model seperti apa yang paling merugikan peternak?
+\end{enumerate}
+
+\begin{enumerate}
+\item Bagaimana cara memperbaiki model agar lebih baik mengenali sapi berisiko?
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{9. Clustering: Mengelompokkan Profil Sapi}
+
+\subsubsection{9.1 Tujuan}
+
+Clustering digunakan untuk menemukan kelompok sapi dengan karakteristik serupa tanpa menggunakan label status kesehatan.
+
+
+\textbf{Fitur yang digunakan:}
+
+
+\textbf{Makna storytelling:} Clustering membantu menyusun strategi pengelolaan berbeda untuk kelompok sapi yang berbeda.
+
+
+\subsubsection{9.2 Standardisasi dan K-Means}
+
+\begin{lstlisting}[language=Python]
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+cluster_features = [
+    "avg_feed_kg", "avg_activity_index", "avg_milk_liter",
+    "avg_thi_index", "previous_disease_count", "body_weight_kg"
+]
+
+scaler = StandardScaler()
+Z = scaler.fit_transform(agg[cluster_features])
+
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=20)
+agg["cluster"] = kmeans.fit_predict(Z)
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Mengapa standardisasi?} Setiap fitur memiliki skala berbeda. Standardisasi mencegah fitur berskala besar mendominasi proses clustering.\end{quote}
+
+
+\subsubsection{9.3 Elbow Method}
+
+\textbf{Cara membaca:}
+
+
+\textbf{Pesan:} Pemilihan cluster perlu menggabungkan metrik dan interpretasi domain.
+
+
+\subsubsection{9.4 Silhouette Score}
+
+\textbf{Makna:}
+
+
+\begin{quote}
+\textbf{Catatan:} Cluster yang baik secara matematis belum tentu bermakna secara praktis.\end{quote}
+
+
+\subsubsection{9.5 Visualisasi Cluster dengan PCA}
+
+PCA membantu menampilkan data berdimensi banyak menjadi 2 dimensi. Warna menunjukkan hasil cluster. Pemisahan visual membantu komunikasi hasil.
+
+
+\textbf{Narasi:} Sapi tidak homogen; ada beberapa profil pengelolaan yang berbeda.
+
+
+\subsubsection{9.6 Pertanyaan Diskusi Clustering}
+
+\begin{enumerate}
+\item Apa makna praktis dari setiap cluster?
+\end{enumerate}
+
+\begin{enumerate}
+\item Apakah cluster otomatis sama dengan kelas sehat, berisiko, dan sakit?
+\end{enumerate}
+
+\begin{enumerate}
+\item Mengapa interpretasi domain tetap diperlukan setelah clustering?
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{10. Merumuskan Insight}
+
+\subsubsection{10.1 Insight Bukan Deskripsi Grafik}
+
+\begin{quote}
+\textbf{Insight adalah kesimpulan berbasis data yang membantu pengambilan keputusan.}\end{quote}
+
+
+\subsubsection{10.2 Insight Utama dari Studi Kasus}
+
+\begin{enumerate}
+\item Pakan berkaitan positif dengan produksi susu.
+\end{enumerate}
+
+\begin{enumerate}
+\item THI berkaitan negatif dengan produksi susu.
+\end{enumerate}
+
+\begin{enumerate}
+\item Aktivitas, produksi susu minimum, dan THI penting untuk klasifikasi kesehatan.
+\end{enumerate}
+
+\begin{enumerate}
+\item Kelas berisiko perlu diperhatikan sebagai sinyal deteksi dini.
+\end{enumerate}
+
+\begin{enumerate}
+\item Clustering membantu menyusun profil pengelolaan ternak.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{11. Dari Insight ke Rekomendasi}
+
+\begin{tabular}{|l|l|}
+\hline
+Insight & Rekomendasi \\
+\hline
+THI tinggi berkaitan dengan penurunan produksi & Pantau zona kandang dengan THI tinggi \\
+\hline
+Aktivitas rendah menjadi sinyal risiko & Prioritaskan pemeriksaan sapi berisiko/sakit \\
+\hline
+Beberapa sapi berulang kali masuk kategori berisiko & Evaluasi pakan untuk sapi produksi rendah \\
+\hline
+Cluster menunjukkan profil ternak berbeda & Terapkan strategi pengelolaan berbeda per cluster \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{12. Dashboard sebagai Media Storytelling}
+
+\subsubsection{12.1 Prinsip}
+
+Dashboard harus membantu audiens memahami kondisi, menemukan masalah, mengevaluasi model, dan menentukan tindakan.
+
+
+\subsubsection{12.2 Alur Dashboard}
+
+\begin{lstlisting}[language=Python]
+Overview  menjadi  Explore  menjadi  Explain  menjadi  Evaluate  menjadi  Act
+\end{lstlisting}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Bagian & Fungsi & Contenido \\
+\hline
+\textbf{Overview} & Indikator utama & Jumlah sapi, rata-rata susu, sapi berisiko, performa model \\
+\hline
+\textbf{Explore} & Pola EDA & Tren produksi, distribusi status kesehatan, pakan vs susu \\
+\hline
+\textbf{Explain} & Hasil model & Feature importance, confusion matrix \\
+\hline
+\textbf{Evaluate} & Metrik model & Akurasi, F1-score, silhouette score \\
+\hline
+\textbf{Act} & Rekomendasi & Daftar sapi prioritas, rekomendasi pemeriksaan \\
+\hline
+\end{tabular}
+
+
+\subsubsection{12.3 Komponen Dashboard Peternakan}
+
+\textbf{Indikator utama:}
+
+
+\textbf{Visualisasi EDA:}
+
+
+\textbf{Visualisasi model:}
+
+
+\textbf{Aksi:}
+
+
+\subsubsection{12.4 Struktur Dashboard HTML Sederhana}
+
+\begin{lstlisting}[language=Python]
+<h1>Dashboard Data Storytelling: Peternakan Sapi Perah</h1>
+
+<div class="card-container">
+    <div class="card">Jumlah Sapi</div>
+    <div class="card">Rata-rata Produksi Susu</div>
+    <div class="card">Sapi Berisiko/Sakit</div>
+    <div class="card">Macro F1 Model</div>
+</div>
+
+<div class="grid">
+    <img src="figures/01_tren_produksi_susu_harian.png">
+    <img src="figures/02_distribusi_status_kesehatan.png">
+    <img src="figures/03_scatter_pakan_vs_susu.png">
+    <img src="figures/04_thi_vs_susu.png">
+</div>
+\end{lstlisting}
+
+\subsubsection{12.5 Pertanyaan Evaluasi Dashboard}
+
+\begin{enumerate}
+\item Grafik mana yang sebaiknya muncul paling awal?
+\end{enumerate}
+
+\begin{enumerate}
+\item Apakah dashboard terlalu teknis untuk peternak?
+\end{enumerate}
+
+\begin{enumerate}
+\item Informasi apa yang perlu ditambahkan agar dashboard lebih operasional?
+\end{enumerate}
+
+\begin{enumerate}
+\item Bagaimana rekomendasi ditampilkan agar mudah dipahami pengguna non-teknis?
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{13. Alur Presentasi Data Storytelling}
+
+\begin{enumerate}
+\item \textbf{Data:} Jelaskan variabel dan sumber data.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{EDA:} Tunjukkan pola utama dari visualisasi.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Model klasifikasi:} Jelaskan prediksi status kesehatan.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Evaluasi:} Jelaskan metrik dan jenis kesalahan model.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Clustering:} Jelaskan profil kelompok sapi.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Dashboard:} Tunjukkan bagaimana semua insight disatukan.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Rekomendasi:} Tutup dengan tindakan yang dapat dilakukan.
+\end{enumerate}
+
+
+\subsubsection{Contoh Narasi Presentasi}
+
+\begin{quote}
+"Peternakan sapi perah perlu menjaga produktivitas susu dan mendeteksi risiko kesehatan lebih awal. Berdasarkan data 120 sapi selama 90 hari, produksi susu terlihat berfluktuasi dan menurun pada beberapa periode.\end{quote}
+
+\begin{quote}
+\end{quote}
+
+\begin{quote}
+EDA menunjukkan bahwa konsumsi pakan berkaitan positif dengan produksi susu, sedangkan THI berkaitan negatif dengan produksi susu. Model klasifikasi membantu mengidentifikasi sapi sehat, berisiko, dan sakit. Evaluasi model menunjukkan bahwa kelas berisiko perlu diperhatikan karena penting untuk deteksi dini.\end{quote}
+
+\begin{quote}
+\end{quote}
+
+\begin{quote}
+Dashboard kemudian digunakan untuk menyatukan indikator utama, hasil EDA, evaluasi model, dan rekomendasi tindakan sehingga pengelola dapat menentukan sapi dan kandang yang perlu diprioritaskan."\end{quote}
+
+
+\hrule
+
+
+\subsection{14. Diskusi}
+
+\begin{enumerate}
+\item Pilih tiga visualisasi paling penting dan jelaskan alasannya.
+\end{enumerate}
+
+\begin{enumerate}
+\item Mengapa THI menjadi variabel penting dalam analisis ini?
+\end{enumerate}
+
+\begin{enumerate}
+\item Interpretasikan confusion matrix model klasifikasi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Mengapa recall untuk kelas berisiko penting dalam deteksi dini?
+\end{enumerate}
+
+\begin{enumerate}
+\item Jelaskan makna praktis dari hasil clustering.
+\end{enumerate}
+
+\begin{enumerate}
+\item Susun tiga rekomendasi untuk pengelola peternakan.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{15. Penutup}
+
+\subsubsection{Pesan Utama}
+
+Data storytelling membantu mengubah hasil teknis menjadi cerita yang bermakna dan dapat digunakan untuk pengambilan keputusan.
+
+
+Dalam studi kasus peternakan sapi perah:
+
+
+\begin{quote}
+\textbf{Tujuan akhir:} Bukan hanya membuat grafik, tetapi membantu orang mengambil keputusan berbasis data.\end{quote}
+
+
+\hrule
+
+
+\subsection{16. Ringkasan}
+
+\begin{enumerate}
+\item Dashboard yang baik memiliki alur cerita: Overview  menjadi  Explore  menjadi  Explain  menjadi  Evaluate  menjadi  Act.
+\end{enumerate}
+
+\begin{enumerate}
+\item EDA menemukan pola awal dan hipotesis penyebab masalah.
+\end{enumerate}
+
+\begin{enumerate}
+\item Klasifikasi memprediksi status kesehatan sapi; evaluasi harus memperhatikan recall kelas berisiko.
+\end{enumerate}
+
+\begin{enumerate}
+\item Clustering menemukan profil sapi yang berbeda untuk strategi pengelolaan yang berbeda.
+\end{enumerate}
+
+\begin{enumerate}
+\item Insight harus diubah menjadi rekomendasi tindakan yang konkret.
+\end{enumerate}
+
+\begin{enumerate}
+\item Komunikasi hasil analisis sama pentingnya dengan analisis itu sendiri.
+\end{enumerate}
+
+
+
+\end{document}

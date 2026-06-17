@@ -1,0 +1,655 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\title{Kuliah 09 - Pengenalan Machine Learning}
+\author{Yeni Herdiyeni}
+\date{}
+\maketitle
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Kuliah 09 - Pengenalan Machine Learning}
+
+\textbf{Topik:} Konsep Dasar, Tahapan, Evaluasi, dan Use Case  
+
+\textbf{Pengampu:} Yeni Herdiyeni, Program Studi Kecerdasan Buatan, SSMI-IPB University  
+
+\textbf{Tanggal:} 22 April 2026
+
+
+\begin{quote}
+\textbf{Catatan:} File asli berjudul \texttt{kuliah-09_pengenalan_machine_learning_slides.pdf}, namun di dalam slide tertulis "Kuliah 10". Dokumen ini mengikuti konteks materi pengenalan machine learning.\end{quote}
+
+
+\hrule
+
+
+\subsection{1. Capaian Pembelajaran}
+
+Setelah mempelajari materi ini, mahasiswa diharapkan mampu:
+
+
+\begin{enumerate}
+\item Memahami tahapan utama dalam \emph{workflow} machine learning.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menjelaskan mengapa model perlu dievaluasi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Membedakan \textbf{underfitting}, \textbf{overfitting}, dan model yang seimbang.
+\end{enumerate}
+
+\begin{enumerate}
+\item Memahami use case regresi sebagai contoh penerapan machine learning.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{2. Hubungan AI, Machine Learning, dan Data Science}
+
+Tiga bidang ini sering tumpang tindih, tetapi memiliki cakupan yang berbeda:
+
+
+\subsubsection{Artificial Intelligence (AI)}
+
+\subsubsection{Machine Learning (ML)}
+
+\subsubsection{Data Science}
+
+\subsubsection{Tingkatan Data Analytics}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Tingkat & Pertanyaan Kunci & Contoh \\
+\hline
+\textbf{Descriptive} & Apa yang terjadi? & Produksi susu rata-rata 20 liter/hari \\
+\hline
+\textbf{Diagnostic} & Mengapa ini terjadi? & Mengapa hasil panen menurun? \\
+\hline
+\textbf{Predictive} & Apa yang akan terjadi? & Prediksi hasil panen musim depan \\
+\hline
+\textbf{Prescriptive} & Apa yang sebaiknya dilakukan? & Waktu tanam optimal \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{3. Mengapa Kita Perlu Machine Learning?}
+
+\subsubsection{Use Case: Prediksi Produksi Tanaman}
+
+\textbf{Input:}
+
+
+\textbf{Output:} Hasil panen (ton/ha)
+
+
+\paragraph{Pendekatan Tradisional}
+
+\paragraph{Pendekatan Machine Learning}
+
+\subsubsection{Definisi Machine Learning}
+
+\begin{quote}
+\textbf{Machine learning adalah pendekatan dalam kecerdasan buatan yang memungkinkan sistem belajar dari data untuk menemukan pola dan menghasilkan prediksi atau keputusan.}\end{quote}
+
+
+Ide utama:
+
+
+\hrule
+
+
+\subsection{4. Konsep Learning dalam Machine Learning}
+
+\subsubsection{Learning = Data + Model + Penyesuaian Parameter}
+
+\textbf{Komponen utama:}
+
+
+\\[
+\hat{y} = f(X)
+\\]
+
+
+\textbf{Proses learning:}
+
+\begin{enumerate}
+\item Menghasilkan prediksi $\hat{y}$.
+\end{enumerate}
+
+\begin{enumerate}
+\item Membandingkan prediksi dengan nilai sebenarnya $y$.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menghitung error.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menyesuaikan parameter model untuk meminimalkan error.
+\end{enumerate}
+
+
+\\[
+\text{Error} = y - \hat{y}
+\\]
+
+
+\subsubsection{Perbandingan: Pemrograman Tradisional vs Machine Learning}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Aspek & Pemrograman Tradisional & Machine Learning \\
+\hline
+Input & Data + aturan eksplisit & Data + contoh output \\
+\hline
+Proses & Programmer menulis aturan & Sistem belajar pola sendiri \\
+\hline
+Output & Hasil dari aturan & Prediksi/keputusan dari model \\
+\hline
+Cocok untuk & Aturan yang jelas dan stabil & Aturan yang sulit ditulis manual \\
+\hline
+\end{tabular}
+
+
+Contoh cocok untuk ML: prediksi harga rumah, deteksi penyakit, prediksi hasil panen, prediksi curah hujan.
+
+
+\hrule
+
+
+\subsection{5. Jenis-Jenis Learning}
+
+\subsubsection{5.1 Supervised Learning (Pembelajaran Terbimbing)}
+
+\textbf{Konsep:} Belajar dari data yang memiliki label/target.
+
+
+\\[
+(X, y) \rightarrow \text{Model} \rightarrow \hat{y}
+\\]
+
+
+\textbf{Tujuan:} Melakukan prediksi terhadap data baru.
+
+
+\textbf{Contoh:}
+
+
+\subsubsection{5.2 Unsupervised Learning (Pembelajaran Tak Terbimbing)}
+
+\textbf{Konsep:} Belajar dari data tanpa label untuk menemukan pola tersembunyi.
+
+
+\\[
+X \rightarrow \text{Model} \rightarrow \text{Pola / Cluster}
+\\]
+
+
+\textbf{Tujuan:} Mengelompokkan atau menyederhanakan data.
+
+
+\textbf{Contoh:}
+
+
+\subsubsection{5.3 Reinforcement Learning (Pembelajaran Penguatan)}
+
+\textbf{Konsep:} Belajar melalui interaksi dengan lingkungan, menggunakan aksi dan \emph{reward}.
+
+
+\textbf{Komponen:}
+
+
+\textbf{Contoh:}
+
+
+\hrule
+
+
+\subsection{6. Use Case Machine Learning dalam Kehidupan Nyata}
+
+\begin{tabular}{|l|l|}
+\hline
+Domain & Aplikasi \\
+\hline
+\textbf{Pendidikan} & Prediksi mahasiswa berisiko terlambat lulus \\
+\hline
+\textbf{Kesehatan} & Prediksi kemungkinan penyakit dari hasil pemeriksaan \\
+\hline
+\textbf{Pertanian} & Prediksi hasil panen berdasarkan cuaca dan pupuk \\
+\hline
+\textbf{Kelautan} & Prediksi wilayah potensi penangkapan ikan dari data oseanografi \\
+\hline
+\textbf{Bisnis} & Rekomendasi produk dan prediksi churn pelanggan \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{7. Tahapan Machine Learning}
+
+\subsubsection{7.1 Ringkasan Tahapan}
+
+\begin{enumerate}
+\item \textbf{Mengumpulkan data}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Pra-pemrosesan data}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Membagi data: training, validation, testing}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Melatih model}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Mengevaluasi model}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Memilih model terbaik}
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Deployment dan monitoring}
+\end{enumerate}
+
+
+\subsubsection{7.2 Tahapan 1: Problem Formulation dan Data Preparation}
+
+\textbf{Problem formulation:}
+
+
+\textbf{Data preparation:}
+
+
+\subsubsection{7.3 Tahapan 2: Training, Validation, dan Testing}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Subset & Fungsi & Proporsi Umum \\
+\hline
+\textbf{Training set} & Melatih model dan menyesuaikan parameter & 60-80% \\
+\hline
+\textbf{Validation set} & Memilih model atau hyperparameter terbaik & 10-20% \\
+\hline
+\textbf{Test set} & Menilai performa akhir pada data baru & 10-20% \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Intuisi:} training untuk belajar, validation untuk memilih, testing untuk menguji secara final.\end{quote}
+
+
+\subsubsection{7.4 Tahapan 3: Deployment dan Monitoring}
+
+\textbf{Deployment} berarti model digunakan pada lingkungan nyata.
+
+
+Contoh deployment:
+
+
+\textbf{Monitoring diperlukan karena:}
+
+
+\hrule
+
+
+\subsection{8. Mengapa Model Harus Dievaluasi?}
+
+Model yang terlihat bagus pada data training belum tentu bagus pada data baru. Evaluasi model bertujuan untuk:
+
+
+\begin{enumerate}
+\item Membandingkan beberapa model.
+\end{enumerate}
+
+\begin{enumerate}
+\item Mendeteksi underfitting atau overfitting.
+\end{enumerate}
+
+\begin{enumerate}
+\item Memastikan model layak digunakan.
+\end{enumerate}
+
+
+\subsubsection{8.1 Evaluasi pada Regresi}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Metrik & Rumus & Interpretasi \\
+\hline
+\textbf{MAE} & $\frac{1}{n} \sum_{i=1}^{n} \lvert y_i - \hat{y}_i \rvert$ & Rata-rata kesalahan absolut \\
+\hline
+\textbf{MSE} & $\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$ & Rata-rata kesalahan kuadrat, memberi penalti lebih besar pada error besar \\
+\hline
+\textbf{RMSE} & $\sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$ & Error dalam satuan asli target \\
+\hline
+\textbf{$R^2$} & $1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}}$ & Proporsi variansi data yang dijelaskan model \\
+\hline
+\end{tabular}
+
+
+\textbf{Intuisi umum:}
+
+
+\subsubsection{8.2 Evaluasi pada Klasifikasi}
+
+\begin{tabular}{|l|l|}
+\hline
+Metrik & Definisi \\
+\hline
+\textbf{Akurasi} & Proporsi prediksi benar secara keseluruhan \\
+\hline
+\textbf{Precision} & Dari yang diprediksi positif, berapa yang benar-benar positif \\
+\hline
+\textbf{Recall} & Dari yang benar-benar positif, berapa yang berhasil ditemukan \\
+\hline
+\textbf{F1-score} & Rata-rata harmonik precision dan recall \\
+\hline
+\textbf{Confusion Matrix} & Tabel perbandingan prediksi vs aktual per kelas \\
+\hline
+\end{tabular}
+
+
+Contoh: pada deteksi penyakit, \textbf{recall} sering penting agar kasus positif tidak banyak terlewat.
+
+
+\subsubsection{8.3 Use Case Evaluasi di Dunia Nyata}
+
+\begin{tabular}{|l|l|}
+\hline
+Kasus & Metrik yang Cocok \\
+\hline
+Prediksi hasil panen & MAE, RMSE \\
+\hline
+Deteksi tanaman sakit vs sehat & Precision, Recall, F1-score \\
+\hline
+Prediksi wilayah penangkapan ikan & Error prediksi, akurasi klasifikasi, atau metrik spasial \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{9. Underfitting, Overfitting, dan Model Seimbang}
+
+\subsubsection{9.1 Underfitting}
+
+\textbf{Ciri-ciri:}
+
+
+\textbf{Contoh:} menggunakan model linear sederhana untuk data yang pola hubungannya sangat non-linear.
+
+
+\subsubsection{9.2 Overfitting}
+
+\textbf{Ciri-ciri:}
+
+
+\textbf{Penyebab umum:}
+
+
+\subsubsection{9.3 Balanced Model (Model Seimbang)}
+
+\textbf{Ciri-ciri:}
+
+
+\textbf{Tujuan utama ML:} menemukan model yang seimbang antara akurasi dan generalisasi.
+
+
+\subsubsection{9.4 Tabel Perbandingan}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Kondisi & Kompleksitas & Train Error & Test Error \\
+\hline
+Underfitting & Rendah & Tinggi & Tinggi \\
+\hline
+Balanced & Sedang & Rendah & Rendah \\
+\hline
+Overfitting & Tinggi & Sangat rendah & Tinggi \\
+\hline
+\end{tabular}
+
+
+\subsubsection{9.5 Cara Memilih Model}
+
+\begin{enumerate}
+\item Evaluasi dengan validation set.
+\end{enumerate}
+
+\begin{enumerate}
+\item Bandingkan beberapa model dan parameter.
+\end{enumerate}
+
+\begin{enumerate}
+\item Pilih model terbaik pada data validasi, bukan hanya training.
+\end{enumerate}
+
+\begin{enumerate}
+\item Gunakan test set hanya untuk evaluasi akhir.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{10. Contoh Penerapan: Regresi untuk Prediksi Hasil Panen Padi}
+
+\subsubsection{10.1 Tujuan Regresi}
+
+Regresi bertujuan memprediksi nilai numerik atau kontinu.
+
+
+\textbf{Contoh target regresi:}
+
+
+\subsubsection{10.2 Use Case: Prediksi Hasil Panen Padi}
+
+Misalkan kita ingin memprediksi hasil panen padi (ton/ha) berdasarkan fitur:
+
+
+Masalah ini adalah \textbf{supervised learning jenis regresi} karena target yang diprediksi berupa nilai kontinu.
+
+
+\subsubsection{10.3 Representasi Data}
+
+Setiap baris data memiliki:
+
+
+\subsubsection{10.4 Pembagian Data}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Subset & Proporsi & Fungsi \\
+\hline
+Training & 60% & Melatih model \\
+\hline
+Validation & 20% & Memilih model dan hyperparameter \\
+\hline
+Testing & 20% & Evaluasi performa akhir \\
+\hline
+\end{tabular}
+
+
+\subsubsection{10.5 Model Regresi}
+
+Model mencoba memetakan fitur ke hasil panen:
+
+
+\\[
+\hat{y} = f(X)
+\\]
+
+
+Contoh model linear:
+
+
+\\[
+\hat{y} = w_1 \cdot \text{curah hujan} + w_2 \cdot \text{suhu} + w_3 \cdot \text{kelembaban tanah} + w_4 \cdot \text{pupuk}
+\\]
+
+
+Model memiliki parameter $w$ yang dipelajari dari data training.
+
+
+\subsubsection{10.6 Perhitungan Metrik (Contoh Numerik)}
+
+\textbf{Data:}
+
+
+\textbf{Error:}
+
+
+\textbf{MAE:}
+
+
+\\[
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\text{MAE} = \frac{ & 0.5 & + & 2.0 & }{2} = 1.25 \\
+\hline
+\end{tabular}
+\\]
+
+
+\textbf{MSE:}
+
+
+\\[
+\text{MSE} = \frac{0.5^2 + 2.0^2}{2} = \frac{0.25 + 4}{2} = 2.125
+\\]
+
+
+\textbf{RMSE:}
+
+
+\\[
+\text{RMSE} = \sqrt{2.125} \approx 1.46
+\\]
+
+
+\textbf{MAPE:}
+
+
+\\[
+\text{MAPE} = \frac{1}{2} \left( \frac{0.5}{6.0} + \frac{2.0}{5.0} \right) \times 100\% \approx 24.2\%
+\\]
+
+
+\subsubsection{10.7 Interpretasi Metrik dalam Konteks Pertanian}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Metrik & Nilai & Makna \\
+\hline
+MAE & 1.25 ton/ha & Rata-rata kesalahan prediksi \\
+\hline
+RMSE & 1.46 ton/ha & Error dalam satuan asli, lebih mudah dipahami \\
+\hline
+MAPE & 24.2% & Persentase error, mudah dikomunikasikan ke petani \\
+\hline
+$R^2$ & - & Seberapa baik model mengikuti pola data \\
+\hline
+\end{tabular}
+
+
+\subsubsection{10.8 Prediksi untuk Data Baru}
+
+Setelah model dilatih dan dievaluasi, kita dapat memprediksi hasil panen untuk lahan baru:
+
+
+\textbf{Contoh input baru:}
+
+
+\\[
+\hat{y} = f(X_{\text{baru}})
+\\]
+
+
+\textbf{Manfaat:}
+
+
+\hrule
+
+
+\subsection{11. Alur Berpikir pada Use Case Regresi}
+
+\begin{enumerate}
+\item Kumpulkan data historis.
+\end{enumerate}
+
+\begin{enumerate}
+\item Bagi data menjadi training, validation, testing.
+\end{enumerate}
+
+\begin{enumerate}
+\item Latih model regresi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Evaluasi error prediksi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Pilih model terbaik.
+\end{enumerate}
+
+\begin{enumerate}
+\item Gunakan model untuk prediksi musim berikutnya.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{12. Ringkasan}
+
+\begin{enumerate}
+\item \textbf{Workflow ML} mencakup problem formulation, data collection, preprocessing, training, validation, testing, dan deployment.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Evaluasi model} penting untuk memastikan generalisasi, bukan hanya akurasi training.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Pemilihan model} harus mempertimbangkan underfitting, overfitting, dan keseimbangan.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Regresi} adalah contoh supervised learning untuk memprediksi nilai kontinu.
+\end{enumerate}
+
+\begin{enumerate}
+\item Metrik seperti MAE, MSE, RMSE, dan $R^2$ membantu mengukur kualitas model regresi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Machine learning sangat berguna ketika pola data sulit dirumuskan dengan aturan manual.
+\end{enumerate}
+
+
+
+\end{document}

@@ -1,0 +1,694 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{indentfirst}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{orange},
+    breaklines=true,
+    frame=single,
+    showstringspaces=false
+}
+
+\title{Kuliah 10 - Supervised dan Unsupervised Learning}
+\author{Yeni Herdiyeni}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Kuliah 10 - Supervised dan Unsupervised Learning}
+
+\textbf{Topik:} Studi Kasus Analisis dan Prediksi Produktivitas Padi  
+
+\textbf{Pengampu:} Yeni Herdiyeni, Program Studi Kecerdasan Buatan, Sekolah Sains Data, Matematika dan Informatika, IPB University  
+
+\textbf{Tanggal:} 29 April 2026
+
+
+\hrule
+
+
+\subsection{1. Tujuan Pembelajaran}
+
+Setelah mengikuti materi ini, mahasiswa diharapkan mampu:
+
+
+\begin{enumerate}
+\item Membedakan \textbf{supervised}, \textbf{unsupervised}, dan \textbf{reinforcement learning}.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menjelaskan peran \textbf{EDA} dalam pipeline machine learning.
+\end{enumerate}
+
+\begin{enumerate}
+\item Melakukan \textbf{feature engineering} berdasarkan temuan EDA.
+\end{enumerate}
+
+\begin{enumerate}
+\item Memahami konsep evaluasi model supervised dan unsupervised.
+\end{enumerate}
+
+\begin{enumerate}
+\item Menginterpretasikan hasil model dalam konteks kasus pertanian.
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{2. Use Case: Produktivitas Padi}
+
+\subsubsection{2.1 Masalah Utama}
+
+Petani dan pengambil kebijakan ingin memahami faktor-faktor yang memengaruhi hasil panen padi. Dengan memahami faktor-faktor tersebut, mereka dapat:
+
+
+
+\subsubsection{2.2 Data yang Tersedia}
+
+\begin{tabular}{|l|l|}
+\hline
+Variabel & Keterangan \\
+\hline
+Curah hujan & Jumlah hujan dalam periode tertentu (mm) \\
+\hline
+Suhu & Suhu rata-rata lingkungan ( derajat C) \\
+\hline
+Kelembaban & Kelembaban udara/tanah (%) \\
+\hline
+Jumlah pupuk & Dosis pupuk yang diberikan (kg/ha) \\
+\hline
+Luas lahan & Luas area tanam (ha) \\
+\hline
+Hasil panen & Target: produksi padi (ton/ha) \\
+\hline
+\end{tabular}
+
+
+\subsubsection{2.3 Pertanyaan Data Science}
+
+\begin{quote}
+Bagaimana data ini dapat digunakan untuk memprediksi hasil panen dan memahami pola lahan?\end{quote}
+
+
+\hrule
+
+
+\subsection{3. Motivasi Machine Learning}
+
+\subsubsection{3.1 Pendekatan Tradisional}
+
+Dalam pendekatan tradisional, kita membuat aturan secara manual:
+
+
+\begin{quote}
+"Jika curah hujan tinggi dan pupuk cukup, maka hasil panen tinggi."\end{quote}
+
+
+Namun, dunia nyata jauh lebih kompleks:
+
+
+\subsubsection{3.2 Motivasi ML}
+
+\begin{quote}
+\textbf{Machine learning digunakan ketika pola dalam data sulit dirumuskan secara eksplisit dengan aturan manual.}\end{quote}
+
+
+ML mampu:
+
+
+\hrule
+
+
+\subsection{4. Tiga Paradigma Machine Learning}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Paradigma & Data & Contoh dalam Use Case \\
+\hline
+\textbf{Supervised Learning} & Ada input dan target & Prediksi hasil panen berdasarkan cuaca dan pupuk \\
+\hline
+\textbf{Unsupervised Learning} & Hanya input, tanpa target & Segmentasi lahan berdasarkan karakteristiknya \\
+\hline
+\textbf{Reinforcement Learning} & Belajar dari aksi dan reward & Sistem irigasi otomatis belajar kapan memberi air \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{5. Mengapa Tidak Langsung Modeling?}
+
+Kesalahan umum dalam machine learning adalah langsung membuat model tanpa memahami data. Risikonya:
+
+
+
+\begin{quote}
+\textbf{Pertanyaan kritis:} Sebelum membuat model, apakah kita sudah memahami karakteristik datanya?\end{quote}
+
+
+\hrule
+
+
+\subsection{6. Peran EDA dalam Machine Learning}
+
+\subsubsection{6.1 Apa itu EDA?}
+
+\textbf{Exploratory Data Analysis (EDA)} adalah tahap untuk memahami data sebelum modeling. EDA membantu menjawab pertanyaan seperti:
+
+
+
+\begin{quote}
+\textbf{Ide utama:} EDA bukan sekadar membuat grafik, tetapi proses berpikir untuk menentukan strategi modeling.\end{quote}
+
+
+\subsubsection{6.2 EDA 1: Distribusi Curah Hujan}
+
+\textbf{Pertanyaan:}
+
+
+\textbf{Insight:}
+
+
+\textbf{Keputusan:}
+
+
+\subsubsection{6.3 EDA 2: Relasi Curah Hujan dan Hasil Panen}
+
+\textbf{Pertanyaan:}
+
+
+\textbf{Insight:}
+
+
+\textbf{Keputusan:}
+
+
+\subsubsection{6.4 EDA 3: Outlier pada Hasil Panen}
+
+\textbf{Pertanyaan:}
+
+
+\textbf{Insight:}
+
+
+\textbf{Keputusan:}
+
+
+\subsubsection{6.5 EDA 4: Korelasi Antar Variabel}
+
+\textbf{Pertanyaan:}
+
+
+\textbf{Insight:}
+
+
+\textbf{Keputusan:}
+
+
+\subsubsection{6.6 Dari EDA ke Keputusan Modeling}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Temuan EDA & Keputusan & Dampak ke Model \\
+\hline
+Data skewed & Scaling / transformasi & Model lebih stabil \\
+\hline
+Relasi non-linear & Tambah fitur kuadrat & Pola lebih tertangkap \\
+\hline
+Outlier bermakna & Tidak langsung dihapus & Model tetap merekam kasus ekstrem \\
+\hline
+Fitur lemah & Feature selection & Model lebih sederhana \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{7. Feature Engineering}
+
+\subsubsection{7.1 Definisi}
+
+\textbf{Feature engineering} adalah proses membentuk fitur agar lebih representatif bagi model.
+
+
+\begin{quote}
+\textbf{Intuisi:} Feature engineering adalah cara memasukkan pemahaman domain ke dalam data.\end{quote}
+
+
+\subsubsection{7.2 Contoh pada Use Case Produktivitas Padi}
+
+\textbf{Fitur kuadrat untuk menangkap relasi non-linear:}
+
+
+\\[
+\text{rainfall}^2
+\\]
+
+
+\textbf{Fitur rasio untuk menggambarkan efisiensi:}
+
+
+\\[
+\text{fertilizer per area} = \frac{\text{fertilizer}}{\text{land area}}
+\\]
+
+
+\textbf{Fitur kategori curah hujan:}
+
+
+\begin{lstlisting}[language=Python]
+df["rainfall_category"] = pd.cut(
+    df["rainfall"],
+    bins=[-np.inf, 140, 220, np.inf],
+    labels=["rendah", "sedang", "tinggi"]
+)
+\end{lstlisting}
+
+\hrule
+
+
+\subsection{8. Supervised Learning: Prediksi Hasil Panen}
+
+\subsubsection{8.1 Konsep}
+
+Dalam supervised learning, data memiliki pasangan input dan target:
+
+
+\\[
+(X, y)
+\\]
+
+
+Pada use case ini:
+
+
+\\[
+X = \{\text{curah hujan}, \text{suhu}, \text{kelembaban}, \text{pupuk}, \text{luas lahan}\}
+\\]
+
+
+\\[
+y = \text{hasil panen}
+\\]
+
+
+\textbf{Tujuan:} Model belajar fungsi $f(X) \rightarrow y$ untuk memprediksi hasil panen dari data baru.
+
+
+\subsubsection{8.2 Contoh Model: Linear Regression}
+
+Model sederhana:
+
+
+\\[
+\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p
+\\]
+
+
+Karena EDA menunjukkan relasi non-linear, kita tambahkan fitur kuadrat:
+
+
+\\[
+\hat{y} = \beta_0 + \beta_1 \cdot \text{rainfall} + \beta_2 \cdot \text{rainfall}^2 + \dots
+\\]
+
+
+\begin{quote}
+\textbf{Makna penting:} Model tetap linear terhadap parameter, tetapi mampu menangkap pola non-linear melalui transformasi fitur.\end{quote}
+
+
+\subsubsection{8.3 Evaluasi Supervised Learning}
+
+\textbf{Mean Absolute Error (MAE):}
+
+
+\\[
+\begin{tabular}{|l|l|}
+\hline
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} & y_i - \hat{y}_i \\
+\hline
+\end{tabular}
+\\]
+
+
+\textbf{Root Mean Squared Error (RMSE):}
+
+
+\\[
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+\\]
+
+
+\textbf{Koefisien Determinasi ($R^2$):}
+
+
+\\[
+R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}}
+\\]
+
+
+\textbf{Interpretasi:} Semakin kecil MAE/RMSE dan semakin besar $R^2$, semakin baik model menjelaskan data.
+
+
+\subsubsection{8.4 Grafik Actual vs Predicted}
+
+Cara membaca grafik:
+
+
+\hrule
+
+
+\subsection{9. Unsupervised Learning: Segmentasi Lahan}
+
+\subsubsection{9.1 Konsep}
+
+Dalam unsupervised learning, data tidak memiliki target:
+
+
+\\[
+X = \{\text{curah hujan}, \text{pupuk}, \text{suhu}, \text{hasil panen}\}
+\\]
+
+
+\textbf{Tujuan:}
+
+
+\textbf{Contoh pertanyaan:} Apakah terdapat kelompok lahan dengan kondisi input dan hasil panen yang berbeda?
+
+
+\subsubsection{9.2 Contoh Model: K-Means Clustering}
+
+K-Means membagi data ke dalam $K$ cluster dengan meminimalkan jarak intra-cluster:
+
+
+\\[
+\begin{tabular}{|l|l|l|}
+\hline
+\min \sum_{k=1}^{K} \sum_{x_i \in C_k} \ & x_i - \mu_k\ & ^2 \\
+\hline
+\end{tabular}
+\\]
+
+
+Di mana:
+
+
+\textbf{Intuisi:} Data yang mirip ditempatkan dalam cluster yang sama. Setiap cluster memiliki pusat yang disebut centroid.
+
+
+\begin{quote}
+\textbf{Catatan:} Hasil clustering harus diinterpretasikan dengan \emph{domain knowledge}.\end{quote}
+
+
+\subsubsection{9.3 Evaluasi Unsupervised: Silhouette Score}
+
+Karena tidak ada label benar, evaluasi clustering menggunakan metrik seperti \textbf{Silhouette Score}:
+
+
+\\[
+s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
+\\]
+
+
+Di mana:
+
+
+\textbf{Interpretasi:} Nilai mendekati 1 menunjukkan cluster lebih terpisah dengan baik.
+
+
+\subsubsection{9.4 Elbow Method untuk Memilih Jumlah Cluster}
+
+\textbf{Ide dasar:} Elbow method digunakan untuk menentukan jumlah cluster optimal $K$.
+
+
+\textbf{Langkah:}
+
+
+\\[
+\begin{tabular}{|l|l|l|}
+\hline
+\text{WCSS} = \sum_{k=1}^{K} \sum_{x_i \in C_k} \ & x_i - \mu_k\ & ^2 \\
+\hline
+\end{tabular}
+\\]
+
+
+\begin{enumerate}
+\item Ulangi untuk berbagai nilai $K$.
+\end{enumerate}
+
+\begin{enumerate}
+\item Plot $K$ vs WCSS.
+\end{enumerate}
+
+\begin{enumerate}
+\item Pilih titik "siku" (\emph{elbow}) di mana penurunan WCSS mulai melambat.
+\end{enumerate}
+
+
+\begin{quote}
+\textbf{Pesan:} Pemilihan cluster perlu menggabungkan metrik dan interpretasi domain.\end{quote}
+
+
+\subsubsection{9.5 Interpretasi Cluster}
+
+Pertanyaan interpretatif:
+
+
+\begin{quote}
+\textbf{Insight:} Clustering bukan akhir analisis, tetapi awal untuk memahami segmentasi data.\end{quote}
+
+
+\hrule
+
+
+\subsection{10. Reinforcement Learning dalam Use Case}
+
+Walaupun fokus praktikum adalah supervised dan unsupervised, reinforcement learning juga dapat muncul dalam pertanian.
+
+
+\textbf{Contoh: Sistem Irigasi Otomatis}
+
+
+\begin{tabular}{|l|l|}
+\hline
+Komponen & Peran \\
+\hline
+\textbf{Agent} & Sistem irigasi \\
+\hline
+\textbf{Environment} & Lahan pertanian \\
+\hline
+\textbf{Action} & Memberi air atau tidak \\
+\hline
+\textbf{Reward} & Peningkatan hasil panen atau efisiensi air \\
+\hline
+\end{tabular}
+
+
+\begin{quote}
+\textbf{Intuisi:} Reinforcement learning cocok ketika sistem harus belajar mengambil keputusan secara bertahap melalui feedback.\end{quote}
+
+
+\hrule
+
+
+\subsection{11. Pipeline Machine Learning End-to-End}
+
+
+\begin{enumerate}
+\item \textbf{Data Collection}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item \textbf{EDA}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item \textbf{Feature Engineering}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item \textbf{Modeling}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item \textbf{Evaluation}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item \textbf{Deployment}
+\end{enumerate}
+
+
+\hrule
+
+
+\subsection{12. Deployment: Dari Model ke Keputusan}
+
+Model machine learning tidak berhenti pada akurasi. Contoh deployment:
+
+
+
+\begin{quote}
+\textbf{Pesan utama:} Nilai utama model adalah ketika hasilnya dapat digunakan untuk mendukung keputusan nyata.\end{quote}
+
+
+\hrule
+
+
+\subsection{13. Kode Program}
+
+\subsubsection{13.1 Generate Data Sintetis}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+n = 180
+
+rainfall = np.random.normal(180, 45, n)
+temperature = np.random.normal(27, 2.2, n)
+humidity = np.random.normal(75, 8, n)
+fertilizer = np.random.normal(110, 25, n)
+land_area = np.random.uniform(0.5, 3.0, n)
+
+# Membentuk target dengan efek non-linear
+rain_effect = -0.0009 * (rainfall - 180)**2 + 5.5
+fert_effect = 0.025 * fertilizer
+temp_effect = -0.08 * (temperature - 27)**2 + 1.2
+
+yield_ton_ha = rain_effect + fert_effect + temp_effect
+\end{lstlisting}
+
+\subsubsection{13.2 Feature Engineering}
+
+\begin{lstlisting}[language=Python]
+df["rainfall_squared"] = df["rainfall"] ** 2
+
+df["fertilizer_per_area"] = df["fertilizer"] / df["land_area"]
+
+df["rainfall_category"] = pd.cut(
+    df["rainfall"],
+    bins=[-np.inf, 140, 220, np.inf],
+    labels=["rendah", "sedang", "tinggi"]
+)
+\end{lstlisting}
+
+\subsubsection{13.3 Supervised Learning}
+
+\begin{lstlisting}[language=Python]
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+features = [
+    "rainfall",
+    "rainfall_squared",
+    "temperature",
+    "humidity",
+    "fertilizer",
+    "land_area"
+]
+
+X = df[features]
+y = df["yield_ton_ha"]
+
+model = LinearRegression()
+model.fit(X, y)
+
+y_pred = model.predict(X)
+\end{lstlisting}
+
+\subsubsection{13.4 Unsupervised Learning}
+
+\begin{lstlisting}[language=Python]
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
+
+X_cluster = df[["rainfall", "fertilizer", "temperature", "yield_ton_ha"]]
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_cluster)
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+labels = kmeans.fit_predict(X_scaled)
+
+score = silhouette_score(X_scaled, labels)
+\end{lstlisting}
+
+\hrule
+
+
+\subsection{14. Ringkasan: Satu Use Case, Banyak Pendekatan}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Tujuan & Pendekatan & Output \\
+\hline
+Prediksi hasil panen & Supervised Learning & Nilai hasil panen \\
+\hline
+Segmentasi lahan & Unsupervised Learning & Kelompok lahan \\
+\hline
+Optimasi irigasi & Reinforcement Learning & Kebijakan aksi \\
+\hline
+\end{tabular}
+
+
+\hrule
+
+
+\subsection{15. Kesimpulan Utama}
+
+\begin{enumerate}
+\item EDA adalah fondasi penting sebelum modeling.
+\end{enumerate}
+
+\begin{enumerate}
+\item Feature engineering harus didasarkan pada insight dari data.
+\end{enumerate}
+
+\begin{enumerate}
+\item Supervised learning digunakan untuk prediksi dengan label.
+\end{enumerate}
+
+\begin{enumerate}
+\item Unsupervised learning digunakan untuk menemukan struktur tersembunyi.
+\end{enumerate}
+
+\begin{enumerate}
+\item Evaluasi model harus disesuaikan dengan jenis masalah.
+\end{enumerate}
+
+
+\begin{quote}
+\textbf{Pesan akhir:} Model yang baik bukan hanya akurat, tetapi juga dapat dijelaskan dan berguna untuk pengambilan keputusan.\end{quote}
+
+
+
+\end{document}

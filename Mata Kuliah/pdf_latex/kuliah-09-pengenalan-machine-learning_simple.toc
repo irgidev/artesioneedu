@@ -1,0 +1,46 @@
+\contentsline {section}{\numberline {1}Kuliah 09 - Pengenalan Machine Learning}{3}{}%
+\contentsline {subsection}{\numberline {1.1}1. Capaian Pembelajaran}{3}{}%
+\contentsline {subsection}{\numberline {1.2}2. Hubungan AI, Machine Learning, dan Data Science}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.1}Artificial Intelligence (AI)}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.2}Machine Learning (ML)}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.3}Data Science}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.4}Tingkatan Data Analytics}{3}{}%
+\contentsline {subsection}{\numberline {1.3}3. Mengapa Kita Perlu Machine Learning?}{3}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Use Case: Prediksi Produksi Tanaman}{3}{}%
+\contentsline {paragraph}{Pendekatan Tradisional}{3}{}%
+\contentsline {paragraph}{Pendekatan Machine Learning}{3}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Definisi Machine Learning}{4}{}%
+\contentsline {subsection}{\numberline {1.4}4. Konsep Learning dalam Machine Learning}{4}{}%
+\contentsline {subsubsection}{\numberline {1.4.1}Learning = Data + Model + Penyesuaian Parameter}{4}{}%
+\contentsline {subsubsection}{\numberline {1.4.2}Perbandingan: Pemrograman Tradisional vs Machine Learning}{4}{}%
+\contentsline {subsection}{\numberline {1.5}5. Jenis-Jenis Learning}{4}{}%
+\contentsline {subsubsection}{\numberline {1.5.1}5.1 Supervised Learning (Pembelajaran Terbimbing)}{4}{}%
+\contentsline {subsubsection}{\numberline {1.5.2}5.2 Unsupervised Learning (Pembelajaran Tak Terbimbing)}{4}{}%
+\contentsline {subsubsection}{\numberline {1.5.3}5.3 Reinforcement Learning (Pembelajaran Penguatan)}{4}{}%
+\contentsline {subsection}{\numberline {1.6}6. Use Case Machine Learning dalam Kehidupan Nyata}{5}{}%
+\contentsline {subsection}{\numberline {1.7}7. Tahapan Machine Learning}{5}{}%
+\contentsline {subsubsection}{\numberline {1.7.1}7.1 Ringkasan Tahapan}{5}{}%
+\contentsline {subsubsection}{\numberline {1.7.2}7.2 Tahapan 1: Problem Formulation dan Data Preparation}{5}{}%
+\contentsline {subsubsection}{\numberline {1.7.3}7.3 Tahapan 2: Training, Validation, dan Testing}{5}{}%
+\contentsline {subsubsection}{\numberline {1.7.4}7.4 Tahapan 3: Deployment dan Monitoring}{5}{}%
+\contentsline {subsection}{\numberline {1.8}8. Mengapa Model Harus Dievaluasi?}{6}{}%
+\contentsline {subsubsection}{\numberline {1.8.1}8.1 Evaluasi pada Regresi}{6}{}%
+\contentsline {subsubsection}{\numberline {1.8.2}8.2 Evaluasi pada Klasifikasi}{6}{}%
+\contentsline {subsubsection}{\numberline {1.8.3}8.3 Use Case Evaluasi di Dunia Nyata}{6}{}%
+\contentsline {subsection}{\numberline {1.9}9. Underfitting, Overfitting, dan Model Seimbang}{6}{}%
+\contentsline {subsubsection}{\numberline {1.9.1}9.1 Underfitting}{6}{}%
+\contentsline {subsubsection}{\numberline {1.9.2}9.2 Overfitting}{6}{}%
+\contentsline {subsubsection}{\numberline {1.9.3}9.3 Balanced Model (Model Seimbang)}{7}{}%
+\contentsline {subsubsection}{\numberline {1.9.4}9.4 Tabel Perbandingan}{7}{}%
+\contentsline {subsubsection}{\numberline {1.9.5}9.5 Cara Memilih Model}{7}{}%
+\contentsline {subsection}{\numberline {1.10}10. Contoh Penerapan: Regresi untuk Prediksi Hasil Panen Padi}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.1}10.1 Tujuan Regresi}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.2}10.2 Use Case: Prediksi Hasil Panen Padi}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.3}10.3 Representasi Data}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.4}10.4 Pembagian Data}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.5}10.5 Model Regresi}{7}{}%
+\contentsline {subsubsection}{\numberline {1.10.6}10.6 Perhitungan Metrik (Contoh Numerik)}{8}{}%
+\contentsline {subsubsection}{\numberline {1.10.7}10.7 Interpretasi Metrik dalam Konteks Pertanian}{8}{}%
+\contentsline {subsubsection}{\numberline {1.10.8}10.8 Prediksi untuk Data Baru}{8}{}%
+\contentsline {subsection}{\numberline {1.11}11. Alur Berpikir pada Use Case Regresi}{8}{}%
+\contentsline {subsection}{\numberline {1.12}12. Ringkasan}{8}{}%

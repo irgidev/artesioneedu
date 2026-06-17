@@ -1,0 +1,570 @@
+Kuliah 10-Pengenalan Machine Learning
+
+ Konsep Dasar, Tahapan, Evaluasi, dan Use Case
+
+                      Yeni Herdiyeni
+               Prodi Kecerdasan Buatan
+
+                   SSMI-IPB University
+
+                       22 April 2026
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  1 / 44
+Capaian Pembelajaran
+
+      Menjelaskan konsep learning dalam machine learning.
+      Memahami tahapan utama dalam workflow machine learning.
+      Menjelaskan mengapa model perlu dievaluasi.
+      Membedakan underfitting, overfitting, dan model yang seimbang.
+      Memahami use case regresi sebagai contoh penerapan machine learning.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  2 / 44
+AI, Machine Learning, dan Data Science
+
+Artificial Intelligence (AI)
+      Bidang luas untuk membangun sistem yang mampu meniru kecerdasan manusia
+      Contoh: reasoning, planning, problem solving, perception
+
+Machine Learning (ML)
+      Subset dari AI yang berfokus pada sistem yang belajar dari data
+      Tidak diprogram secara eksplisit, tetapi belajar pola dari data
+      Contoh: klasifikasi, prediksi, clustering
+
+Data Science
+      Bidang yang berfokus pada pengolahan data untuk menghasilkan insight
+      Mencakup: data collection, cleaning, analysis, visualization
+      Machine learning adalah salah satu tools dalam data science
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  3 / 44
+ Tingkatan Data Analytics                                                                      22 April 2026  4 / 44
+
+  Diagnostic Analytics
+        Mengapa ini terjadi?
+        Analisis penyebab
+        Contoh: Mengapa hasil panen menurun?
+
+  Predictive Analytics
+        Apa yang akan terjadi?
+        Menggunakan machine learning
+        Contoh: Prediksi hasil panen
+
+  Prescriptive Analytics
+        Apa yang sebaiknya dilakukan?
+        Memberikan rekomendasi
+        Contoh: Waktu tanam optimal
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Mengapa Kita Perlu Machine Learning?
+
+Use Case: Prediksi Produksi Tanaman  Pendekatan Tradisional
+                                           Sulit membuat aturan pasti
+Input:                                     Banyak faktor saling berinteraksi
+      Curah hujan                          Bersifat subjektif
+      Suhu
+      Kelembaban tanah               Pendekatan Machine Learning
+      Jenis tanah                          Belajar dari data historis
+      Pupuk                                Menangkap pola kompleks
+                                           Prediksi lebih akurat
+Output:
+      Hasil panen (ton/ha)
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  5 / 44
+Apa Itu Machine Learning?
+
+Machine learning adalah pendekatan dalam kecerdasan buatan yang memungkinkan sistem
+belajar dari data untuk menemukan pola dan menghasilkan prediksi atau keputusan.
+Ide utama:
+
+      Kita tidak menulis semua aturan secara eksplisit.
+      Sistem belajar hubungan antara input dan output dari contoh data.
+      Hasil belajar direpresentasikan dalam bentuk model.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  6 / 44
+Pipeline Machine Learning
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  7 / 44
+Use Case dan Konsep Learning
+
+Use Case: Prediksi Hasil Panen  Proses Learning
+                                      Model belajar dari data historis
+Data (Pengalaman)                     Menemukan pola hubungan input-output
+      Curah hujan                     Menyesuaikan parameter model
+      Suhu
+      Kelembaban tanah          Output
+      Jenis pupuk                     Prediksi hasil panen baru
+
+Target (Label)
+      Hasil panen (ton/ha)
+
+Learning = Data + Model + Penyesuaian  Prediksi
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  8 / 44
+Use Case: Data Understanding (Exploratory Data Analysis)
+
+Use Case
+      Prediksi hasil panen padi
+      Sebelum modeling, kita perlu memahami data
+
+Pertanyaan EDA
+      Bagaimana distribusi curah hujan?
+      Apakah suhu berkorelasi dengan hasil panen?
+      Apakah terdapat outlier pada data?
+      Fitur mana yang paling berpengaruh?
+
+Tujuan
+      Memahami karakteristik data
+      Mengidentifikasi masalah (noise, missing values, outlier)
+      Menentukan strategi modeling yang tepat
+
+   Insight                                                                                     22 April 2026  9 / 44
+         Model yang baik selalu diawali dengan pemahaman data yang baik
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Contoh EDA plot
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  10 / 44
+Konsep Learning
+
+Learning pada machine learning adalah     Ilustrasi proses learning: input  model  prediksi
+proses menyesuaikan model agar kesalahan                               error
+prediksi semakin kecil.
+Komponen utama:
+
+      Input X : fitur yang diamati
+      Target y : nilai sebenarnya
+      Model f : pemetaan X  y
+      Loss/Error: ukuran kesalahan
+
+                      y^ = f (X )
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  11 / 44
+Pemrograman Tradisional vs Machine Learning
+
+Pemrograman Tradisional                   Machine Learning
+      Data + aturan diberikan programmer        Data + contoh output diberikan ke
+      Sistem menghasilkan output                model
+      Cocok jika aturan jelas                   Sistem belajar pola sendiri
+                                                Cocok jika aturan sulit ditulis manual
+
+Contoh: memprediksi harga rumah, deteksi penyakit, prediksi hasil panen, prediksi curah hujan.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  12 / 44
+Jenis Learning Secara Umum
+
+      Supervised Learning: belajar dari data yang memiliki target/label.
+              Contoh: prediksi harga rumah, klasifikasi email spam.
+
+      Unsupervised Learning: belajar dari data tanpa label untuk menemukan pola
+      tersembunyi.
+
+              Contoh: segmentasi pelanggan, pengelompokan wilayah pertanian.
+      Reinforcement Learning: belajar melalui interaksi, aksi, dan reward.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  13 / 44
+Supervised Learning
+
+Konsep                                       Input X  Model  Output y
+      Belajar dari data yang memiliki
+      label/target
+      Model mempelajari hubungan antara
+      input dan output
+
+Tujuan
+      Melakukan prediksi terhadap data baru
+
+Contoh
+      Prediksi harga rumah
+      Klasifikasi email spam
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  14 / 44
+Unsupervised Learning
+
+Konsep                                                                                         Data  Pola / Cluster
+      Belajar dari data tanpa label
+      Model mencari pola tersembunyi dalam
+      data
+
+Tujuan
+      Mengelompokkan atau menyederhanakan
+      data
+
+Contoh
+      Segmentasi pelanggan
+      Pengelompokan wilayah pertanian
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026         15 / 44
+Reinforcement Learning
+
+Konsep
+      Belajar melalui interaksi
+      Menggunakan aksi dan feedback
+      (reward)
+
+Komponen
+      Agent
+      Environment
+      Reward
+
+Contoh
+      Robot navigasi
+      Sistem rekomendasi adaptif
+
+                                     Agent  Environment  Reward
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  16 / 44
+Use Case Machine Learning dalam Kehidupan Nyata
+
+      Pendidikan: prediksi mahasiswa berisiko terlambat lulus.
+      Kesehatan: prediksi kemungkinan penyakit dari hasil pemeriksaan.
+      Pertanian: prediksi hasil panen berdasarkan curah hujan, suhu, dan kelembapan.
+      Kelautan: prediksi wilayah potensi penangkapan ikan dari data oseanografi.
+      Bisnis: rekomendasi produk dan prediksi churn pelanggan.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  17 / 44
+ Tahapan Machine Learning                                                                      22 April 2026  18 / 44
+
+     1 Menentukan masalah dan tujuan
+     2 Mengumpulkan data
+     3 Pra-pemrosesan data
+     4 Membagi data: training, validation, testing
+     5 Melatih model
+     6 Mengevaluasi model
+     7 Memilih model terbaik
+     8 Deployment dan monitoring
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+ 1. Problem Formulation dan Data Preparation                                                   22 April 2026  19 / 44
+
+   Problem formulation
+         Apa yang ingin diprediksi?
+         Apakah masalahnya regresi atau klasifikasi?
+         Apa metrik keberhasilannya?
+
+   Data preparation
+         Membersihkan missing values dan noise
+         Memilih fitur yang relevan
+         Melakukan encoding/normalisasi jika diperlukan
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+2. Training, Validation, dan Testing
+
+Training Set
+
+Digunakan untuk melatih model dan menyesuaikan parameter.
+
+Validation Set
+
+Digunakan untuk memilih model atau hyperparameter yang paling baik.
+
+Test Set
+
+Digunakan untuk menilai performa akhir model pada data yang benar-benar belum pernah
+dilihat.
+
+Intuisi: training untuk belajar, validation untuk memilih, testing untuk menguji secara final.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  20 / 44
+Skema Sederhana Workflow Machine Learning
+
+                  Data Mentah  Pra-pemrosesan  Training
+                                             
+
+                                      Validation 
+                                             
+
+                                Testing  Deployment
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  21 / 44
+ 3. Deployment dan Monitoring                                                                  22 April 2026  22 / 44
+
+   Deployment berarti model digunakan pada lingkungan nyata.
+   Contoh deployment:
+
+         Sistem prediksi harga komoditas di dashboard.
+         Model prediksi risiko pasien di rumah sakit.
+         Sistem rekomendasi lokasi tanam untuk petani.
+   Monitoring diperlukan karena:
+         data baru bisa berubah pola
+         performa model bisa menurun
+         model perlu diperbarui secara berkala
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Mengapa Model Harus Dievaluasi?
+
+Model yang terlihat bagus pada data training belum tentu bagus pada data baru.
+Evaluasi model bertujuan untuk:
+
+      mengukur kualitas prediksi
+      membandingkan beberapa model
+      mendeteksi underfitting atau overfitting
+      memastikan model layak digunakan
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  23 / 44
+ Evaluasi pada Regresi                                                                         22 April 2026  24 / 44
+
+   Untuk masalah regresi, beberapa metrik umum adalah:
+         MAE (Mean Absolute Error)
+         MSE (Mean Squared Error)
+         RMSE (Root Mean Squared Error)
+         R2 (Koefisien determinasi)
+
+   Intuisi umum:
+         Error kecil  prediksi lebih baik
+         R2 besar  model menjelaskan variasi data lebih baik
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Evaluasi pada Klasifikasi
+
+Untuk masalah klasifikasi, metrik yang umum digunakan:
+      Akurasi
+      Precision
+      Recall
+      F1-score
+      Confusion matrix
+
+Contoh: pada deteksi penyakit, recall sering penting agar kasus positif tidak banyak terlewat.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  25 / 44
+Use Case: Evaluasi Model di Dunia Nyata
+
+Kasus 1: Prediksi hasil panen
+Metrik yang cocok: MAE, RMSE
+Kasus 2: Deteksi tanaman sakit vs sehat
+Metrik yang cocok: precision, recall, F1-score
+Kasus 3: Prediksi wilayah penangkapan ikan
+Metrik dapat dipilih sesuai target: error prediksi, akurasi klasifikasi, atau metrik spasial tertentu
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  26 / 44
+Pemilihan Model Terbaik
+
+ Dalam praktiknya, kita tidak hanya mencari model yang akurat pada training set, tetapi model
+                                   yang mampu melakukan generalisasi.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  27 / 44
+Underfitting
+
+Ciri-ciri:
+      Model terlalu sederhana
+      Tidak mampu menangkap pola penting
+      Error training dan testing sama-sama tinggi
+
+Contoh: menggunakan model linear sederhana untuk data yang pola hubungan sebenarnya
+sangat non-linear.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  28 / 44
+ Overfitting                                                                                   22 April 2026  29 / 44
+
+   Ciri-ciri:
+         Model terlalu kompleks
+         Sangat baik pada training set
+         Buruk pada validation atau test set
+
+   Penyebab umum:
+         terlalu banyak parameter
+         data training terlalu sedikit
+         model menangkap noise
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Balanced Model
+
+Ciri-ciri:
+      Cukup kompleks untuk menangkap pola utama
+      Tidak terlalu sensitif terhadap noise
+      Performa training dan testing sama-sama baik
+
+Tujuan utama machine learning: menemukan model yang seimbang antara akurasi dan
+generalisasi.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  30 / 44
+Ilustrasi Konseptual Pemilihan Model
+
+Kondisi       Kompleksitas Train Error Test Error
+
+Underfitting  Rendah                       Tinggi                                              Tinggi
+Balanced      Sedang                      Rendah                                               Rendah
+Overfitting   Tinggi                  Sangat rendah                                            Tinggi
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  31 / 44
+Bagaimana Memilih Model?
+
+      Mulai dari model sederhana
+      Evaluasi dengan validation set
+      Bandingkan beberapa model dan parameter
+      Pilih model yang paling baik pada data validasi, bukan hanya training
+      Gunakan test set hanya untuk evaluasi akhir
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  32 / 44
+Contoh Machine Learning: Regresi
+
+Tujuan regresi: memprediksi nilai numerik atau kontinu.
+Contoh target regresi:
+
+      harga rumah
+      suhu udara
+      hasil panen
+      jumlah produksi ikan
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  33 / 44
+Use Case Regresi: Prediksi Hasil Panen Padi
+
+Misalkan kita ingin memprediksi hasil panen padi (ton/ha) berdasarkan beberapa fitur:
+      curah hujan
+      suhu rata-rata
+      kelembapan tanah
+      penggunaan pupuk
+
+Masalah ini adalah supervised learning jenis regresi, karena target yang diprediksi berupa
+nilai kontinu.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  34 / 44
+Pipeline: Data Pertanian
+
+Dataset                            Representasi data input-output
+      Data historis budidaya padi
+      Setiap baris data memiliki:
+             fitur (X )
+             hasil panen (y )
+
+Contoh fitur
+      Curah hujan (mm)
+      Suhu (C)
+      Kelembaban tanah (%)
+      Pupuk (kg/ha)
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  35 / 44
+Pipeline: Pembagian Data
+
+Mengapa data dibagi?                       Ilustrasi pembagian data training, validation, dan
+      Training set: melatih model                                     testing
+      Validation set: memilih
+      model/menyetel parameter
+      Testing set: menguji performa akhir
+
+Contoh proporsi
+      Training: 60%
+      Validation: 20%
+      Testing: 20%
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  36 / 44
+Pipeline: Model Regresi
+
+Model mencoba memetakan fitur ke hasil panen
+                                                      y^ = f (X )
+
+Contoh
+               y^ = w1 · curah hujan + w2 · suhu + w3 · kelembaban tanah + w4 · pupuk
+
+      Model memiliki parameter w
+      Parameter dipelajari dari data training
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  37 / 44
+ Pipeline: Training                                                                            22 April 2026  38 / 44
+
+   Proses Learning
+         Model menerima data training
+         Menghasilkan prediksi y^
+         Membandingkan prediksi dengan nilai sebenarnya y
+         Menghitung error
+         Menyesuaikan parameter model
+
+                                                      Error = y - y^
+   Tujuan
+
+         Meminimalkan error agar prediksi semakin akurat
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning
+Pipeline: Evaluasi Model
+
+Evaluasi dilakukan pada validation dan  Perbandingan hasil prediksi dan nilai aktual untuk
+testing set                                          mengevaluasi performa model
+Metric regresi
+
+      Mean Absolute Error (MAE)
+      Mean Squared Error (MSE)
+      R2
+
+Tujuan evaluasi
+      Mengukur performa model
+      Mendeteksi overfitting
+      Memilih model terbaik
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  39 / 44
+Perbandingan Metrik (Perhitungan) -- Prediksi Hasil Panen
+
+Use Case                                      RMSE
+      Aktual: [6.0, 5.0] ton/ha                                        
+      Prediksi: [5.5, 3.0]
+                                                           RMSE = 2.125  1.46
+
+Error                                         MAPE
+      e1 = 0.5
+      e2 = 2.0                                        1 0.5 2.0
+                                              MAPE =                                           +  × 100%  24.2%
+                                                      2 6.0 5.0
+
+MAE                                           Interpretasi awal
+
+     MAE =         |0.5| + |2.0|  = 1.25      Error kecil: 0.5
+                                              Error besar: 2.0
+                   2
+
+MSE                                           MSE/RMSE memberi penalti lebih besar
+
+       0.52 + 2.02 0.25 + 4                   pada error 2.0
+
+MSE =           2  =              2  = 2.125
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning     22 April 2026  40 / 44
+Interpretasi Metrik (Use Case Pertanian)
+
+R2 (Koefisien Determinasi)                      RMSE
+      Mengukur seberapa baik model                    Error dalam satuan asli = 1.46 ton/ha
+      mengikuti pola data                             Lebih mudah dipahami daripada MSE
+      Tidak menunjukkan besar error secara
+      langsung                                  MAPE
+                                                      Error  24%
+Makna tiap metrik                                     Mudah dikomunikasikan ke
+      MAE                                             petani/stakeholder
+             Rata-rata kesalahan = 1.25 ton/ha
+      MSE
+             Error besar sangat berpengaruh
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  41 / 44
+Pipeline: Prediksi Hasil Panen
+
+Setelah model dilatih dan dievaluasi  Prediksi vs nilai aktual (model regresi)
+      Masukkan data lahan baru                        y^ = f (Xbaru)
+      Model memprediksi hasil panen
+
+Contoh input baru
+      Curah hujan = 220 mm
+      Suhu = 28C
+      Kelembaban tanah = 68%
+      Pupuk = 260 kg/ha
+
+Manfaat
+      Perencanaan budidaya
+      Estimasi produktivitas lahan
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  42 / 44
+Alur Berpikir pada Use Case Regresi
+
+   1 Tentukan target: hasil panen
+   2 Kumpulkan data historis
+   3 Bagi data menjadi training, validation, testing
+   4 Latih model regresi
+   5 Evaluasi error prediksi
+   6 Pilih model terbaik
+   7 Gunakan model untuk prediksi musim berikutnya
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  43 / 44
+Ringkasan
+
+      Machine learning adalah proses belajar dari data untuk membangun model.
+      Workflow ML mencakup training, validation, testing, dan deployment.
+      Evaluasi model penting untuk memastikan generalisasi.
+      Pemilihan model harus mempertimbangkan underfitting, overfitting, dan keseimbangan.
+      Regresi adalah contoh supervised learning untuk memprediksi nilai kontinu.
+
+Yeni HerdiyeniProdi Kecerdasan BuatanSSMI-IPB UniversKituyliah 10-Pengenalan Machine Learning  22 April 2026  44 / 44
+

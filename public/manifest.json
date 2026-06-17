@@ -1,0 +1,20 @@
+{
+  "name": "ArtesionEdu",
+  "short_name": "ArtesionEdu",
+  "description": "Aplikasi latihan soal ujian untuk mahasiswa Kecerdasan Buatan IPB University",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAFE",
+  "theme_color": "#6C63FF",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

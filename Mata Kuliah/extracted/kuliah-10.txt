@@ -1,0 +1,562 @@
+  Supervised dan Unsupervised Learning
+
+Studi Kasus: Analisis dan Prediksi Produktivitas Padi
+
+                        Yeni Herdiyeni
+           Program Studi Kecerdasan Buatan
+  Sekolah Sains Data, Matematika dan Informatika
+
+                        IPB University
+
+                        April 29, 2026
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  1 / 33
+Tujuan Pembelajaran
+
+Setelah mengikuti materi ini, mahasiswa diharapkan mampu:
+   1 Menjelaskan motivasi penggunaan machine learning.
+   2 Membedakan supervised, unsupervised, dan reinforcement learning.
+   3 Menjelaskan peran EDA dalam pipeline machine learning.
+   4 Melakukan feature engineering berdasarkan temuan EDA.
+   5 Memahami konsep evaluasi model supervised dan unsupervised.
+   6 Menginterpretasikan hasil model dalam konteks kasus pertanian.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  2 / 33
+Use Case: Produktivitas Padi
+
+Masalah utama:
+Petani dan pengambil kebijakan ingin memahami faktor yang memengaruhi hasil panen padi.
+
+Data yang tersedia:
+      Curah hujan
+      Suhu
+      Kelembaban
+      Jumlah pupuk
+      Luas lahan
+      Hasil panen
+
+Pertanyaan Data Science
+
+Bagaimana data ini dapat digunakan untuk memprediksi hasil panen dan memahami pola
+lahan?
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  3 / 33
+Motivasi Machine Learning
+
+Pada pendekatan tradisional, kita membuat aturan secara manual.
+
+Contoh aturan manual
+
+Jika curah hujan tinggi dan pupuk cukup, maka hasil panen tinggi.
+
+Namun dalam dunia nyata:
+      Hubungan antar variabel tidak selalu sederhana.
+      Curah hujan terlalu tinggi justru dapat menurunkan hasil panen.
+      Kombinasi suhu, pupuk, dan kelembaban dapat membentuk pola kompleks.
+
+Motivasi ML
+
+Machine learning digunakan ketika pola dalam data sulit dirumuskan secara eksplisit dengan
+aturan manual.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  4 / 33
+Tiga Paradigma Machine Learning
+
+Paradigma          Data                       Contoh dalam Use Case
+
+Supervised Learn-  Ada input dan target       Prediksi                                                                                   hasil  panen
+ing
+Unsupervised       Hanya input, tanpa tar-    berdasarkan cuaca dan pupuk
+Learning           get
+Reinforcement      Belajar dari aksi dan re-  Segmentasi lahan berdasarkan
+Learning           ward
+                                              karakteristiknya
+
+                                              Sistem irigasi otomatis belajar
+
+                                              kapan memberi air
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  5 / 33
+Mengapa Tidak Langsung Modeling?
+
+Kesalahan umum dalam machine learning adalah langsung membuat model tanpa memahami
+data.
+Risiko:
+
+      Model belajar dari data yang salah.
+      Outlier dapat merusak hasil prediksi.
+      Relasi non-linear tidak tertangkap oleh model sederhana.
+      Fitur penting dan tidak penting tidak dibedakan.
+
+Pertanyaan Kritis
+
+Sebelum membuat model, apakah kita sudah memahami karakteristik datanya?
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  6 / 33
+Peran EDA dalam Machine Learning
+
+Exploratory Data Analysis (EDA) adalah tahap untuk memahami data sebelum modeling.
+EDA membantu menjawab:
+
+      Bagaimana distribusi setiap variabel?
+      Apakah ada data ekstrem atau outlier?
+      Apakah hubungan antar variabel linear atau non-linear?
+      Fitur mana yang tampak relevan terhadap target?
+
+Ide Utama
+
+EDA bukan sekadar membuat grafik, tetapi proses berpikir untuk menentukan strategi
+modeling.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  7 / 33
+ EDA 1: Distribusi Curah Hujan                                                                                                           April 29, 2026  8 / 33
+
+  Pertanyaan:
+        Apakah curah hujan tersebar merata?
+        Apakah ada nilai ekstrem?
+
+  Insight:
+        Data dapat bersifat skewed.
+        Nilai ekstrem perlu diperiksa.
+
+  Keputusan:
+        Lakukan scaling.
+        Pertimbangkan transformasi fitur.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+ EDA 2: Relasi Curah Hujan dan Hasil Panen                                                                                               April 29, 2026  9 / 33
+
+  Pertanyaan:
+        Apakah semakin tinggi hujan selalu
+        meningkatkan panen?
+
+  Insight:
+        Relasi dapat berbentuk non-linear.
+        Ada titik optimal curah hujan.
+
+  Keputusan:
+        Tambahkan fitur kuadrat.
+        Gunakan model yang mampu
+        menangkap pola non-linear.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+ EDA 3: Outlier pada Hasil Panen                                                                                                         April 29, 2026  10 / 33
+
+  Pertanyaan:
+        Apakah hasil panen sangat rendah
+        merupakan error?
+
+  Insight:
+        Hasil panen mendekati nol bisa menjadi
+        kasus gagal panen.
+        Outlier tidak selalu salah.
+
+  Keputusan:
+        Jangan langsung menghapus outlier.
+        Periksa makna domainnya.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+ EDA 4: Korelasi Antar Variabel                                                                                                          April 29, 2026  11 / 33
+
+  Pertanyaan:
+        Fitur mana yang berkaitan dengan hasil
+        panen?
+
+  Insight:
+        Beberapa fitur lebih berhubungan
+        dengan target.
+        Korelasi membantu indikasi awal, bukan
+        bukti kausal.
+
+  Keputusan:
+        Lakukan feature selection.
+        Hindari memakai fitur yang tidak relevan
+        secara berlebihan.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+Dari EDA ke Keputusan Modeling
+
+Temuan EDA         Keputusan               Dampak ke Model
+Data skewed        Scaling / transformasi
+Relasi non-linear  Tambah fitur kuadrat    Model lebih stabil
+Outlier bermakna   Tidak langsung dihapus  Pola lebih tertangkap
+                                           Model tetap merekam
+Fitur lemah        Feature selection       kasus ekstrem
+                                           Model lebih sederhana
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  12 / 33
+Feature Engineering
+
+Feature engineering adalah proses membentuk fitur agar lebih representatif bagi model.
+
+Contoh pada use case:
+      Fitur kuadrat:
+
+                                    rainfall 2
+
+untuk menangkap relasi non-linear.
+
+Fitur rasio:                                      fertilizer
+                       fertilizer per area =
+
+                                                 land area
+
+Kategori curah hujan: rendah, sedang, tinggi.
+
+Intuisi
+
+Feature engineering adalah cara memasukkan pemahaman domain ke dalam data.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  13 / 33
+Supervised Learning: Prediksi Hasil Panen
+
+Dalam supervised learning, data memiliki pasangan input dan target.
+
+                       (X , y )
+
+Pada use case ini:
+
+                    X = {curah hujan, suhu, kelembaban, pupuk, luas lahan}
+
+                       y = hasil panen
+
+Tujuan
+
+Model belajar fungsi:
+
+                       f (X )  y
+
+untuk memprediksi hasil panen dari data baru.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  14 / 33
+Contoh Model Supervised
+
+Model sederhana: Linear Regression
+                                      y^ = 0 + 1x1 + 2x2 + � � � + pxp
+
+Namun karena EDA menunjukkan relasi non-linear, kita tambahkan:
+                                    y^ = 0 + 1rainfall + 2rainfall2 + . . .
+
+Makna Penting
+
+Model tetap linear terhadap parameter, tetapi mampu menangkap pola non-linear melalui
+transformasi fitur.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  15 / 33
+Visualisasi Model Supervised
+
+Interpretasi:
+      Titik menunjukkan data aktual.
+      Garis menunjukkan prediksi model.
+      Pola melengkung muncul karena fitur
+      kuadrat.
+
+Pesan
+
+EDA membantu kita memilih representasi
+fitur yang lebih tepat.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  16 / 33
+Evaluasi Supervised Learning
+
+Untuk kasus prediksi hasil panen, evaluasi dapat menggunakan:
+
+MAE                           1n
+
+                              MAE =               |yi - y^i |
+                                         n
+                                            i =1
+
+RMSE
+
+      RMSE =                                1  n
+                                            n
+                                                 (yi - y^i )2
+
+                                               i =1
+
+R2
+                                              R2 = 1 - SSres
+                                                            SStot
+
+Interpretasi
+
+Semakin kecil MAE/RMSE dan semakin besar R2, semakin baik model menjelaskan data.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  17 / 33
+Actual vs Predicted
+
+Cara membaca grafik:
+      Jika titik dekat garis diagonal, prediksi
+      baik.
+      Jika titik jauh dari garis, error besar.
+      Titik ekstrem dapat menunjukkan kasus
+      gagal panen.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  18 / 33
+Unsupervised Learning: Segmentasi Lahan
+
+Dalam unsupervised learning, data tidak memiliki target.
+                               X = {curah hujan, pupuk, suhu, hasil panen}
+
+Tujuan:
+      Menemukan kelompok lahan/petani yang mirip.
+      Memahami pola tersembunyi dalam data.
+
+Contoh Pertanyaan
+
+Apakah terdapat kelompok lahan dengan kondisi input dan hasil panen yang berbeda?
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  19 / 33
+Contoh Model Unsupervised: K-Means
+
+K-Means membagi data ke dalam K cluster.
+
+                  K                       ||xi - 탃 ||2
+
+          min
+
+          k=1 xi Ck
+
+Intuisi:
+
+Data yang mirip ditempatkan dalam cluster yang sama.
+
+Setiap cluster memiliki pusat yang disebut centroid.
+
+Catatan
+
+Hasil clustering harus diinterpretasikan dengan domain knowledge.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  20 / 33
+Visualisasi Clustering
+
+Interpretasi:
+      Setiap warna menunjukkan cluster.
+      Cluster dapat menggambarkan pola
+      lahan berbeda.
+      Misalnya: lahan input tinggi, sedang,
+      atau rendah.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  21 / 33
+Evaluasi Unsupervised Learning
+
+Evaluasi clustering tidak sesederhana supervised learning karena tidak ada label benar.
+Salah satu metrik yang digunakan adalah Silhouette Score.
+
+                                                          b(i) - a(i)
+                                              s(i) =
+
+                                                       max(a(i), b(i))
+      a(i): rata-rata jarak ke titik dalam cluster yang sama.
+      b(i): rata-rata jarak ke cluster terdekat.
+
+Interpretasi
+
+Nilai mendekati 1 menunjukkan cluster lebih terpisah dengan baik.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  22 / 33
+Evaluasi Clustering: Elbow Method
+
+Ide Dasar
+Elbow method digunakan untuk menentukan
+jumlah cluster optimal (K ).
+
+Langkah:
+      Hitung WCSS (Within Cluster Sum of
+      Squares)
+      Ulangi untuk berbagai nilai K
+      Plot K vs WCSS
+
+                  K  ||xi - 탃 ||2        Contoh Elbow Method untuk menentukan jumlah cluster
+                                             Penurunan tajam  cluster membaik
+WCSS =                                       Titik "siku" (elbow)  K optimal
+
+k=1 xi Ck
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  23 / 33
+ Interpretasi Cluster                                                                                                                    April 29, 2026  24 / 33
+
+  Pertanyaan interpretatif:
+        Cluster mana yang rata-rata hasil
+        panennya tinggi?
+        Apakah cluster tertentu memiliki pupuk
+        lebih tinggi?
+        Apakah cluster tertentu rentan hasil
+        rendah?
+
+ Insight
+
+  Clustering bukan akhir analisis, tetapi awal
+  untuk memahami segmentasi data.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+Reinforcement Learning dalam Use Case
+
+Walaupun fokus praktikum adalah supervised dan unsupervised, reinforcement learning juga
+dapat muncul dalam pertanian.
+Contoh: sistem irigasi otomatis
+
+      Agent: sistem irigasi.
+      Environment: lahan pertanian.
+      Action: memberi air atau tidak.
+      Reward: peningkatan hasil panen atau efisiensi air.
+
+Intuisi
+
+Reinforcement learning cocok ketika sistem harus belajar mengambil keputusan secara
+bertahap melalui feedback.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  25 / 33
+ Pipeline Machine Learning End-to-End                                                                                                    April 29, 2026  26 / 33
+
+     1 Problem Definition
+         Menentukan masalah dan tujuan analisis.
+
+     2 Data Collection
+         Mengumpulkan data cuaca, lahan, pupuk, dan hasil panen.
+
+     3 EDA
+         Memahami pola, outlier, dan relasi.
+
+     4 Feature Engineering
+         Membentuk fitur baru berdasarkan insight EDA.
+
+     5 Modeling
+         Supervised atau unsupervised learning.
+
+     6 Evaluation
+         Mengukur kinerja model.
+
+     7 Deployment
+         Menggunakan model untuk membantu keputusan.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity
+Deployment: Dari Model ke Keputusan
+
+Model machine learning tidak berhenti pada akurasi.
+Contoh deployment:
+
+      Dashboard prediksi hasil panen.
+      Sistem rekomendasi kebutuhan pupuk.
+      Peta segmentasi lahan berdasarkan cluster.
+      Peringatan dini risiko gagal panen.
+
+Pesan Utama
+
+Nilai utama model adalah ketika hasilnya dapat digunakan untuk mendukung keputusan nyata.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  27 / 33
+Kode Program: Generate Data
+
+import numpy as np
+import pandas as pd
+
+np . random . seed (42)
+n = 180
+
+rainfall = np.random.normal (180, 45, n)
+temperature = np.random.normal(27, 2.2, n)
+humidity = np.random.normal(75, 8, n)
+fertilizer = np.random.normal (110, 25, n)
+land_area = np.random.uniform(0.5, 3.0, n)
+
+rain_effect = -0.0009 * (rainfall - 180)**2 + 5.5
+fert_effect = 0.025 * fertilizer
+temp_effect = -0.08 * (temperature - 27)**2 + 1.2
+
+yield_ton_ha = rain_effect + fert_effect + temp_effect
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  28 / 33
+Kode Program: Feature Engineering
+
+                                              df["rainfall_squared"] = df["rainfall"] ** 2
+
+                                              df["fertilizer_per_area"] = (
+                                              df["fertilizer"] / df["land_area"]
+                                              )
+
+                                              df["rainfall_category"] = pd.cut(
+                                              df [" rainfall "],
+                                              bins=[-np.inf , 140, 220, np.inf],
+                                              labels=["rendah", "sedang", "tinggi"]
+                                              )
+
+Makna
+
+Fitur baru dibentuk berdasarkan insight EDA, bukan sekadar coba-coba.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  29 / 33
+Kode Program: Supervised Learning
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error ,
+
+       mean_squared_error
+
+features = [
+"rainfall",
+"rainfall_squared",
+"temperature",
+"humidity",
+"fertilizer",
+"land_area"
+]
+
+X = df[features]
+y = df["yield_ton_ha"]
+
+model = LinearRegression()
+model.fit(X, y)
+
+y_pred = model.predict(X)
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  30 / 33
+Kode Program: Unsupervised Learning
+
+                                               from sklearn.cluster import KMeans
+                                               from sklearn.preprocessing import StandardScaler
+                                               from sklearn.metrics import silhouette_score
+
+                                               X_cluster = df[
+                                               ["rainfall", "fertilizer", "temperature", "yield_ton_ha"]
+                                               ]
+
+                                               scaler = StandardScaler()
+                                               X_scaled = scaler.fit_transform(X_cluster)
+
+                                               kmeans = KMeans(n_clusters=3, random_state =42)
+                                               labels = kmeans.fit_predict(X_scaled)
+
+                                               score = silhouette_score(X_scaled , labels)
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  31 / 33
+Ringkasan: Satu Use Case, Banyak Pendekatan
+
+Tujuan                Pendekatan              Output
+
+Prediksi hasil panen  Supervised Learning     Nilai hasil panen
+Segmentasi lahan      Unsupervised Learning   Kelompok lahan
+Optimasi irigasi      Reinforcement Learning  Kebijakan aksi
+
+Kesimpulan
+
+Jenis machine learning dipilih berdasarkan bentuk masalah dan ketersediaan label.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  32 / 33
+Kesimpulan Utama
+
+   1 Machine learning digunakan ketika pola data sulit dibuat dengan aturan manual.
+   2 EDA adalah fondasi penting sebelum modeling.
+   3 Feature engineering harus didasarkan pada insight dari data.
+   4 Supervised learning digunakan untuk prediksi dengan label.
+   5 Unsupervised learning digunakan untuk menemukan struktur tersembunyi.
+   6 Evaluasi model harus disesuaikan dengan jenis masalah.
+
+Pesan Akhir
+
+Model yang baik bukan hanya akurat, tetapi juga dapat dijelaskan dan berguna untuk
+pengambilan keputusan.
+
+Yeni HerdiyeniProgram Studi Kecerdasan BuatanSekolah Sains DaStau,pMeravitseemdadtaikna UdnasnuIpnefrovrimseadtiLkaeIaPrnBinUgniversity  April 29, 2026  33 / 33
+

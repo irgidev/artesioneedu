@@ -26,3 +26,5 @@ dist-ssr
 soal_latihan/extracted/
 scripts/screenshots/
 nul
+
+.vercel

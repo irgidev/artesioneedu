@@ -22,8 +22,23 @@ import Confetti from '../components/ui/Confetti';
 import useQuizStore from '../stores/useQuizStore';
 import useStatsStore from '../stores/useStatsStore';
 import { psdChapters } from '../data/psd/chapters';
+import { chapterQuestionMap, quizUAS } from '../data/psd';
 import { getFeedbackMessage, formatTime } from '../utils/helpers';
 import MathText from '../components/ui/MathText';
+
+const allQuestions = [...quizUAS, ...Object.values(chapterQuestionMap).flat()];
+const questionById = Object.fromEntries(allQuestions.map((q) => [q.id, q]));
+
+function getCurrentQuestion(answer) {
+  const current = questionById[answer.questionId];
+  if (!current) return null;
+  return {
+    ...answer,
+    question: current.question,
+    options: current.options,
+    explanation: current.explanation,
+  };
+}
 
 // Animated score circle component
 function ScoreCircle({ score, total }) {
@@ -240,7 +255,8 @@ function AnswerReview({ answers }) {
 
   if (!answers || answers.length === 0) return null;
 
-  const allOpen = openSet.size === answers.length;
+  const normalizedAnswers = answers.map(getCurrentQuestion).map((a, idx) => a || answers[idx]);
+  const allOpen = openSet.size === normalizedAnswers.length;
 
   const toggleOne = (idx) => {
     setOpenSet((prev) => {
@@ -255,7 +271,7 @@ function AnswerReview({ answers }) {
   };
 
   const toggleAll = () => {
-    setOpenSet(allOpen ? new Set() : new Set(answers.map((_, idx) => idx)));
+    setOpenSet(allOpen ? new Set() : new Set(normalizedAnswers.map((_, idx) => idx)));
   };
 
   return (
@@ -274,7 +290,7 @@ function AnswerReview({ answers }) {
       </div>
 
       <div className="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1 pb-1">
-        {answers.map((answer, idx) => (
+        {normalizedAnswers.map((answer, idx) => (
           <ReviewItem
             key={idx}
             answer={answer}

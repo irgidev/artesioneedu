@@ -1,4 +1,4 @@
-const CACHE_NAME = 'artesioneedu-v1';
+const CACHE_NAME = 'artesioneedu-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

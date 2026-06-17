@@ -30,7 +30,7 @@ const bab10Questions = [
       { id: 'd', text: 'Semi-Supervised Learning' }
     ],
     correctAnswer: 'b',
-    explanation: 'Unsupervised learning digunakan saat kita hanya memiliki data masukan ( ) tanpa adanya label target atau "kebenaran" ( ) yang ingin diprediksi.',
+    explanation: 'Unsupervised learning digunakan saat kita hanya memiliki data masukan ($X$) tanpa adanya label target atau \\"kebenaran\\" ($y$) yang ingin diprediksi.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -56,15 +56,15 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Manakah di antara pilihan berikut yang merupakan variabel target ( ) dalam use case prediksi produktivitas padi berdasarkan materi Kuliah 10?',
+    question: 'Manakah di antara pilihan berikut yang merupakan variabel target ($y$) dalam use case prediksi produktivitas padi berdasarkan materi Kuliah 10?',
     options: [
-      { id: 'a', text: 'Jumlah pupuk ( )' },
-      { id: 'b', text: 'Hasil panen ( )' },
-      { id: 'c', text: 'Curah hujan ( )' },
-      { id: 'd', text: 'Luas lahan ( )' }
+      { id: 'a', text: 'Jumlah pupuk $x_1$' },
+      { id: 'b', text: 'Hasil panen $y$' },
+      { id: 'c', text: 'Curah hujan $x_2$' },
+      { id: 'd', text: 'Luas lahan $x_3$' }
     ],
     correctAnswer: 'b',
-    explanation: 'Target ( ) yang ingin diprediksi dan dipahami faktor-faktor pengaruhnya adalah produktivitas padi (hasil panen dalam satuan ).',
+    explanation: 'Target yang ingin diprediksi dan dipahami faktor-faktor pengaruhnya adalah produktivitas padi (hasil panen dalam satuan ton/ha).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -110,12 +110,12 @@ const bab10Questions = [
     question: 'Hubungan antara curah hujan dan hasil panen padi ternyata tidak linear sempurna; curah hujan yang terlampau tinggi justru menurunkan produktivitas. Keputusan pemodelan apa yang harus diambil berdasarkan fakta ini?',
     options: [
       { id: 'a', text: 'Menolak variabel curah hujan dan menghapusnya dari daftar fitur input.' },
-      { id: 'b', text: 'Menambahkan fitur kuadrat ( ) ke dalam model regresi.' },
+      { id: 'b', text: 'Menambahkan fitur kuadrat ($x^2$) ke dalam model regresi.' },
       { id: 'c', text: 'Menggunakan regresi linear sederhana tanpa modifikasi fitur apa pun.' },
       { id: 'd', text: 'Mengubah tipe data hasil panen menjadi kategorikal diskrit.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Dengan menambahkan fitur kuadrat ( ), model regresi linear parametrik dapat menangkap hubungan lengkung (parabola) tanpa kehilangan sifat linearitas parameternya.',
+    explanation: 'Dengan menambahkan fitur kuadrat ($x^2$), model regresi linear parametrik dapat menangkap hubungan lengkung (parabola) tanpa kehilangan sifat linearitas parameternya.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -160,7 +160,7 @@ const bab10Questions = [
     babTitle: 'Supervised dan Unsupervised Learning',
     question: 'Jika visualisasi EDA menunjukkan adanya korelasi yang sangat lemah antara variabel suhu dengan hasil panen, keputusan penyederhanaan model apa yang paling rasional?',
     options: [
-      { id: 'a', text: 'Tetap mempertahankan variabel suhu dan membuat fitur kubik ( ).' },
+      { id: 'a', text: 'Tetap mempertahankan variabel suhu dan membuat fitur kubik ($x^3$).' },
       { id: 'b', text: 'Melakukan eliminasi fitur (feature selection) agar model tidak terlalu kompleks.' },
       { id: 'c', text: 'Mengganti target hasil panen dengan variabel suhu.' },
       { id: 'd', text: 'Melakukan duplikasi data suhu untuk memperkuat korelasinya secara artifisial.' }
@@ -217,7 +217,7 @@ const bab10Questions = [
       { id: 'd', text: 'netral' }
     ],
     correctAnswer: 'a',
-    explanation: 'Nilai berada dalam rentang interval , sehingga berdasarkan parameter bins ia dikategorikan sebagai "rendah".',
+    explanation: 'Nilai $x$ berada dalam rentang interval, sehingga berdasarkan parameter bins ia dikategorikan sebagai "rendah".',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -234,7 +234,7 @@ const bab10Questions = [
       { id: 'd', text: 'ekstrem' }
     ],
     correctAnswer: 'b',
-    explanation: 'Nilai berada dalam interval , sehingga diklasifikasikan sebagai kategori curah hujan "sedang".',
+    explanation: 'Nilai $x$ berada dalam interval, sehingga diklasifikasikan sebagai kategori curah hujan "sedang".',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -243,7 +243,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Dalam Supervised Learning untuk use case ini, jika kita merepresentasikan data sebagai pasangan , maka adalah...',
+    question: 'Dalam Supervised Learning untuk use case ini, jika kita merepresentasikan data sebagai pasangan $(X, y)$, maka $y$ adalah...',
     options: [
       { id: 'a', text: 'Hanya berupa variabel hasil panen padi.' },
       { id: 'b', text: 'Set fitur yang terdiri dari curah hujan, suhu, kelembaban, pupuk, dan luas lahan.' },
@@ -262,13 +262,13 @@ const bab10Questions = [
     babTitle: 'Supervised dan Unsupervised Learning',
     question: 'Persamaan regresi linear yang menambahkan fitur kuadratik untuk menangkap pola non-linear dituliskan sebagai: Mengapa model ini masih dikategorikan sebagai model "regresi linear"?',
     options: [
-      { id: 'a', text: 'Karena hasil prediksinya ( ) selalu membentuk garis lurus yang linear di atas grafik.' },
-      { id: 'b', text: 'Karena model tersebut tetap bersifat linear terhadap parameter-parameter koefisiennya ( ).' },
+      { id: 'a', text: 'Karena hasil prediksinya ($\\hat{y}$) selalu membentuk garis lurus yang linear di atas grafik.' },
+      { id: 'b', text: 'Karena model tersebut tetap bersifat linear terhadap parameter-parameter koefisiennya ($\\beta_j$).' },
       { id: 'c', text: 'Karena variabel bebasnya tidak mengalami operasi perkalian dengan variabel bebas lainnya.' },
       { id: 'd', text: 'Karena model tersebut tidak mampu mendeteksi adanya interaksi non-linear dalam data asli.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Istilah "linear" pada regresi linear mengacu pada hubungan fungsional yang linear terhadap parameter koefisiennya ( ), bukan terhadap variabel independennya ( ).',
+    explanation: 'Istilah "linear" pada regresi linear mengacu pada hubungan fungsional yang linear terhadap parameter koefisiennya ($\\beta_j$), bukan terhadap variabel independennya .',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -311,7 +311,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Apa interpretasi yang paling tepat dari nilai Koefisien Determinasi ( ) yang mendekati dalam evaluasi model prediksi hasil panen?',
+    question: 'Apa interpretasi yang paling tepat dari nilai Koefisien Determinasi ($R^2$) yang mendekati dalam evaluasi model prediksi hasil panen?',
     options: [
       { id: 'a', text: 'Model memiliki tingkat kesalahan absolut (MAE) yang sangat tinggi.' },
       { id: 'b', text: 'Variasi pada variabel target (hasil panen) dapat dijelaskan dengan sangat baik oleh fitur-fitur dalam model.' },
@@ -383,7 +383,7 @@ const bab10Questions = [
     options: [
       { id: 'a', text: 'Meminimalkan jarak antar-cluster (inter-cluster distance) dan memaksimalkan jarak intra-cluster.' },
       { id: 'b', text: 'Meminimalkan variasi jarak di dalam cluster yang sama (intra-cluster distance) dengan mengelompokkan data yang mirip.' },
-      { id: 'c', text: 'Menemukan nilai koefisien regresi optimal ( ) guna memprediksi tonase panen di masa depan.' },
+      { id: 'c', text: 'Menemukan nilai koefisien regresi optimal ($\\hat{\\beta}$) guna memprediksi tonase panen di masa depan.' },
       { id: 'd', text: 'Memisahkan data secara linear menggunakan hyperplane berdimensi tinggi.' }
     ],
     correctAnswer: 'b',
@@ -447,15 +447,15 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Jika hasil perhitungan Silhouette Score suatu model clustering mendekati nilai , hal ini menunjukkan bahwa...',
+    question: 'Jika hasil perhitungan Silhouette Score suatu model clustering mendekati nilai $-1$, hal ini menunjukkan bahwa...',
     options: [
       { id: 'a', text: 'Cluster terbentuk dengan sangat baik, terpisah secara jelas, dan padat.' },
       { id: 'b', text: 'Data kemungkinan besar telah salah ditempatkan dan dimasukkan ke dalam cluster yang salah.' },
-      { id: 'c', text: 'Jumlah cluster ( ) yang dipilih sudah sangat optimal sesuai dengan kaidah Elbow Method.' },
+      { id: 'c', text: 'Jumlah cluster $K$ yang dipilih sudah sangat optimal sesuai dengan kaidah Elbow Method.' },
       { id: 'd', text: 'Jarak antar-centroid cluster bernilai nol.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Nilai Silhouette Score yang mendekati mengindikasikan bahwa rata-rata jarak ke cluster tetangga ( ) lebih kecil daripada jarak intra-cluster ( ), yang berarti salah pengelompokkan.',
+    explanation: 'Nilai Silhouette Score yang mendekati mengindikasikan bahwa rata-rata jarak ke cluster tetangga ($b_i$) lebih kecil daripada jarak intra-cluster ($a_i$), yang berarti salah pengelompokkan.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -464,7 +464,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Bagaimana prinsip kerja Elbow Method dalam menentukan jumlah cluster ( ) yang optimal?',
+    question: 'Bagaimana prinsip kerja Elbow Method dalam menentukan jumlah cluster ($K$) yang optimal?',
     options: [
       { id: 'a', text: 'Memilih nilai yang menghasilkan nilai Silhouette Score paling mendekati angka nol.' },
       { id: 'b', text: 'Mencari titik "siku" pada grafik hubungan antara nilai dengan WCSS, di mana penurunan WCSS mulai melambat secara signifikan.' },
@@ -586,12 +586,12 @@ const bab10Questions = [
     question: 'Mengapa pada kode data sintetis di atas efek suhu (temp_effect) dirumuskan sebagai: temp_effect = -0.08 * (temperature - 27)**2 + 1.2 (Catatan: perhatikan tanda minus pada koefisien )',
     options: [
       { id: 'a', text: 'Suhu lingkungan di atas atau di bawah akan meningkatkan hasil panen secara eksponensial.' },
-      { id: 'b', text: 'Suhu optimal untuk pertumbuhan padi diasumsikan berada pada , di mana penyimpangan dari suhu tersebut akan menurunkan hasil panen.' },
+      { id: 'b', text: 'Suhu optimal untuk pertumbuhan padi diasumsikan berada pada $25^\\circ C$, di mana penyimpangan dari suhu tersebut akan menurunkan hasil panen.' },
       { id: 'c', text: 'Suhu tidak memiliki pengaruh apa pun karena nilainya dikuadratkan.' },
       { id: 'd', text: 'Suhu rata-rata lingkungan selalu bernilai konstan di seluruh wilayah Indonesia.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Koefisien negatif pada fungsi kuadrat parabola terbalik menunjukkan bahwa performa akan turun jika suhu bergeser menjauhi nilai optimalnya ( ).',
+    explanation: 'Koefisien negatif pada fungsi kuadrat parabola terbalik menunjukkan bahwa performa akan turun jika suhu bergeser menjauhi nilai optimalnya $x_{opt}$.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -619,7 +619,7 @@ const bab10Questions = [
     babTitle: 'Supervised dan Unsupervised Learning',
     question: 'Jika kita membandingkan tiga paradigma ML dalam satu use case pertanian, pasangan manakah yang menyajikan hubungan tujuan dan pendekatan yang salah?',
     options: [
-      { id: 'a', text: 'Prediksi hasil panen Supervised Learning Nilai hasil panen ( )' },
+      { id: 'a', text: 'Prediksi hasil panen Supervised Learning Nilai hasil panen ($y$)' },
       { id: 'b', text: 'Segmentasi lahan Unsupervised Learning Kelompok/Cluster Lahan' },
       { id: 'c', text: 'Optimasi irigasi Reinforcement Learning Kebijakan Aksi Penyiraman' },
       { id: 'd', text: 'Memilih varietas unggul Unsupervised Learning Aturan manual bersyarat (if-else)' }
@@ -634,7 +634,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Pada tahapan Feature Engineering, apa tujuan utama pembuatan fitur rasio seperti jumlah pupuk dibagi luas lahan ( )?',
+    question: 'Pada tahapan Feature Engineering, apa tujuan utama pembuatan fitur rasio seperti jumlah pupuk dibagi luas lahan ($x_3$)?',
     options: [
       { id: 'a', text: 'Mengurangi jumlah dimensi data agar proses pelatihan model berjalan lebih cepat.' },
       { id: 'b', text: 'Menghilangkan ketergantungan semu terhadap skala mutlak, sehingga efisiensi dosis pupuk dapat dinilai secara adil terlepas dari luas lahan yang berbeda.' },
@@ -668,7 +668,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Model regresi linear mengevaluasi kinerjanya menggunakan data uji. Jika nilai MAE bernilai dan rata-rata hasil panen aktual adalah , bagaimana menginterpretasikan kesalahan tersebut secara praktis?',
+    question: 'Model regresi linear mengevaluasi kinerjanya menggunakan data uji. Jika nilai MAE bernilai $a$ dan rata-rata hasil panen aktual adalah $\\bar{y}$ , bagaimana menginterpretasikan kesalahan tersebut secara praktis?',
     options: [
       { id: 'a', text: 'Rata-rata prediksi model meleset sekitar (atau sekitar ) dari hasil panen yang sebenarnya.' },
       { id: 'b', text: 'Model dipastikan salah dalam memprediksi sebanyak dari total seluruh sampel data yang ada.' },
@@ -719,7 +719,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Dalam algoritma K-Means, jika kita menentukan jumlah cluster , apa yang akan terjadi pada perhitungan WCSS?',
+    question: 'Dalam algoritma K-Means, jika kita menentukan jumlah cluster $K=1$, apa yang akan terjadi pada perhitungan WCSS?',
     options: [
       { id: 'a', text: 'Nilai WCSS akan bernilai minimum atau sama dengan nol.' },
       { id: 'b', text: 'Nilai WCSS akan mencapai nilai maksimum karena seluruh titik data dihitung jaraknya terhadap satu centroid tunggal global.' },
@@ -727,7 +727,7 @@ const bab10Questions = [
       { id: 'd', text: 'Nilai WCSS akan konvergen secara instan ke nilai rata-rata Silhouette Score.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Jika hanya ada cluster ( ), centroid-nya adalah rata-rata global data, sehingga nilai WCSS mencapai angka tertinggi karena mencakup seluruh variabilitas jarak data.',
+    explanation: 'Jika hanya ada cluster $K$, centroid-nya adalah rata-rata global data, sehingga nilai WCSS mencapai angka tertinggi karena mencakup seluruh variabilitas jarak data.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -778,7 +778,7 @@ const bab10Questions = [
       { id: 'd', text: 'RMSE hanya digunakan jika data berdistribusi normal, sedangkan MAE digunakan jika data miring (skewed).' }
     ],
     correctAnswer: 'b',
-    explanation: 'RMSE menggunakan kuadrat selisih , sehingga kesalahan prediksi yang besar (outlier) akan memberikan dampak penalti yang jauh lebih signifikan pada skor akhir dibanding MAE.',
+    explanation: 'RMSE menggunakan kuadrat selisih $(y_i - \\hat{y}_i)$, sehingga kesalahan prediksi yang besar (outlier) akan memberikan dampak penalti yang jauh lebih signifikan pada skor akhir dibanding MAE.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -787,7 +787,7 @@ const bab10Questions = [
     type: 'multiple_choice',
     bab: 10,
     babTitle: 'Supervised dan Unsupervised Learning',
-    question: 'Berdasarkan tabel korelasi, variabel luas lahan memiliki hubungan korelasi yang sangat kuat dengan total pupuk yang diberikan secara keseluruhan, namun korelasi terhadap produktivitas hasil panen per hektar ( ) cukup rendah. Apa makna fisis dari fenomena ini?',
+    question: 'Berdasarkan tabel korelasi, variabel luas lahan memiliki hubungan korelasi yang sangat kuat dengan total pupuk yang diberikan secara keseluruhan, namun korelasi terhadap produktivitas hasil panen per hektar ($y$) cukup rendah. Apa makna fisis dari fenomena ini?',
     options: [
       { id: 'a', text: 'Lahan yang lebih luas membutuhkan pemupukan total yang lebih banyak, tetapi produktivitas per hektar tidak semata-mata meningkat hanya karena lahannya luas.' },
       { id: 'b', text: 'Petani di lahan luas selalu memberikan pupuk secara tidak efisien sehingga merusak kualitas tanah.' },
@@ -829,7 +829,7 @@ const bab10Questions = [
       { id: 'd', text: 'Unsupervised learning hanya dapat memproses data teks dan gambar, bukan data numerik kontinu.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Unsupervised learning tidak memiliki label target aktual ( ) di awal, sehingga tidak ada indikator numerik mutlak untuk menyatakan apakah hasil pengelompokan tersebut benar .',
+    explanation: 'Unsupervised learning tidak memiliki label target aktual ($y_i$) di awal, sehingga tidak ada indikator numerik mutlak untuk menyatakan apakah hasil pengelompokan tersebut benar .',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },

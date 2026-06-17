@@ -302,7 +302,7 @@ const bab9Questions = [
       { id: 'd', text: 'Deteksi spam email, pengelompokan jenis batuan bumi, segmentasi pasar.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Klasifikasi penyakit kanker (klasifikasi), prediksi hasil panen (regresi), dan taksiran harga mobil bekas (regresi) semuanya memiliki target berlabel ( ), sehingga termasuk Supervised Learning (Halaman 4).',
+    explanation: 'Klasifikasi penyakit kanker (klasifikasi), prediksi hasil panen (regresi), dan taksiran harga mobil bekas (regresi) semuanya memiliki target berlabel , sehingga termasuk Supervised Learning (Halaman 4).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -364,7 +364,7 @@ const bab9Questions = [
     babTitle: 'Pengenalan Machine Learning',
     question: 'Pembagian dataset menjadi subset Training, Validation, dan Test set memiliki tujuan yang berbeda. Fungsi utama dari Validation set adalah...',
     options: [
-      { id: 'a', text: 'Melatih parameter internal model seperti bobot ( ).' },
+      { id: 'a', text: 'Melatih parameter internal model seperti bobot ($\\beta_j$).' },
       { id: 'b', text: 'Menilai performa final secara mutlak pada data riil yang belum pernah dilihat sama sekali.' },
       { id: 'c', text: 'Memilih model terbaik atau menyetel nilai parameter eksternal (hyperparameter).' },
       { id: 'd', text: 'Melakukan visualisasi performa akhir kepada pengguna.' }
@@ -486,10 +486,10 @@ const bab9Questions = [
       { id: 'a', text: 'Mean Squared Error (MSE)' },
       { id: 'b', text: 'Root Mean Squared Error (RMSE)' },
       { id: 'c', text: 'Mean Absolute Error (MAE)' },
-      { id: 'd', text: 'Coefficient of Determination ( )' }
+      { id: 'd', text: 'Coefficient of Determination ($R^2$)' }
     ],
     correctAnswer: 'c',
-    explanation: 'Rumus tersebut menjumlahkan nilai selisih absolut antara nilai aktual dan nilai prediksi , lalu membaginya dengan jumlah sampel , yang merupakan rumus dari Mean Absolute Error (MAE) (Halaman 7).',
+    explanation: 'Rumus tersebut menjumlahkan nilai selisih absolut antara nilai aktual $y_i$ dan nilai prediksi $\\hat{y}_i$, lalu membaginya dengan jumlah sampel $n$, yang merupakan rumus dari Mean Absolute Error (MAE) (Halaman 7).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -506,7 +506,7 @@ const bab9Questions = [
       { id: 'd', text: 'Karena MSE mengabaikan nilai negatif dari hasil kalkulasi error.' }
     ],
     correctAnswer: 'b',
-    explanation: 'MSE dihitung dengan menguadratkan selisih , sehingga kesalahan prediksi yang besar akan menghasilkan penalti kuadratis yang sangat besar dibandingkan kesalahan yang bernilai kecil (Halaman 7).',
+    explanation: 'MSE dihitung dengan menguadratkan selisih $(y_i - \\hat{y}_i)$, sehingga kesalahan prediksi yang besar akan menghasilkan penalti kuadratis yang sangat besar dibandingkan kesalahan yang bernilai kecil (Halaman 7).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -518,7 +518,7 @@ const bab9Questions = [
     question: 'Di antara metrik-metrik regresi berikut, metrik yang mengembalikan satuan nilai kesalahan prediksi ke dalam satuan asli target data (sehingga lebih mudah diinterpretasikan oleh pengguna non-teknis) adalah...',
     options: [
       { id: 'a', text: 'Mean Squared Error (MSE)' },
-      { id: 'b', text: 'Coefficient of Determination ( )' },
+      { id: 'b', text: 'Coefficient of Determination ($R^2$)' },
       { id: 'c', text: 'Root Mean Squared Error (RMSE)' },
       { id: 'd', text: 'Mean Absolute Percentage Error (MAPE)' }
     ],
@@ -532,7 +532,7 @@ const bab9Questions = [
     type: 'multiple_choice',
     bab: 9,
     babTitle: 'Pengenalan Machine Learning',
-    question: 'Seorang peneliti pertanian melatih model regresi untuk memprediksi hasil panen padi. Hasil evaluasi menunjukkan nilai Koefisien Determinasi ( ) sebesar 0.85. Makna dari nilai ini adalah...',
+    question: 'Seorang peneliti pertanian melatih model regresi untuk memprediksi hasil panen padi. Hasil evaluasi menunjukkan nilai Koefisien Determinasi ($R^2$) sebesar 0.85. Makna dari nilai ini adalah...',
     options: [
       { id: 'a', text: 'Model melakukan kesalahan prediksi rata-rata sebesar 85% dari total panen sesungguhnya.' },
       { id: 'b', text: 'Sebesar 85% variansi dari data hasil panen padi dapat dijelaskan dengan baik oleh fitur-fitur dalam model regresi tersebut.' },
@@ -540,7 +540,7 @@ const bab9Questions = [
       { id: 'd', text: 'Model mengalami gejala overfitting sebesar 85% pada data validasi.' }
     ],
     correctAnswer: 'b',
-    explanation: 'Koefisien determinasi ( ) mengukur proporsi variansi data target yang berhasil dijelaskan oleh fitur-fitur prediktif di dalam model (Halaman 7). Nilai 0.85 berarti 85% variabilitas data dijelaskan oleh model.',
+    explanation: 'Koefisien determinasi $R^2$ mengukur proporsi variansi data target yang berhasil dijelaskan oleh fitur-fitur prediktif di dalam model (Halaman 7). Nilai 0.85 berarti 85% variabilitas data dijelaskan oleh model.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -583,7 +583,7 @@ const bab9Questions = [
     type: 'multiple_choice',
     bab: 9,
     babTitle: 'Pengenalan Machine Learning',
-    question: 'Berdasarkan nilai MSE yang diperoleh dari Soal 34 ( ), berapakah nilai Root Mean Squared Error (RMSE) model tersebut?',
+    question: 'Berdasarkan nilai MSE yang diperoleh dari Soal 34 ($MSE$), berapakah nilai Root Mean Squared Error (RMSE) model tersebut?',
     options: [
       { id: 'a', text: 'ton/ha' },
       { id: 'b', text: 'ton/ha' },
@@ -620,7 +620,7 @@ const bab9Questions = [
     question: 'Dalam mengomunikasikan performa model prediksi hasil panen padi kepada kelompok tani tradisional, metrik manakah yang paling mudah dipahami secara intuitif oleh mereka?',
     options: [
       { id: 'a', text: 'MSE karena penaltinya besar' },
-      { id: 'b', text: 'R-squared ( ) karena berupa nilai statistik teoretis' },
+      { id: 'b', text: 'R-squared ($R^2$) karena berupa nilai statistik teoretis' },
       { id: 'c', text: 'MAPE karena dinyatakan langsung dalam bentuk persentase kesalahan rata-rata' },
       { id: 'd', text: 'MAE karena tidak menggunakan fungsi kuadrat dalam kalkulasinya' }
     ],
@@ -823,13 +823,13 @@ const bab9Questions = [
     babTitle: 'Pengenalan Machine Learning',
     question: 'Dalam model prediksi hasil panen padi, fitur input yang digunakan dan target output yang ingin diprediksi secara berurutan adalah...',
     options: [
-      { id: 'a', text: ': Hasil panen ( ) ; : Jenis pupuk dan curah hujan.' },
+      { id: 'a', text: '$y$: Hasil panen ($y$) ; $X$: Jenis pupuk dan curah hujan.' },
       { id: 'b', text: ': Jenis tanah dan kelembaban ; : Klasifikasi padi sakit atau sehat.' },
-      { id: 'c', text: ': Curah hujan, suhu, kelembaban tanah, pupuk ; : Hasil panen ( ).' },
+      { id: 'c', text: '$X$: Curah hujan, suhu, kelembaban tanah, pupuk ; $y$: Hasil panen ($y$).' },
       { id: 'd', text: ': Nama petani ; : Luas wilayah pertanian global.' }
     ],
     correctAnswer: 'c',
-    explanation: 'Berdasarkan use case nyata di Halaman 10, fitur input mencakup faktor lingkungan seperti curah hujan, suhu, kelembaban tanah, dan penggunaan pupuk. Target output adalah nilai numerik kontinu berupa hasil panen ( ).',
+    explanation: 'Berdasarkan use case nyata di Halaman 10, fitur input mencakup faktor lingkungan seperti curah hujan, suhu, kelembaban tanah, dan penggunaan pupuk. Target output adalah nilai numerik kontinu berupa hasil panen ($y$).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },

@@ -362,7 +362,7 @@ const bab11Questions = [
     type: 'multiple_choice',
     bab: 11,
     babTitle: 'Shrinkage Methods',
-    question: 'Apakah arti dari simbol ( ) yang terdapat pada fungsi objektif Ridge Regression?',
+    question: 'Apakah arti dari simbol $\\lambda$ yang terdapat pada fungsi objektif Ridge Regression?',
     options: [
       { id: 'a', text: 'Parameter penalti yang mengontrol kekuatan regularisasi (regularization strength)' },
       { id: 'b', text: 'Nilai ambang batas minimal untuk menghapus koefisien yang tidak signifikan' },
@@ -370,7 +370,7 @@ const bab11Questions = [
       { id: 'd', text: 'Rasio jumlah fitur terhadap jumlah sampel data' }
     ],
     correctAnswer: 'a',
-    explanation: 'Lambda ( ) adalah hyperparameter yang mengatur seberapa besar penalti yang akan dikenakan pada koefisien regresi. Semakin besar , semakin kuat penyusutan koefisien yang terjadi.',
+    explanation: 'Lambda ($\\lambda$) adalah hyperparameter yang mengatur seberapa besar penalti yang akan dikenakan pada koefisien regresi. Semakin besar $\\lambda$, semakin kuat penyusutan koefisien yang terjadi.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -387,7 +387,7 @@ const bab11Questions = [
       { id: 'd', text: 'Model Ridge hanya akan menyisakan intersep saja' }
     ],
     correctAnswer: 'b',
-    explanation: 'Jika , maka komponen penalti bernilai nol. Fungsi objektif Ridge murni menjadi minimalisasi SSE saja, yang berarti sama dengan OLS.',
+    explanation: 'Jika $\\lambda = 0$, maka komponen penalti bernilai nol. Fungsi objektif Ridge murni menjadi minimalisasi SSE saja, yang berarti sama dengan OLS.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -413,7 +413,7 @@ const bab11Questions = [
     type: 'multiple_choice',
     bab: 11,
     babTitle: 'Shrinkage Methods',
-    question: 'Apa akibat ekstrem jika nilai parameter pada Ridge Regression diatur sangat besar ( )?',
+    question: 'Apa akibat ekstrem jika nilai parameter $\\lambda$ pada Ridge Regression diatur sangat besar ($\\lambda \\to \\infty$)?',
     options: [
       { id: 'a', text: 'Semua koefisien regresi menyusut sangat kuat mendekati nol, tetapi tidak tepat nol' },
       { id: 'b', text: 'Semua koefisien regresi langsung bernilai tepat nol secara serentak' },
@@ -421,7 +421,7 @@ const bab11Questions = [
       { id: 'd', text: 'Model Ridge akan menghasilkan nilai prediksi yang bernilai negatif tak terhingga' }
     ],
     correctAnswer: 'a',
-    explanation: 'Berdasarkan sifat asimtotik penalti , koefisien akan didorong sedekat mungkin ke arah nol seiring membesar secara ekstrem, namun secara teoritis tidak akan pernah tepat menyentuh angka nol (berbeda dengan Lasso).',
+    explanation: 'Berdasarkan sifat asimtotik penalti $\\lambda \\sum \\beta_j^2$, koefisien akan didorong sedekat mungkin ke arah nol seiring membesar secara ekstrem, namun secara teoritis tidak akan pernah tepat menyentuh angka nol (berbeda dengan Lasso).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },

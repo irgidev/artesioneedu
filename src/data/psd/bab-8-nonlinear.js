@@ -8,7 +8,7 @@ const bab8Questions = [
     question: 'Apa filosofi utama di balik pendekatan regresi nonlinear yang dibahas dalam materi kuliah ini?',
     options: [
       { id: 'a', text: 'Mengubah hubungan asli menjadi eksponensial murni agar lebih mudah diintegrasikan.' },
-      { id: 'b', text: 'Mengubah representasi fitur menjadi sekumpulan fitur baru , lalu melakukan regresi linear pada fitur baru tersebut.' },
+      { id: 'b', text: 'Mengubah representasi fitur menjadi sekumpulan fitur baru $\\phi(x)$, lalu melakukan regresi linear pada fitur baru tersebut.' },
       { id: 'c', text: 'Menggunakan algoritma optimasi non-linear yang rumit untuk meminimalkan fungsi loss non-linear secara langsung.' },
       { id: 'd', text: 'Menghilangkan parameter sehingga model sepenuhnya bergantung pada struktur fitur input asli.' }
     ],
@@ -22,7 +22,7 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Berdasarkan bentuk umum regresi basis function , manakah pernyataan yang tepat mengenai peran ?',
+    question: 'Berdasarkan bentuk umum regresi basis function $y(x) = \\sum_j \\beta_j \\phi_j(x)$, manakah pernyataan yang tepat mengenai peran $\\phi_j(x)$?',
     options: [
       { id: 'a', text: 'Fungsi basis ke- yang bertugas mengubah bentuk representasi variabel independen .' },
       { id: 'b', text: 'Koefisien kemiringan (slope) linear yang diestimasi secara langsung dengan OLS.' },
@@ -47,7 +47,7 @@ const bab8Questions = [
       { id: 'd', text: 'Karena variansi kesalahan (error) berdistribusi normal dan linear terhadap nilai target .' }
     ],
     correctAnswer: 'b',
-    explanation: 'Kelineran dinilai dari keterkaitan model dengan parameternya ( ). Karena disusun sebagai penjumlahan berbobot parameter tanpa ada parameter yang saling dikalikan atau dipangkatkan, model ini dikategorikan linear terhadap parameter.',
+    explanation: 'Kelineran dinilai dari keterkaitan model dengan parameternya ($\\beta$). Karena disusun sebagai penjumlahan berbobot parameter tanpa ada parameter yang saling dikalikan atau dipangkatkan, model ini dikategorikan linear terhadap parameter.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -90,7 +90,7 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Dalam Regresi Polynomial , apa yang direpresentasikan oleh nilai ?',
+    question: 'Dalam Regresi Polynomial $\\hat{y}(x) = \\beta_0 + \\beta_1 x + \\beta_2 x^2 + \\cdots + \\beta_d x^d$, apa yang direpresentasikan oleh nilai $d$?',
     options: [
       { id: 'a', text: 'Derajat (degree) tertinggi polynomial yang menentukan jumlah maksimum kelengkungan kurva global.' },
       { id: 'b', text: 'Jumlah partisi interval diskrit yang membagi domain input variabel .' },
@@ -98,7 +98,7 @@ const bab8Questions = [
       { id: 'd', text: 'Titik pusat (center) referensi lokal di mana kurva mencapai nilai optimal.' }
     ],
     correctAnswer: 'a',
-    explanation: 'Nilai adalah derajat polynomial (polynomial degree). Semakin tinggi derajat , semakin banyak kurva dapat meliuk/membengkok secara global untuk mencocokkan data.',
+    explanation: 'Nilai adalah derajat polynomial (polynomial degree). Semakin tinggi derajat $d$, semakin banyak kurva dapat meliuk/membengkok secara global untuk mencocokkan data.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -175,7 +175,7 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Apa risiko utama jika kita memilih derajat ( ) yang terlalu tinggi pada regresi polynomial?',
+    question: 'Apa risiko utama jika kita memilih derajat $d$ yang terlalu tinggi pada regresi polynomial?',
     options: [
       { id: 'a', text: 'Model mengalami overfitting, memiliki varians tinggi, dan menjadi tidak stabil di tepi domain (efek Runge).' },
       { id: 'b', text: 'Model mengalami underfitting, memiliki bias tinggi, dan menghasilkan kurva yang terlalu kaku.' },
@@ -268,7 +268,7 @@ const bab8Questions = [
       { id: 'd', text: 'Menghitung jarak kuadrat antara variabel dengan titik pusat eksponensial.' }
     ],
     correctAnswer: 'a',
-    explanation: 'Model matematika step function membagi domain menjadi interval diskrit dengan batas-batas titik potong . Menggunakan fungsi indikator , model memberikan nilai konstan untuk data yang berada dalam rentang tersebut.',
+    explanation: 'Model matematika step function membagi domain menjadi interval diskrit dengan batas-batas titik potong $\\xi_k$. Menggunakan fungsi indikator $I(x \\in A_k)$, model memberikan nilai konstan untuk data yang berada dalam rentang tersebut.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -313,13 +313,13 @@ const bab8Questions = [
     babTitle: 'Regresi Nonlinear',
     question: 'Berdasarkan use case medis risiko komplikasi pada materi kuliah, manakah segmentasi ambang batas kadar gula darah yang benar?',
     options: [
-      { id: 'a', text: 'Normal ( ), Borderline ( ), Tinggi ( ).' },
-      { id: 'b', text: 'Normal ( ), Borderline ( ), Tinggi ( ).' },
-      { id: 'c', text: 'Normal ( ), Borderline ( ), Tinggi ( ).' },
-      { id: 'd', text: 'Normal ( ), Borderline ( ), Tinggi ( ).' }
+      { id: 'a', text: 'Normal (< 100 mg/dL), Borderline (100-125 mg/dL), Tinggi/Diabetes (>= 126 mg/dL).' },
+      { id: 'b', text: 'Normal (< 100 mg/dL), Borderline (100-125 mg/dL), Tinggi/Diabetes (>= 126 mg/dL).' },
+      { id: 'c', text: 'Normal (< 100 mg/dL), Borderline (100-125 mg/dL), Tinggi/Diabetes (>= 126 mg/dL).' },
+      { id: 'd', text: 'Normal (< 100 mg/dL), Borderline (100-125 mg/dL), Tinggi/Diabetes (>= 126 mg/dL).' }
     ],
     correctAnswer: 'a',
-    explanation: 'Sesuai materi kuliah bagian 3.2, rentang kategori klinis untuk kadar gula darah adalah Normal ( ), Borderline ( ), dan Tinggi/Diabetes ( ).',
+    explanation: 'Sesuai materi kuliah bagian 3.2, rentang kategori klinis untuk kadar gula darah adalah Normal (<100), Borderline (100-125), dan Tinggi/Diabetes (>=126).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -481,7 +481,7 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Dalam rumus Gaussian RBF , apa yang direpresentasikan oleh variabel ?',
+    question: 'Dalam rumus Gaussian RBF $\\phi_j(x) = \\exp(-\\gamma |x - \\mu_j|^2)$, apa yang direpresentasikan oleh variabel $\\gamma$?',
     options: [
       { id: 'a', text: 'Titik pusat (center) atau referensi dari fungsi basis Gaussian ke- .' },
       { id: 'b', text: 'Koefisien pembobot linear yang dihitung melalui estimasi parameter least squares.' },
@@ -506,7 +506,7 @@ const bab8Questions = [
       { id: 'd', text: 'Kurva bel akan terbalik sehingga puncaknya mengarah ke nilai negatif.' }
     ],
     correctAnswer: 'a',
-    explanation: 'Semakin besar , nilai eksponensial negatif luruh dengan sangat cepat seiring bertambahnya jarak . Akibatnya, kurva menjadi sangat sempit (sangat sensitif lokal).',
+    explanation: 'Semakin besar $\\gamma$, nilai eksponensial negatif luruh dengan sangat cepat seiring bertambahnya jarak $|x - \\mu_j|$. Akibatnya, kurva menjadi sangat sempit (sangat sensitif lokal).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -532,15 +532,15 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Pada matriks desain fitur RBF , baris ke- dan kolom ke- menyatakan...',
+    question: 'Pada matriks desain fitur RBF $Z$, baris ke-$i$ dan kolom ke-$j$ menyatakan...',
     options: [
-      { id: 'a', text: 'Nilai transformasi basis RBF ke- yang dievaluasi pada data sampel ke- ( ).' },
+      { id: 'a', text: 'Nilai transformasi basis RBF ke-$j$ yang dievaluasi pada data sampel ke-$i$ ($z_{ij}$).' },
       { id: 'b', text: 'Jarak absolut murni tanpa transformasi antara sampel ke- dengan sampel ke- .' },
       { id: 'c', text: 'Koefisien regresi linear optimal yang dihitung khusus untuk sampel data ke- .' },
       { id: 'd', text: 'Nilai intercept dasar yang disesuaikan dengan bobot ke- .' }
     ],
     correctAnswer: 'a',
-    explanation: 'Setiap kolom dalam matriks desain mewakili satu fitur baru hasil transformasi basis , dan setiap baris mewakili satu sampel data . Sehingga elemen adalah .',
+    explanation: 'Setiap kolom dalam matriks desain mewakili satu fitur baru hasil transformasi basis $\\phi_j(x)$, dan setiap baris mewakili satu sampel data $x_i$. Sehingga elemen adalah .',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -574,7 +574,7 @@ const bab8Questions = [
       { id: 'd', text: 'Menghasilkan 12 buah interval diskrit fungsi tangga dengan tingkat prediksi konstan.' }
     ],
     correctAnswer: 'a',
-    explanation: 'Fungsi np.linspace(0, 1, 12) membangkitkan 12 koordinat titik yang berjarak sama dari rentang 0 hingga 1, yang selanjutnya digunakan sebagai pusat-pusat lokal ( ) kurva bel RBF.',
+    explanation: 'Fungsi np.linspace(0, 1, 12) membangkitkan 12 koordinat titik yang berjarak sama dari rentang 0 hingga 1, yang selanjutnya digunakan sebagai pusat-pusat lokal ($\\mu_j$) kurva bel RBF.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -625,7 +625,7 @@ const bab8Questions = [
       { id: 'd', text: 'Karena model ini tidak memiliki parameter intercept dasar sehingga selalu melewati titik .' }
     ],
     correctAnswer: 'a',
-    explanation: 'Parameter berpangkat 1 dan saling terhubung secara penjumlahan linear. Model regresi dikategorikan linear/nonlinear berdasarkan hubungannya terhadap parameter estimasi ( ), bukan terhadap variabel input ( ).',
+    explanation: 'Parameter berpangkat 1 dan saling terhubung secara penjumlahan linear. Model regresi dikategorikan linear/nonlinear berdasarkan hubungannya terhadap parameter estimasi ($\\beta$), bukan terhadap variabel input ($x$).',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
@@ -639,7 +639,7 @@ const bab8Questions = [
       { id: 'a', text: 'Kita harus melakukan penalaan (tuning) manual yang sensitif terhadap posisi pusat dan nilai parameter .' },
       { id: 'b', text: 'Model RBF tidak dapat diselesaikan menggunakan estimasi Ordinary Least Squares (OLS).' },
       { id: 'c', text: 'Nilai keluaran fungsi basis RBF selalu bernilai negatif sehingga membatasi arah prediksi.' },
-      { id: 'd', text: 'Jumlah pusat basis harus selalu sama persis dengan jumlah sampel data latih ( ).' }
+      { id: 'd', text: 'Jumlah pusat basis harus selalu sama persis dengan jumlah sampel data latih .' }
     ],
     correctAnswer: 'a',
     explanation: 'Peforma RBF sangat bergantung pada hyperparameter berupa jumlah dan lokasi titik pusat (centers) serta nilai . Penentuan parameter yang kurang tepat dapat membuat model underfitting atau overfitting parah.',
@@ -753,7 +753,7 @@ const bab8Questions = [
     type: 'multiple_choice',
     bab: 8,
     babTitle: 'Regresi Nonlinear',
-    question: 'Mengapa peningkatan jumlah fungsi basis ( ) harus diimbangi dengan kewaspadaan terhadap ancaman overfitting?',
+    question: 'Mengapa peningkatan jumlah fungsi basis ($J$) harus diimbangi dengan kewaspadaan terhadap ancaman overfitting?',
     options: [
       { id: 'a', text: 'Karena semakin banyak basis memberikan derajat kebebasan (fleksibilitas) tinggi bagi model untuk menghafal bising data latih.' },
       { id: 'b', text: 'Karena penambahan basis akan secara otomatis memaksa semua parameter menyusut mendekati nilai nol.' },
@@ -772,13 +772,13 @@ const bab8Questions = [
     babTitle: 'Regresi Nonlinear',
     question: 'Mengapa transformasi binerisasi pada step function menghasilkan matriks desain yang bersifat "sparse" (jarang) secara alami untuk setiap baris data?',
     options: [
-      { id: 'a', text: 'Karena untuk setiap satu nilai sampel data , hanya ada satu fungsi indikator interval yang aktif (bernilai 1), sedangkan interval lainnya bernilai 0.' },
+      { id: 'a', text: 'Karena untuk setiap satu nilai sampel data $x_i$, hanya ada satu fungsi indikator interval yang aktif (bernilai 1), sedangkan interval lainnya bernilai 0.' },
       { id: 'b', text: 'Karena sebagian besar sampel data yang bernilai ekstrem dibuang dari matriks sebelum proses fitting dimulai.' },
       { id: 'c', text: 'Karena koefisien diestimasi secara bergiliran sehingga sebagian besar nilai kolom sengaja dikosongkan.' },
       { id: 'd', text: 'Karena step function hanya dapat memproses data yang bernilai bulat saja.' }
     ],
     correctAnswer: 'a',
-    explanation: 'Setiap baris pada matriks desain step function biner mewakili satu sampel data . Karena interval-interval pembagian bersifat mutually exclusive (saling lepas), data hanya bisa berada di salah satu interval (kolom aktif bernilai 1), sedangkan sisa kolom lainnya pasti bernilai 0.',
+    explanation: 'Setiap baris pada matriks desain step function biner mewakili satu sampel data $x_i$. Karena interval-interval pembagian bersifat mutually exclusive (saling lepas), data hanya bisa berada di salah satu interval (kolom aktif bernilai 1), sedangkan sisa kolom lainnya pasti bernilai 0.',
     difficulty: 'medium',
     tags: ['pilihan-ganda', 'konsep'],
   },
